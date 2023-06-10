@@ -29,5 +29,7 @@ namespace DTO
         public string BrandName { get; set; }
         public string Status { get; set; }
         public string ProductImage { get; set; }
+        public string ShopName { get; set; }
+        public string CategoryName { get; set; }
     }
 }

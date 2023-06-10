@@ -1,3 +1,5 @@
+using BussinessObject.Models;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +10,6 @@ namespace Repository.Interface
 {
     public interface IShopRepository
     {
+        public ShopDTO GetShopById(int id);
     }
 }

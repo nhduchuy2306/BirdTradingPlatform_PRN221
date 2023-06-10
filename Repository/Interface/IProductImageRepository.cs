@@ -1,3 +1,4 @@
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +9,6 @@ namespace Repository.Interface
 {
     public interface IProductImageRepository
     {
+        List<ProductImageDTO> GetProductImagesByProductId(int productId);
     }
 }

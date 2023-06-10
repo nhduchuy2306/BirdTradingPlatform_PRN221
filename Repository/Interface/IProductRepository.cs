@@ -13,6 +13,7 @@ namespace Repository.Interface
         List<ProductDTO> GetProducts();
         List<ProductDTO> GetTop3Products();
         List<ProductDTO> GetProductByCategoryId(int id);
+        List<ProductDTO> GetProductByShopId(int id);
         ProductDTO GetProductById(int id);
         void AddProduct(ProductDTO productDTO);
         void UpdateProduct(ProductDTO productDTO);
