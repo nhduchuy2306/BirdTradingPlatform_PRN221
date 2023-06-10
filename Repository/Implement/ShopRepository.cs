@@ -6,4 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Interface
 {
+    public class ShopRepository : IShopRepository
+    {
+    }
 }
