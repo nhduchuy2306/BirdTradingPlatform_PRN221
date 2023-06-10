@@ -18,7 +18,10 @@ namespace Repository
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
-            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName))
+                .ForMember(dest => dest.ShopName, opt => opt.MapFrom(src => src.Shop.ShopName))
+                .ReverseMap();
             CreateMap<Shop, ShopDTO>().ReverseMap();
             CreateMap<PaymentMethod, PaymentMethodDTO>().ReverseMap();
             CreateMap<ProductImage, ProductImageDTO>().ReverseMap();

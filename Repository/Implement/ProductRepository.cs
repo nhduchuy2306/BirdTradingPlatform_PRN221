@@ -22,6 +22,8 @@ namespace Repository.Interface
         public void AddProduct(ProductDTO productDTO)
         {
             Product product = _mapper.Map<Product>(productDTO);
+            product.Category = null;
+            product.Shop = null;
             ProductDAO.AddProduct(product);
         }
 
@@ -43,6 +45,12 @@ namespace Repository.Interface
             return _mapper.Map<ProductDTO>(product);
         }
 
+        public List<ProductDTO> GetProductByShopId(int id)
+        {
+            List<Product> products = ProductDAO.GetProductByShopId(id);
+            return _mapper.Map<List<ProductDTO>>(products);
+        }
+
         public List<ProductDTO> GetProducts()
         {
             List<Product> list = ProductDAO.GetProducts();
@@ -58,6 +66,8 @@ namespace Repository.Interface
         public void UpdateProduct(ProductDTO productDTO)
         {
             Product product = _mapper.Map<Product>(productDTO);
+            product.Category = null;
+            product.Shop = null;
             ProductDAO.UpdateProduct(product);
         }
     }
