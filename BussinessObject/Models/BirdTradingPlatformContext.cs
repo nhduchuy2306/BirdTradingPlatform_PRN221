@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -31,12 +29,11 @@ namespace BussinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            IConfigurationRoot configuration = builder.Build();
-
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("BirdTradingPlatformDB"));
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer(" Server=(local);uid=sa;pwd=12345;database=BirdTradingPlatform;TrustServerCertificate=True ");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,13 +44,10 @@ namespace BussinessObject.Models
             {
                 entity.ToTable("Account");
 
-                entity.Property(e => e.Password)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Password).HasMaxLength(255);
 
                 entity.Property(e => e.PhoneNumber)
-                    .HasMaxLength(1)
+                    .HasMaxLength(10)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
@@ -66,9 +60,9 @@ namespace BussinessObject.Models
             {
                 entity.ToTable("Category");
 
-                entity.Property(e => e.CategoryName).HasMaxLength(1);
+                entity.Property(e => e.CategoryName).HasMaxLength(255);
 
-                entity.Property(e => e.Status).HasMaxLength(1);
+                entity.Property(e => e.Status).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -88,12 +82,12 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.OrderParent)
                     .WithMany(p => p.InverseOrderParent)
                     .HasForeignKey(d => d.OrderParentId)
-                    .HasConstraintName("FK__Order__OrderPare__2F9A1060");
+                    .HasConstraintName("FK__Order__OrderPare__5DCAEF64");
 
                 entity.HasOne(d => d.PaymentMethod)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.PaymentMethodId)
-                    .HasConstraintName("FK__Order__PaymentMe__2EA5EC27");
+                    .HasConstraintName("FK__Order__PaymentMe__5CD6CB2B");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -102,24 +96,24 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.Rating).HasColumnName("rating");
 
-                entity.Property(e => e.Status).HasMaxLength(1);
+                entity.Property(e => e.Status).HasMaxLength(10);
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__OrderDeta__Order__336AA144");
+                    .HasConstraintName("FK__OrderDeta__Order__619B8048");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__OrderDeta__Produ__32767D0B");
+                    .HasConstraintName("FK__OrderDeta__Produ__60A75C0F");
             });
 
             modelBuilder.Entity<PaymentMethod>(entity =>
             {
                 entity.ToTable("PaymentMethod");
 
-                entity.Property(e => e.PaymentNumber).HasMaxLength(1);
+                entity.Property(e => e.PaymentNumber).HasMaxLength(10);
 
                 entity.Property(e => e.PaymentType).HasMaxLength(50);
 
@@ -131,7 +125,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.PaymentMethods)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__PaymentMe__UserI__2057CCD0");
+                    .HasConstraintName("FK__PaymentMe__UserI__4E88ABD4");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -160,7 +154,9 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.Material).HasMaxLength(20);
 
-                entity.Property(e => e.ProductName).HasMaxLength(1);
+                entity.Property(e => e.ProductImage).HasMaxLength(255);
+
+                entity.Property(e => e.ProductName).HasMaxLength(255);
 
                 entity.Property(e => e.Species).HasMaxLength(50);
 
@@ -172,19 +168,19 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Product__Categor__28ED12D1");
+                    .HasConstraintName("FK__Product__Categor__571DF1D5");
 
                 entity.HasOne(d => d.Shop)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.ShopId)
-                    .HasConstraintName("FK__Product__ShopId__27F8EE98");
+                    .HasConstraintName("FK__Product__ShopId__5629CD9C");
             });
 
             modelBuilder.Entity<ProductImage>(entity =>
             {
                 entity.ToTable("ProductImage");
 
-                entity.Property(e => e.ImageUrl).HasMaxLength(1);
+                entity.Property(e => e.ImageUrl).HasMaxLength(255);
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(10)
@@ -194,7 +190,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductImages)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__ProductIm__Produ__2BC97F7C");
+                    .HasConstraintName("FK__ProductIm__Produ__59FA5E80");
             });
 
             modelBuilder.Entity<Shop>(entity =>
@@ -203,27 +199,27 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.Address).HasMaxLength(300);
 
-                entity.Property(e => e.AvatarUrl).HasMaxLength(1);
+                entity.Property(e => e.AvatarUrl).HasMaxLength(255);
 
                 entity.Property(e => e.CreateDate).HasColumnType("date");
 
                 entity.Property(e => e.ShopName).HasMaxLength(50);
 
-                entity.Property(e => e.Status).HasMaxLength(1);
+                entity.Property(e => e.Status).HasMaxLength(255);
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Shops)
                     .HasForeignKey(d => d.AccountId)
-                    .HasConstraintName("FK__Shop__Status__251C81ED");
+                    .HasConstraintName("FK__Shop__Status__534D60F1");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
 
-                entity.Property(e => e.Address).HasMaxLength(1);
+                entity.Property(e => e.Address).HasMaxLength(255);
 
-                entity.Property(e => e.AvatarUrl).HasMaxLength(1);
+                entity.Property(e => e.AvatarUrl).HasMaxLength(255);
 
                 entity.Property(e => e.CreateDate).HasColumnType("date");
 
@@ -248,7 +244,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.AccountId)
-                    .HasConstraintName("FK__User__Address__1D7B6025");
+                    .HasConstraintName("FK__User__Address__4BAC3F29");
             });
 
             OnModelCreatingPartial(modelBuilder);

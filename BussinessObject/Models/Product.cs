@@ -33,6 +33,7 @@ namespace BussinessObject.Models
         public string Description { get; set; }
         public string BrandName { get; set; }
         public string Status { get; set; }
+        public string ProductImage { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual Shop Shop { get; set; }
