@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DTO;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +12,23 @@ namespace BirdTradingPlatformRazorPage.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
-            _logger = logger;
+            _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
 
-        public void OnGet()
-        {
+        public List<CategoryDTO> Categories { get; set; }
+        public List<ProductDTO> Products { get; set; }
 
+        public IActionResult OnGet()
+        {
+            Categories = _categoryRepository.GetCategories();
+            Products = _productRepository.GetTop8Products();
+            return Page();
         }
     }
 }

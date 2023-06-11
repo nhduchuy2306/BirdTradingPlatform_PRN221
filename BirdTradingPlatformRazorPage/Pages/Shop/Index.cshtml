@@ -37,8 +37,8 @@
                                     asp-route-pageIndex="1"
                                     asp-route-minPrice="@Model.MinPrice"
                                     asp-route-maxPrice="@Model.MaxPrice"
-                                   asp-route-color="@Model.BirdColor"
-                                   asp-route-country="@Model.Country">
+                                    asp-route-color="@Model.BirdColor"
+                                    asp-route-country="@Model.Country">
                                     All
                                 </a>
                             </li>
@@ -237,7 +237,9 @@
                                     <div class="product__item__pic set-bg" data-setbg="@item.ProductImage"></div>
                                 </a>
                                 <div class="product__item__text">
-                                    <a class="btn btn-info text-white w-100">Add to Cart</a>
+                                    <a class="btn btn-info text-white w-100" 
+                                        asp-route-productId="@item.ProductId" 
+                                        asp-page-handler="AddToCart">Add to Cart</a>
                                 </div>
                                 <div class="product__item__text">
                                     <h5 class="mb-2">Shop Name: @item.ShopName</h5>

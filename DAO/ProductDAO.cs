@@ -60,7 +60,10 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                product = context.Products.FirstOrDefault(p => p.ProductId == id);
+                product = context.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Shop)
+                    .FirstOrDefault(p => p.ProductId == id);
             }
             catch (Exception ex)
             {
@@ -148,6 +151,24 @@ namespace DAO
             {
                 using var context = new BirdTradingPlatformContext();
                 products = context.Products.Where(p => p.ShopId == id).OrderByDescending(p => p.ProductId).Take(4).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return products;
+        }
+
+        public static List<Product> GetTop8Products()
+        {
+            var products = new List<Product>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                products = context.Products.OrderByDescending(p => p.ProductId)
+                    .Include(p => p.Category)
+                    .Include(p => p.Shop)
+                    .Take(8).ToList();
             }
             catch (Exception ex)
             {
