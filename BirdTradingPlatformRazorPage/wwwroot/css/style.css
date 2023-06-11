@@ -609,7 +609,7 @@ ol {
 	position: absolute;
 	right: 18px;
 	top: 9px;
-	content: "3";
+	content: "";
 	font-family: "ElegantIcons";
 	font-size: 18px;
 	color: #ffffff;
@@ -665,7 +665,6 @@ ol {
 	width: 1px;
 	background: #000000;
 	opacity: 0.1;
-	content: "";
 }
 
 .hero__search__form form .hero__search__categories span {
