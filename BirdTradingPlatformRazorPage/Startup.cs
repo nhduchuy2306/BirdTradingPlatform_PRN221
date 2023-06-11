@@ -56,6 +56,8 @@ namespace BirdTradingPlatformRazorPage
 
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();

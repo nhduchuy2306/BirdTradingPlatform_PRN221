@@ -63,6 +63,12 @@ namespace Repository.Interface
             return _mapper.Map<List<ProductDTO>>(list);
         }
 
+        public List<ProductDTO> GetTop8Products()
+        {
+            List<Product> list = ProductDAO.GetTop8Products();
+            return _mapper.Map<List<ProductDTO>>(list);
+        }
+
         public void UpdateProduct(ProductDTO productDTO)
         {
             Product product = _mapper.Map<Product>(productDTO);
