@@ -1246,7 +1246,7 @@ ol {
 
 .sidebar__item__size label input {
 	position: absolute;
-	visibility: hidden;
+	/*visibility: hidden;*/
 }
 
 /*---------------------
