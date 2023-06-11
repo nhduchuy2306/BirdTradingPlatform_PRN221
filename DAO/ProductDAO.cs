@@ -19,6 +19,7 @@ namespace DAO
                 products = context.Products
                             .Include(p => p.Category)
                             .Include(p => p.Shop)
+                            .AsNoTracking()
                             .ToList();
             }
             catch (Exception ex)
@@ -26,6 +27,31 @@ namespace DAO
                 throw new Exception(ex.Message);
             }
             return products;
+        }
+
+        public static List<Product> GetProductPaginatin(int totalPage, int pageSize)
+        {
+            var products = new List<Product>();
+            using var context = new BirdTradingPlatformContext();
+            pageSize = pageSize > 0 ? pageSize : 1;
+            totalPage = totalPage > 0 ? totalPage : 1;
+            products = context.Products
+                        .Include(p => p.Category)
+                        .Include(p => p.Shop)
+                        .AsNoTracking()
+                        .Skip((totalPage - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+            return products;
+        }
+
+        public static IQueryable<Product> GetQueryProduct()
+        {
+            using var context = new BirdTradingPlatformContext();
+            return context.Products
+                        .Include(p => p.Category)
+                        .Include(p => p.Shop)
+                        .AsNoTracking();
         }
 
         public static Product GetProductById(int id)
