@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="breadcrumb__text">
-                    <h2>Organi Shop</h2>
+                    <h2>Bird Shop</h2>
                     <div class="breadcrumb__option">
                         <a href="./index.html">Home</a>
                         <span>Shop</span>
@@ -32,10 +32,26 @@
                     <div class="sidebar__item">
                         <h4>Category</h4>
                         <ul>
+                            <li>
+                                <a asp-page="./Index" 
+                                    asp-route-pageIndex="1"
+                                    asp-route-minPrice="@Model.MinPrice"
+                                    asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="@Model.BirdColor"
+                                   asp-route-country="@Model.Country">
+                                    All
+                                </a>
+                            </li>
                             @foreach(var item in Model.Categories)
                             {
                                 <li>
-                                    <a asp-page="Index" asp-route-id="@item.CategoryId" asp-page-handler="ShowProductByCategory">
+                                    <a asp-page="./Index" 
+                                        asp-route-categoryId="@item.CategoryId" 
+                                        asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                        asp-route-minPrice="@Model.MinPrice"
+                                        asp-route-maxPrice="@Model.MaxPrice"
+                                       asp-route-color="@Model.BirdColor"
+                                       asp-route-country="@Model.Country">
                                         @item.CategoryName
                                     </a>
                                 </li>
@@ -44,58 +60,148 @@
                     </div>
                     <div class="sidebar__item">
                         <h4>Price</h4>
-                        <div class="price-range-wrap">
-                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                 data-min="10" data-max="540">
-                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                        <ul>
+                            <li>
+                                <a asp-page="./Index" 
+                                    asp-route-minPrice="0" 
+                                    asp-route-maxPrice="50"
+                                    asp-route-categoryId="@Model.Category.CategoryId" 
+                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-color="@Model.BirdColor"
+                                   asp-route-country="@Model.Country">
+                                    $0 - $50
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-page="./Index" 
+                                    asp-route-minPrice="50" 
+                                    asp-route-maxPrice="100"
+                                    asp-route-categoryId="@Model.Category.CategoryId"
+                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-color="@Model.BirdColor"
+                                   asp-route-country="@Model.Country">
+                                    $50 - $100
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-page="./Index" 
+                                    asp-route-minPrice="100" 
+                                    asp-route-maxPrice="200"
+                                    asp-route-categoryId="@Model.Category.CategoryId"
+                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-color="@Model.BirdColor"
+                                   asp-route-country="@Model.Country">
+                                    $100 - $200
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-page="./Index" 
+                                    asp-route-minPrice="200"
+                                    asp-route-categoryId="@Model.Category.CategoryId"
+                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-color="@Model.BirdColor"
+                                   asp-route-country="@Model.Country">
+                                    > $200
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sidebar__item sidebar__item__color--option">
+                        <h4>Colors</h4>
+                        <div class="w-100">
+                            <div class="order-first">
+                                <a asp-page="./Index"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice" 
+                                   asp-route-color="black" 
+                                   asp-route-country="@Model.Country" class="btn btn-dark text-white w-25">Black</a>
+                                <a asp-page="./Index"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="white" 
+                                   asp-route-country="@Model.Country" class="btn btn-light w-25">White</a>
+                                <a asp-page="./Index"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="red" 
+                                   asp-route-country="@Model.Country" class="btn btn-danger text-white w-25">Red</a>
                             </div>
-                            <div class="range-slider">
-                                <div class="price-input">
-                                    <input type="text" id="minamount">
-                                    <input type="text" id="maxamount">
-                                </div>
+                            <div class="order-second mt-3">
+                                <a asp-page="./Index"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="yellow"
+                                   asp-route-country="@Model.Country" class="btn btn-warning text-white w-25">Yellow</a>
+                                <a asp-page="./Index"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="grey"
+                                   asp-route-country="@Model.Country" class="btn btn-secondary text-white w-25">Grey</a>
+                                <a asp-page="./Index"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="blue" 
+                                   asp-route-country="@Model.Country" class="btn btn-primary text-white w-25">Blue</a>
                             </div>
                         </div>
                     </div>
                     <div class="sidebar__item sidebar__item__color--option">
-                        <h4>Colors</h4>
-                        <div class="sidebar__item__color sidebar__item__color--white">
-                            <label for="white">
-                                White
-                                <input type="radio" id="white">
-                            </label>
-                        </div>
-                        <div class="sidebar__item__color sidebar__item__color--gray">
-                            <label for="gray">
-                                Gray
-                                <input type="radio" id="gray">
-                            </label>
-                        </div>
-                        <div class="sidebar__item__color sidebar__item__color--red">
-                            <label for="red">
-                                Red
-                                <input type="radio" id="red">
-                            </label>
-                        </div>
-                        <div class="sidebar__item__color sidebar__item__color--black">
-                            <label for="black">
-                                Black
-                                <input type="radio" id="black">
-                            </label>
-                        </div>
-                        <div class="sidebar__item__color sidebar__item__color--blue">
-                            <label for="blue">
-                                Blue
-                                <input type="radio" id="blue">
-                            </label>
-                        </div>
-                        <div class="sidebar__item__color sidebar__item__color--green">
-                            <label for="green">
-                                Green
-                                <input type="radio" id="green">
-                            </label>
+                        <h4>Come From</h4>
+                        <div class="w-100">
+                            <a asp-page="./Index"
+                               asp-route-categoryId="@Model.Category.CategoryId"
+                               asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                               asp-route-minPrice="@Model.MinPrice"
+                               asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-color="@Model.BirdColor"
+                               asp-route-country="japan" class="btn btn-outline-secondary w-100 mt-1">Japan</a>
+                            <a asp-page="./Index"
+                               asp-route-categoryId="@Model.Category.CategoryId"
+                               asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                               asp-route-minPrice="@Model.MinPrice"
+                               asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-color="@Model.BirdColor"
+                               asp-route-country="indonesia" class="btn btn-outline-secondary w-100 mt-1">Indonesia</a>
+                            <a asp-page="./Index"
+                               asp-route-categoryId="@Model.Category.CategoryId"
+                               asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                               asp-route-minPrice="@Model.MinPrice"
+                               asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-color="@Model.BirdColor"
+                               asp-route-country="korea" class="btn btn-outline-secondary w-100 mt-1">Korea</a>
+                            <a asp-page="./Index"
+                               asp-route-categoryId="@Model.Category.CategoryId"
+                               asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                               asp-route-minPrice="@Model.MinPrice"
+                               asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-color="@Model.BirdColor"
+                               asp-route-country="thailand" class="btn btn-outline-secondary w-100 mt-1">Thailand</a>
+                            <a asp-page="./Index"
+                               asp-route-categoryId="@Model.Category.CategoryId"
+                               asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                               asp-route-minPrice="@Model.MinPrice"
+                               asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-color="@Model.BirdColor"
+                               asp-route-country="australia" class="btn btn-outline-secondary w-100 mt-1">Australia</a>
+                            <a asp-page="./Index"
+                               asp-route-categoryId="@Model.Category.CategoryId"
+                               asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                               asp-route-minPrice="@Model.MinPrice"
+                               asp-route-maxPrice="@Model.MaxPrice"
+                               asp-route-color="@Model.BirdColor"
+                               asp-route-country="america" class="btn btn-outline-secondary w-100 mt-1">America</a>
                         </div>
                     </div>
                     <div class="sidebar__item">
@@ -123,7 +229,7 @@
             </div>
             <div class="col-lg-9 col-md-7">
                 <div class="row">
-                    @foreach(var item in Model.Products)
+                    @foreach (var item in Model.PaginatedProducts)
                     {
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
@@ -143,12 +249,39 @@
                         </div>
                     }
                 </div>
+                @{
+                    var prevDisabled = !Model.PaginatedProducts.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.PaginatedProducts.HasNextPage ? "disabled" : "";
+                }
                 <div class="product__pagination float-right">
-                    <a href="#"><i class="fas fa-chevron-left"></i></a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#"><i class="fas fa-chevron-right"></i></a>
+                    <a asp-page="./Index" 
+                       asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex-1)"
+                       asp-route-categoryId="@Model.Category.CategoryId"
+                       asp-route-minPrice="@Model.MinPrice"
+                       asp-route-maxPrice="@Model.MaxPrice"
+                       asp-route-color="@Model.BirdColor"
+                       asp-route-country="@Model.Country" class="@prevDisabled">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    @for(int i = 1; i <= Model.PaginatedProducts.TotalPages; i++)
+                    {
+                        <a asp-page="./Index" 
+                           asp-route-pageIndex="@i" 
+                           asp-route-categoryId="@Model.Category.CategoryId"
+                           asp-route-minPrice="@Model.MinPrice"
+                           asp-route-maxPrice="@Model.MaxPrice"
+                           asp-route-color="@Model.BirdColor"
+                           asp-route-country="@Model.Country">@i</a>
+                    }
+                    <a asp-page="./Index" 
+                       asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex+1)"
+                       asp-route-categoryId="@Model.Category.CategoryId" class="@nextDisabled"
+                       asp-route-minPrice="@Model.MinPrice"
+                       asp-route-maxPrice="@Model.MaxPrice"
+                       asp-route-color="@Model.BirdColor"
+                       asp-route-country="@Model.Country">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
