@@ -47,9 +47,9 @@
 </head>
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    @*<div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div>*@
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
@@ -142,6 +142,7 @@
                             <li><a asp-page="/Index">Home</a></li>
                             <li><a asp-page="/Shop/Index">Shop</a></li>
                             <li><a asp-page="/Contact/Index">Contact</a></li>
+                            <li><a asp-page="/Orders/Index">Order History</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -174,7 +175,7 @@
     </div>
 
     <!-- Footer Section Begin -->
-    <footer class="footer spad">
+    <footer class="footer spad" style="bottom:0">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -29,11 +31,12 @@ namespace BussinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(" Server=(local);uid=sa;pwd=12345;database=BirdTradingPlatform;TrustServerCertificate=True ");
-            }
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfiguration configuration = builder.Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("BirdTradingPlatformDB"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,10 +49,7 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 
-                entity.Property(e => e.PhoneNumber)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(10);
 
                 entity.Property(e => e.Role).HasMaxLength(50);
 
@@ -69,15 +69,9 @@ namespace BussinessObject.Models
             {
                 entity.ToTable("Order");
 
-                entity.Property(e => e.PaymentStatus)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.PaymentStatus).HasMaxLength(10);
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Status).HasMaxLength(10);
 
                 entity.HasOne(d => d.OrderParent)
                     .WithMany(p => p.InverseOrderParent)
@@ -117,10 +111,7 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.PaymentType).HasMaxLength(50);
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Status).HasMaxLength(10);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.PaymentMethods)
@@ -134,10 +125,7 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.BrandName).HasMaxLength(50);
 
-                entity.Property(e => e.Color)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Color).HasMaxLength(20);
 
                 entity.Property(e => e.CreateDate).HasColumnType("date");
 
@@ -145,25 +133,19 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.Expiration).HasColumnType("date");
 
-                entity.Property(e => e.Gender)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Gender).HasMaxLength(10);
 
                 entity.Property(e => e.MadeIn).HasMaxLength(50);
 
                 entity.Property(e => e.Material).HasMaxLength(20);
 
-                entity.Property(e => e.ProductImage).HasMaxLength(255);
+                entity.Property(e => e.ProductImage).HasMaxLength(500);
 
                 entity.Property(e => e.ProductName).HasMaxLength(255);
 
                 entity.Property(e => e.Species).HasMaxLength(50);
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Status).HasMaxLength(10);
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
@@ -173,7 +155,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Shop)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.ShopId)
-                    .HasConstraintName("FK__Product__ShopId__5629CD9C");
+                    .HasConstraintName("FK__Product__Product__5629CD9C");
             });
 
             modelBuilder.Entity<ProductImage>(entity =>
@@ -182,10 +164,7 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.ImageUrl).HasMaxLength(255);
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Status).HasMaxLength(10);
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductImages)
@@ -231,15 +210,9 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.FullName).HasMaxLength(100);
 
-                entity.Property(e => e.Gender)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Gender).HasMaxLength(10);
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                entity.Property(e => e.Status).HasMaxLength(10);
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Users)

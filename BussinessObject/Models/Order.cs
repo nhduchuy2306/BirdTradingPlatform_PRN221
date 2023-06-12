@@ -20,6 +20,7 @@ namespace BussinessObject.Models
         public double? Total { get; set; }
         public string PaymentStatus { get; set; }
         public string Status { get; set; }
+        public int? ShopId { get; set; }
 
         public virtual Order OrderParent { get; set; }
         public virtual PaymentMethod PaymentMethod { get; set; }
