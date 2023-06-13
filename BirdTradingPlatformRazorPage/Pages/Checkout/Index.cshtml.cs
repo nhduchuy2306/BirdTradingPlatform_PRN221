@@ -4,6 +4,8 @@ using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repository.Interface;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Repository.Interface;
 using System.Collections.Generic;
@@ -24,14 +26,12 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
             IOrderDetailRepository orderDetailRepository, 
             IOrderRepository orderRepository, 
             IUserRepository userRepository, 
-            IPaymentMethodRepository paymentMethodRepository,
-            IProductRepository productRepository)
+            IPaymentMethodRepository paymentMethodRepository)
         {
             _orderDetailRepository = orderDetailRepository;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
             _paymentMethodRepository = paymentMethodRepository;
-            _productRepository = productRepository;
         }
 
         public List<CartItemDTO> cartItems { get; set; }
@@ -73,6 +73,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
             else if (cart != null)
             {
                 cartItems = JsonSerializer.Deserialize<List<CartItemDTO>>(cart);
+
                 int userId = userIdSession;
                 PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodByUserId(userId);
 
