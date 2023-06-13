@@ -19,14 +19,20 @@
                         </div>
                     }
                     <form method="post">
+                        @if (ViewData["Fail"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @ViewData["Fail"]
+                            </div>
+                        }
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="Email" class="form-control" required />
+                            <label asp-for="PhoneNumber">Phone Number</label>
+                            <input type="number" asp-for="PhoneNumber" id="PhoneNumber" name="PhoneNumber" class="form-control" required />
                         </div>
 
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="Password" class="form-control" required />
+                            <label for="Password">Password</label>
+                            <input type="Password" asp-for="Password" id="Password" name="Password" class="form-control" required />
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
