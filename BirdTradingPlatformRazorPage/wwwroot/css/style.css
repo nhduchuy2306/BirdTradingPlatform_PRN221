@@ -2189,7 +2189,7 @@ ol {
 
 .checkout__order {
 	background: #f5f5f5;
-	padding: 40px;
+	padding: 10px;
 	padding-top: 30px;
 }
 
@@ -2237,10 +2237,12 @@ ol {
 	padding-bottom: 15px;
 	margin-bottom: 15px;
 	padding-top: 15px;
+	padding-left: 10px;
 }
 
 .checkout__order .checkout__order__subtotal span {
 	float: right;
+	padding-right: 10px;
 }
 
 .checkout__order .checkout__input__checkbox label {
@@ -2254,11 +2256,13 @@ ol {
 	border-bottom: 1px solid #e1e1e1;
 	padding-bottom: 15px;
 	margin-bottom: 25px;
+	padding-left: 10px;
 }
 
 .checkout__order .checkout__order__total span {
 	float: right;
 	color: #dd2222;
+	padding-right: 10px;
 }
 
 .checkout__order button {

@@ -1,6 +1,8 @@
-﻿using DTO;
+using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using BussinessObject.Enum;
+using DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -17,11 +19,14 @@ namespace BirdTradingPlatformRazorPage.Pages
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
 
-        public IndexModel(ICategoryRepository categoryRepository, IProductRepository productRepository)
+        public IndexModel(ICategoryRepository categoryRepository, IProductRepository productRepository, 
+            IUserRepository userRepository)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
+            _userRepository = userRepository;
         }
 
         public List<CategoryDTO> Categories { get; set; }

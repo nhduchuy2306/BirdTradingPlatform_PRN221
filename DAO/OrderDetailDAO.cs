@@ -1,3 +1,4 @@
+using BussinessObject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +9,35 @@ namespace DAO
 {
     public class OrderDetailDAO
     {
+        public static void AddOrderDetail(OrderDetail orderDetail)
+        {
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                context.OrderDetails.Add(orderDetail);
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static List<OrderDetail> GetOrderDetailsByOrderId(int orderId)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                orderDetails = context.OrderDetails
+                    .Where(o => o.OrderId == orderId)
+                    .ToList();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return orderDetails;
+        }
     }
 }

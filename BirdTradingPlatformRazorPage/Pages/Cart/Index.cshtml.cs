@@ -54,6 +54,13 @@ namespace BirdTradingPlatformRazorPage.Pages.Cart
 
             cartItems.Remove(cartItems.FirstOrDefault(x => x.ProductId == productId));
 
+            if(cartItems.Count == 0)
+            {
+                HttpContext.Session.Remove("cart");
+                cartItems = new List<CartItemDTO>();
+                return Page();
+            }
+
             HttpContext.Session.SetString("cart", JsonSerializer.Serialize(cartItems));
 
             return Page();
