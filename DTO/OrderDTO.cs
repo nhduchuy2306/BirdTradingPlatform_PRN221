@@ -15,5 +15,6 @@ namespace DTO
         public double? Total { get; set; }
         public string PaymentStatus { get; set; }
         public string Status { get; set; }
+        public int? ShopId { get; set; }
     }
 }

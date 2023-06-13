@@ -1,8 +1,10 @@
+using BussinessObject.Enum;
 using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repository.Interface;
+using System;
 
 namespace BirdTradingPlatformRazorPage.Pages
 {
@@ -29,7 +31,7 @@ namespace BirdTradingPlatformRazorPage.Pages
         {
         }
 
-        public IActionResult OnPost(string PhoneNumber, string Password)
+        public IActionResult OnPost()
         {
             AccountDTO accountDTO = _accountRepository.GetAccountByPhoneNumberAndPassword(PhoneNumber, Password);
             if (accountDTO == null)
@@ -43,8 +45,29 @@ namespace BirdTradingPlatformRazorPage.Pages
                 HttpContext.Session.SetString("Role", accountDTO.Role);
                 int userId = _userRepository.GetUserByAccountId(accountDTO.AccountId).UserId;
                 HttpContext.Session.SetInt32("UserId", userId);
+
+                if (userId != 0 && accountDTO.Role.Equals(RoleEnum.USER.ToString()))
+                {
+                    UserDTO userDTO = _userRepository.GetUserById(userId);
+
+                    HttpContext.Session.SetString("UserName", userDTO.FullName);
+                }
+
+                string redirectTo = HttpContext.Session.GetString("RedirectTo");
+
+                if(redirectTo != null)
+                {
+                    return RedirectToPage(redirectTo);
+                }
+
                 return RedirectToPage("/Index");
             }
+        }
+
+        public IActionResult OnGetLogout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("/Index");
         }
     }
 }

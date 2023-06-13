@@ -11,5 +11,6 @@ namespace Repository.Interface
     public interface IUserRepository
     {
         UserDTO GetUserByAccountId(int id);
+        UserDTO GetUserById(int userId);
     }
 }

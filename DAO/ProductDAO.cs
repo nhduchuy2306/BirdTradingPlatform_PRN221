@@ -176,5 +176,20 @@ namespace DAO
             }
             return products;
         }
+
+        public static Product GetProductByProductIdAndShopId(int productId, int shopId)
+        {
+            var product = new Product();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                product = context.Products.FirstOrDefault(p => p.ProductId == productId && p.ShopId == shopId);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return product;
+        }
     }
 }

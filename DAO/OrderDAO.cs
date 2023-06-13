@@ -43,6 +43,22 @@ namespace DAO
                 throw new Exception(ex.Message);
             }
         }
+        
+        public static Order AddOrderReturnObject(Order order)
+        {
+            Order orderReturn = new Order();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                orderReturn = context.Orders.Add(order).Entity;
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return orderReturn;
+        }
 
         public static void DeleteOrder(Order order)
         {
@@ -53,6 +69,20 @@ namespace DAO
                 context.SaveChanges();
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static void UpdateOrder(Order order)
+        {
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                context.Entry<Order>(order).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

@@ -77,6 +77,11 @@
             <div class="header__top__right__auth">
                 <a href="#"><i class="fa fa-user"></i> Login</a>
             </div>
+            <div class="header__top__right__auth">
+                <a asp-page="/Login" asp-page-handler="Logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
@@ -124,8 +129,18 @@
                                 {
                                     <a asp-page="/Login"><i class="fas fa-user"></i> Login</a>
                                 }
-                                
                             </div>
+                                @if (Context.Session.GetString("UserId") != null)
+                                {
+                                    <div class="header__top__right__auth mr-5">
+                                        Welcome @Context.Session.GetString("UserName")
+                                    </div>
+                                    <div class="header__top__right__auth">
+                                        <a asp-page="/Login" asp-page-handler="Logout">
+                                            <i class="fas fa-sign-out-alt"></i> Logout
+                                        </a>
+                                    </div>
+                                }
                         </div>
                     </div>
                 </div>

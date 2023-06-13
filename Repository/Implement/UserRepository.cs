@@ -25,5 +25,11 @@ namespace Repository.Interface
             User user = UserDAO.GetUserByAccountId(id);
             return mapper.Map<UserDTO>(user);
         }
+
+        public UserDTO GetUserById(int userId)
+        {
+            User user = UserDAO.GetUserById(userId);
+            return mapper.Map<UserDTO>(user);
+        }
     }
 }
