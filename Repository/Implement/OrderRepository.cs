@@ -22,7 +22,10 @@ namespace Repository.Interface
         public void AddOrder(OrderDTO orderDTO)
         {
             Order order = _mapper.Map<Order>(orderDTO);
+<<<<<<< Updated upstream
             order.PaymentMethod = null;
+=======
+>>>>>>> Stashed changes
             OrderDAO.AddOrder(order);
         }
 
@@ -33,6 +36,7 @@ namespace Repository.Interface
             return _mapper.Map<OrderDTO>(orderReturn);
         }
 
+<<<<<<< Updated upstream
         public List<OrderDTO> GetCompletedOrdersByShopId(int shopId)
         {
             List<Order> orders = OrderDAO.GetCompletedOrdersByShopId(shopId);
@@ -51,6 +55,8 @@ namespace Repository.Interface
             return _mapper.Map<List<OrderDTO>>(orders);
         }
 
+=======
+>>>>>>> Stashed changes
         public List<OrderDTO> GetOrdersByUserId(int userId)
         {
             List<Order> list = OrderDAO.GetOrdersByUserId(userId);

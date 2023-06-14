@@ -10,6 +10,9 @@ namespace Repository.Interface
     public interface IOrderDetailRepository
     {
         void AddOrderDetail(OrderDetailDTO orderDetailDTO);
+<<<<<<< Updated upstream
         List<OrderDetailDTO> GetOrderDetailByOrderId(int id);
+=======
+>>>>>>> Stashed changes
     }
 }

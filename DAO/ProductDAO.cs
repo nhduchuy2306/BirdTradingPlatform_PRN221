@@ -191,6 +191,7 @@ namespace DAO
             }
             return product;
         }
+<<<<<<< Updated upstream
 
         public static List<Product> GetAllProductsByShopId(int shopId)
         {
@@ -210,5 +211,7 @@ namespace DAO
             }
             return products;
         }
+=======
+>>>>>>> Stashed changes
     }
 }

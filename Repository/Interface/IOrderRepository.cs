@@ -13,8 +13,11 @@ namespace Repository.Interface
         void AddOrder(OrderDTO orderDTO);
         void UpdateOrder(OrderDTO orderDTO);
         OrderDTO AddOrderReturnObject(OrderDTO orderDTO);
+<<<<<<< Updated upstream
         OrderDTO GetOrderById(int orderId);
         List<OrderDTO> GetOrdersByShopId(int shopId);
         List<OrderDTO> GetCompletedOrdersByShopId(int shopId);
+=======
+>>>>>>> Stashed changes
     }
 }

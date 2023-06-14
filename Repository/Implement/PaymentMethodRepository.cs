@@ -19,12 +19,15 @@ namespace Repository.Interface
             _mapper = mapper;
         }
 
+<<<<<<< Updated upstream
         public PaymentMethodDTO GetPaymentMethodById(int? paymentMethodId)
         {
             PaymentMethod paymentMethod = PaymentMethodDAO.GetPaymentMethodById(paymentMethodId);
             return _mapper.Map<PaymentMethodDTO>(paymentMethod);
         }
 
+=======
+>>>>>>> Stashed changes
         public PaymentMethodDTO GetPaymentMethodByUserId(int userId)
         {
             PaymentMethod paymentMethod = PaymentMethodDAO.GetPaymentMethodByUserId(userId);

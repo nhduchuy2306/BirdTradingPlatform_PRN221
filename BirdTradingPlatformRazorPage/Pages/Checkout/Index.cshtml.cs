@@ -4,11 +4,15 @@ using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Repository.Interface;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Repository.Interface;
 using System.Collections.Generic;
+<<<<<<< Updated upstream
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Repository.Interface;
+using System.Collections.Generic;
+=======
+>>>>>>> Stashed changes
 using System.Linq;
 using System.Text.Json;
 using System;
@@ -57,9 +61,15 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
 
         public IActionResult OnPost()
         {
+<<<<<<< Updated upstream
             string userIdSession = HttpContext.Session.GetString("UserId");
 
             if(string.IsNullOrEmpty(userIdSession))
+=======
+            int userIdSession = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            if(userIdSession == 0)
+>>>>>>> Stashed changes
             {
                 HttpContext.Session.SetString("RedirectTo", "/Checkout/Index");
                 return RedirectToPage("/Login");
@@ -76,8 +86,12 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
             else if (cart != null)
             {
                 cartItems = JsonSerializer.Deserialize<List<CartItemDTO>>(cart);
+<<<<<<< Updated upstream
 
                 int userId = int.Parse(userIdSession);
+=======
+                int userId = userIdSession;
+>>>>>>> Stashed changes
                 PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodByUserId(userId);
 
                 HashSet<int> shopIds = new HashSet<int>();
@@ -94,12 +108,20 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
 
                 OrderDTO orderFirst = new OrderDTO
                 {
+<<<<<<< Updated upstream
                     PaymentMethodId = paymentMethod.PaymentMethodId,
                     Total = 0,
                     ShopId = firstShopId,
                     OrderDate = DateTime.Now,
                     Status = OrderEnum.Processing.ToString(),
                     PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? PaymentEnum.Unpaid.ToString() : PaymentEnum.Paid.ToString()
+=======
+                    OrderPaymentId = paymentMethod.PaymentMethodId,
+                    Total = 0,
+                    ShopId = firstShopId,
+                    Status = OrderEnum.Processing.ToString(),
+                    PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? "Unpaid" : "Paid"
+>>>>>>> Stashed changes
                 };
                 OrderDTO orderDTOFirstReturn = _orderRepository.AddOrderReturnObject(orderFirst);
 
@@ -138,11 +160,18 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 {
                     OrderDTO order = new OrderDTO
                     {
+<<<<<<< Updated upstream
                         PaymentMethodId = paymentMethod.PaymentMethodId,
                         Status = OrderEnum.Processing.ToString(),
                         Total = 0,
                         OrderDate = DateTime.Now,
                         PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? PaymentEnum.Unpaid.ToString() : PaymentEnum.Paid.ToString(),
+=======
+                        OrderPaymentId = paymentMethod.PaymentMethodId,
+                        Status = OrderEnum.Processing.ToString(),
+                        Total = 0,
+                        PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? "Unpaid" : "Paid",
+>>>>>>> Stashed changes
                         ShopId = shopId,
                         OrderParentId = orderDTOFirstReturn.OrderId
                     };
@@ -181,7 +210,11 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 ViewData["Message"] = "Order success!";
                 HttpContext.Session.Remove("cart");
             }
+<<<<<<< Updated upstream
             return RedirectToPage("/Checkout/Index");
+=======
+            return Page();
+>>>>>>> Stashed changes
         }
     }
 }
