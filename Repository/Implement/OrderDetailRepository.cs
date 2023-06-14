@@ -22,7 +22,6 @@ namespace Repository.Interface
         public void AddOrderDetail(OrderDetailDTO orderDetailDTO)
         {
             OrderDetail orderDetail = _mapper.Map<OrderDetail>(orderDetailDTO);
-<<<<<<< Updated upstream
             orderDetail.Product = null;
             OrderDetailDAO.AddOrderDetail(orderDetail);
         }
@@ -32,9 +31,5 @@ namespace Repository.Interface
             List<OrderDetail> list = OrderDetailDAO.GetOrderDetailsByOrderId(id);
             return _mapper.Map<List<OrderDetailDTO>>(list);
         }
-=======
-            OrderDetailDAO.AddOrderDetail(orderDetail);
-        }
->>>>>>> Stashed changes
     }
 }

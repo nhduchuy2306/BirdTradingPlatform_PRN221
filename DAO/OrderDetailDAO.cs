@@ -1,8 +1,5 @@
 using BussinessObject.Models;
-<<<<<<< Updated upstream
 using Microsoft.EntityFrameworkCore;
-=======
->>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,10 +31,7 @@ namespace DAO
             {
                 using var context = new BirdTradingPlatformContext();
                 orderDetails = context.OrderDetails
-<<<<<<< Updated upstream
                     .Include(o => o.Product)
-=======
->>>>>>> Stashed changes
                     .Where(o => o.OrderId == orderId)
                     .ToList();
             }

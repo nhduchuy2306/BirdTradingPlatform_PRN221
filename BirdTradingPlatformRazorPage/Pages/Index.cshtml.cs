@@ -1,12 +1,7 @@
-<<<<<<< Updated upstream
-=======
 ﻿using BussinessObject.Enum;
->>>>>>> Stashed changes
 using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using BussinessObject.Enum;
-using DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;

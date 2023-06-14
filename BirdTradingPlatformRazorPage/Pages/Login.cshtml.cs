@@ -44,7 +44,6 @@ namespace BirdTradingPlatformRazorPage.Pages
             {
                 ViewData["Fail"] = null;
                 HttpContext.Session.SetString("Role", accountDTO.Role);
-<<<<<<< Updated upstream
 
                 if(accountDTO.Role.Equals(RoleEnum.USER.ToString()))
                 {
@@ -64,16 +63,6 @@ namespace BirdTradingPlatformRazorPage.Pages
                 {
                     HttpContext.Session.SetString("StaffId", accountDTO.AccountId.ToString());
                 }
-=======
-                int userId = _userRepository.GetUserByAccountId(accountDTO.AccountId).UserId;
-                HttpContext.Session.SetInt32("UserId", userId);
-
-                if (userId != 0 && accountDTO.Role.Equals(RoleEnum.USER.ToString()))
-                {
-                    UserDTO userDTO = _userRepository.GetUserById(userId);
-
-                    HttpContext.Session.SetString("UserName", userDTO.FullName);
-                }
 
                 string redirectTo = HttpContext.Session.GetString("RedirectTo");
 
@@ -83,22 +72,7 @@ namespace BirdTradingPlatformRazorPage.Pages
                 }
 
                 return RedirectToPage("/Index");
->>>>>>> Stashed changes
             }
-            string redirectTo = HttpContext.Session.GetString("RedirectTo");
-
-            if (redirectTo != null)
-            {
-                return RedirectToPage(redirectTo);
-            }
-
-            return RedirectToPage("/Index");
-        }
-
-        public IActionResult OnGetLogout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToPage("/Index");
         }
 
         public IActionResult OnGetLogout()

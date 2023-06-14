@@ -87,8 +87,6 @@ namespace DAO
                 throw new Exception(ex.Message);
             }
         }
-<<<<<<< Updated upstream
-
         public static Order GetOrderById(int orderId)
         {
             Order order = new Order();
@@ -146,7 +144,5 @@ namespace DAO
             }
             return orders;
         }
-=======
->>>>>>> Stashed changes
     }
 }

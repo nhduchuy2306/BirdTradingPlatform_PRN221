@@ -108,7 +108,6 @@
                             @if(Context.Session.GetString("Role") == null) {
                                 <div class="header__top__right__auth">
                                     <a asp-page="/Login"><i class="fas fa-user"></i> Login</a>
-<<<<<<< Updated upstream
                                 </div>
                             }
                             @if (Context.Session.GetString("Role") == RoleEnum.USER.ToString())
@@ -133,21 +132,6 @@
                                     </a>
                                 </div>
                             }
-=======
-                                }
-                            </div>
-                                @if (Context.Session.GetString("UserId") != null)
-                                {
-                                    <div class="header__top__right__auth mr-5">
-                                        Welcome @Context.Session.GetString("UserName")
-                                    </div>
-                                    <div class="header__top__right__auth">
-                                        <a asp-page="/Login" asp-page-handler="Logout">
-                                            <i class="fas fa-sign-out-alt"></i> Logout
-                                        </a>
-                                    </div>
-                                }
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>

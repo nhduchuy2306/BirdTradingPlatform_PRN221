@@ -9,7 +9,6 @@ namespace DAO
 {
     public class PaymentMethodDAO
     {
-<<<<<<< Updated upstream
         public static PaymentMethod GetPaymentMethodById(int? paymentMethodId)
         {
             PaymentMethod paymentMethod = null;
@@ -25,8 +24,6 @@ namespace DAO
             return paymentMethod;
         }
 
-=======
->>>>>>> Stashed changes
         public static PaymentMethod GetPaymentMethodByUserId(int userId)
         {
             PaymentMethod paymentMethod = null;

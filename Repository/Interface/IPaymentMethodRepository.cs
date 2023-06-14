@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
 using BussinessObject.Models;
-=======
->>>>>>> Stashed changes
 using DTO;
 using System;
 using System.Collections.Generic;
@@ -13,10 +10,7 @@ namespace Repository.Interface
 {
     public interface IPaymentMethodRepository
     {
-<<<<<<< Updated upstream
         PaymentMethodDTO GetPaymentMethodById(int? paymentMethodId);
-=======
->>>>>>> Stashed changes
         PaymentMethodDTO GetPaymentMethodByUserId(int userId);
     }
 }

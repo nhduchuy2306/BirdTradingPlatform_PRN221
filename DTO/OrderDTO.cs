@@ -15,12 +15,9 @@ namespace DTO
         public string PaymentStatus { get; set; }
         public string Status { get; set; }
         public int? ShopId { get; set; }
-<<<<<<< Updated upstream
         public string ShopName { get; set; }
         public string PaymentType { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? ShippedDate { get; set; }
-=======
->>>>>>> Stashed changes
     }
 }
