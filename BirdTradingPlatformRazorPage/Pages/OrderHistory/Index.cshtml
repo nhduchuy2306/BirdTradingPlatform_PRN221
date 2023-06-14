@@ -1,72 +1,84 @@
 ﻿@page
+@using BussinessObject.Enum;
 @model BirdTradingPlatformRazorPage.Pages.OrderHistory.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Order History</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-page="/Index">Home</a>
+                        <span>Order History</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+<table class="table table-hover mt-3">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderPaymentId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].PaymentStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].ShopId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderParent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order[0].PaymentMethod)
-            </th>
+            <th>Shop</th>
+            <th>Total</th>
+            <th>PaymentMethod</th>
+            <th>PaymentStatus</th>
+            <th>Order Date</th>
+            <th>Ship Date</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Order) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderPaymentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShopId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderParent.OrderId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentMethod.PaymentMethodId)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.OrderId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.OrderId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.OrderId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.orderDTO) {
+            <tr>
+                <td>@item.ShopName</td>
+                <td>@item.Total</td>
+                <td>@item.PaymentType</td>
+                <td>@item.PaymentStatus</td>
+                <td>
+                    @{
+                        var OrderDate = item.OrderDate;
+                        var OrderDateStr = OrderDate.ToString("dd/MM/yyyy");
+                    }
+                    @OrderDateStr
+                </td>
+                <td>
+                    @{
+                        var ShippedDateStr = "";
+                        var ShippedDate = item.ShippedDate;
+                        if(ShippedDate != null)
+                        {
+                            ShippedDateStr = ShippedDate.Value.ToString("dd/MM/yyyy");
+                        }
+                        else
+                        {
+                            ShippedDateStr = "Waiting For Shop";
+                        }
+                    }
+                    @ShippedDateStr
+                </td>
+                <td>@item.Status</td>
+                <td>
+                    @{
+                        var disabled = (
+                            item.PaymentStatus == PaymentEnum.Paid.ToString() ||
+                            item.Status == OrderEnum.Delivered.ToString() ||
+                            item.Status == OrderEnum.Cancelled.ToString()) ? "disabled" : "";
+                    }
+                    <a class="btn btn-primary @disabled" 
+                    asp-page="Index" 
+                    asp-page-handler="CheckReveivedProduct" asp-route-orderId="@item.OrderId">Reveived</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

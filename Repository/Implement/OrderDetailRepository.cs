@@ -22,7 +22,14 @@ namespace Repository.Interface
         public void AddOrderDetail(OrderDetailDTO orderDetailDTO)
         {
             OrderDetail orderDetail = _mapper.Map<OrderDetail>(orderDetailDTO);
+            orderDetail.Product = null;
             OrderDetailDAO.AddOrderDetail(orderDetail);
+        }
+
+        public List<OrderDetailDTO> GetOrderDetailByOrderId(int id)
+        {
+            List<OrderDetail> list = OrderDetailDAO.GetOrderDetailsByOrderId(id);
+            return _mapper.Map<List<OrderDetailDTO>>(list);
         }
     }
 }

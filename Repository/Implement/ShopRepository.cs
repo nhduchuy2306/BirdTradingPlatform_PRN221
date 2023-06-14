@@ -19,6 +19,12 @@ namespace Repository.Interface
             _mapper = mapper;
         }
 
+        public ShopDTO GetShopByAccountId(int accountId)
+        {
+            Shop shop = ShopDAO.GetShopByAccountId(accountId);
+            return _mapper.Map<ShopDTO>(shop);
+        }
+
         public ShopDTO GetShopById(int id)
         {
             Shop shop = ShopDAO.GetShopById(id);

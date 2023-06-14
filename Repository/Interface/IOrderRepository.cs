@@ -13,5 +13,8 @@ namespace Repository.Interface
         void AddOrder(OrderDTO orderDTO);
         void UpdateOrder(OrderDTO orderDTO);
         OrderDTO AddOrderReturnObject(OrderDTO orderDTO);
+        OrderDTO GetOrderById(int orderId);
+        List<OrderDTO> GetOrdersByShopId(int shopId);
+        List<OrderDTO> GetCompletedOrdersByShopId(int shopId);
     }
 }

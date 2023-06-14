@@ -1,0 +1,126 @@
+﻿@page
+@model BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Create FlowerBouquet</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-2">ProductName</dt>
+                        <dd class="col-sm-10">@Model.productDTO.ProductName</dd>
+                        <dt class="col-sm-2">UnitPrice</dt>
+                        <dd class="col-sm-10">@Model.productDTO.UnitPrice</dd>
+                        <dt class="col-sm-2">Quantity</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Quantity</dd>
+                        <dt class="col-sm-2">Rating</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Rating</dd>
+                        <dt class="col-sm-2">CreateDate</dt>
+                        <dd class="col-sm-10">@Model.productDTO.CreateDate</dd>
+                        <dt class="col-sm-2">Species</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Species</dd>
+                        <dt class="col-sm-2">Age</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Age</dd>
+                        <dt class="col-sm-2">Size</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Size</dd>
+                        <dt class="col-sm-2">Weight</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Weight</dd>
+                        <dt class="col-sm-2">Expiration</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Expiration</dd>
+                        <dt class="col-sm-2">MadeIn</dt>
+                        <dd class="col-sm-10">@Model.productDTO.MadeIn</dd>
+                        <dt class="col-sm-2">Gender</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Gender</dd>
+                        <dt class="col-sm-2">Color</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Color</dd>
+                        <dt class="col-sm-2">Material</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Material</dd>
+                        <dt class="col-sm-2">Description</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Description</dd>
+                        <dt class="col-sm-2">BrandName</dt>
+                        <dd class="col-sm-10">@Model.productDTO.BrandName</dd>
+                        <dt class="col-sm-2">Status</dt>
+                        <dd class="col-sm-10">@Model.productDTO.Status</dd>
+                        <dt class="col-sm-2">ProductImage</dt>
+                        <dd class="col-sm-10">@Model.productDTO.ProductImage</dd>
+                        <dt class="col-sm-2">Category</dt>
+                        <dd class="col-sm-10">@Model.productDTO.CategoryName</dd>
+                        <dt class="col-sm-2">Shop</dt>
+                        <dd class="col-sm-10">@Model.productDTO.ShopName</dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-info" asp-page="./Edit" asp-route-id="@Model.productDTO.ProductId">Edit</a>
+                    <a class="btn btn-secondary" asp-page="./Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <h4>ProductImages</h4>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createImage">
+            Create Image for product
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="createImage" tabindex="-1" role="dialog" aria-labelledby="createImageLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" asp-page-handler="AddImageForProduct">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="imageUrl">Image Url</label>
+                                <input type="text" class="form-control" id="imageUrl"
+                                    placeholder="Enter Image Url" asp-for="productImageDTO.ImageUrl">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Image Url</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.productImages)
+                {
+                    <tr>
+                        <td>@item.ProductId</td>
+                        <td>@Model.productDTO.ProductName</td>
+                        <td>@item.ImageUrl</td>
+                        <td>@item.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

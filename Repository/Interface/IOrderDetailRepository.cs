@@ -10,5 +10,6 @@ namespace Repository.Interface
     public interface IOrderDetailRepository
     {
         void AddOrderDetail(OrderDetailDTO orderDetailDTO);
+        List<OrderDetailDTO> GetOrderDetailByOrderId(int id);
     }
 }

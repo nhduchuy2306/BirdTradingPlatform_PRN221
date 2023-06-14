@@ -19,5 +19,6 @@ namespace Repository.Interface
         void AddProduct(ProductDTO productDTO);
         void UpdateProduct(ProductDTO productDTO);
         void DeleteProduct(ProductDTO productDTO);
+        List<ProductDTO> GetAllProductsByShopId(int shopId);
     }
 }

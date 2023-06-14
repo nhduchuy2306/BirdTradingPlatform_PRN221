@@ -1,4 +1,5 @@
 using BussinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace DAO
             {
                 using var context = new BirdTradingPlatformContext();
                 orderDetails = context.OrderDetails
+                    .Include(o => o.Product)
                     .Where(o => o.OrderId == orderId)
                     .ToList();
             }

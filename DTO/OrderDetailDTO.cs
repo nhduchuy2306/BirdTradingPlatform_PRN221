@@ -15,5 +15,6 @@ namespace DTO
         public double? Price { get; set; }
         public int? Rating { get; set; }
         public string Status { get; set; }
+        public string ProductName { get; set; }
     }
 }

@@ -19,6 +19,12 @@ namespace Repository.Interface
             _mapper = mapper;
         }
 
+        public PaymentMethodDTO GetPaymentMethodById(int? paymentMethodId)
+        {
+            PaymentMethod paymentMethod = PaymentMethodDAO.GetPaymentMethodById(paymentMethodId);
+            return _mapper.Map<PaymentMethodDTO>(paymentMethod);
+        }
+
         public PaymentMethodDTO GetPaymentMethodByUserId(int userId)
         {
             PaymentMethod paymentMethod = PaymentMethodDAO.GetPaymentMethodByUserId(userId);

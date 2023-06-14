@@ -9,6 +9,21 @@ namespace DAO
 {
     public class PaymentMethodDAO
     {
+        public static PaymentMethod GetPaymentMethodById(int? paymentMethodId)
+        {
+            PaymentMethod paymentMethod = null;
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                paymentMethod = context.PaymentMethods.FirstOrDefault(p => p.PaymentMethodId == paymentMethodId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return paymentMethod;
+        }
+
         public static PaymentMethod GetPaymentMethodByUserId(int userId)
         {
             PaymentMethod paymentMethod = null;

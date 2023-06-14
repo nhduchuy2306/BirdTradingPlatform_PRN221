@@ -1,0 +1,72 @@
+﻿@page
+@model BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Create FlowerBouquet</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-2">User</dt>
+                        <dd class="col-sm-10">@Model.userDTO.FullName</dd>
+                        <dt class="col-sm-2">Total</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.Total</dd>
+                        <dt class="col-sm-2">PaymentStatus</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.PaymentStatus</dd>
+                        <dt class="col-sm-2">Status</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.Status</dd>
+                        <dt class="col-sm-2">OrderDate</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.OrderDate</dd>
+                        <dt class="col-sm-2">ShippedDate</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.ShippedDate</dd>
+                        <dt class="col-sm-2">OrderParent</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.OrderParentId</dd>
+                        <dt class="col-sm-2">PaymentMethod</dt>
+                        <dd class="col-sm-10">@Model.orderDTO.PaymentType</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a  class="btn btn-secondary" asp-page="./Index">Back to List</a>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ProductId</th>
+                <th>ProductName</th>
+                <th>OrderId</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Rating</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.orderDetailDTOs)
+            {
+                <tr>
+                    <td>@item.ProductId</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.OrderId</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price</td>
+                    <td>@item.Rating</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

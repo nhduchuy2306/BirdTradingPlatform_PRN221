@@ -1,3 +1,4 @@
+using BussinessObject.Enum;
 using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,6 @@ namespace DAO
                     .Include(p => p.PaymentMethod)
                     .Include(p => p.OrderParent)
                     .Where(o => o.PaymentMethod.UserId == userId)
-                    .Where(o => o.OrderParent != null)
                     .ToList();
             }
             catch(Exception ex)
@@ -86,6 +86,64 @@ namespace DAO
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public static Order GetOrderById(int orderId)
+        {
+            Order order = new Order();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                order = context.Orders
+                    .Include(p => p.PaymentMethod)
+                    .Include(p => p.OrderParent)
+                    .FirstOrDefault(o => o.OrderId == orderId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return order;
+        }
+
+        public static List<Order> GetOrdersByShopId(int shopId)
+        {
+            List<Order> orders = new List<Order>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                orders = context.Orders
+                    .Include(p => p.PaymentMethod)
+                    .Include(p => p.OrderParent)
+                    .Where(o => o.ShopId == shopId)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return orders;
+        }
+
+        public static List<Order> GetCompletedOrdersByShopId(int shopId)
+        {
+            List<Order> orders = new List<Order>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                orders = context.Orders
+                    .Include(p => p.PaymentMethod)
+                    .Include(p => p.OrderParent)
+                    .Where(o => o.ShopId == shopId &&
+                        o.Status == OrderEnum.Delivered.ToString() &&
+                        o.PaymentStatus == PaymentEnum.Paid.ToString())
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return orders;
         }
     }
 }

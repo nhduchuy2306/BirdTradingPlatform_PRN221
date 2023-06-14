@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -31,12 +29,11 @@ namespace BussinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            IConfiguration configuration = builder.Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("BirdTradingPlatformDB"));
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer(" Server=(local);uid=sa;pwd=12345;database=BirdTradingPlatform;TrustServerCertificate=True ");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -69,7 +66,11 @@ namespace BussinessObject.Models
             {
                 entity.ToTable("Order");
 
+                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+
                 entity.Property(e => e.PaymentStatus).HasMaxLength(10);
+
+                entity.Property(e => e.ShippedDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasMaxLength(10);
 

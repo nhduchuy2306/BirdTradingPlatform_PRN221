@@ -191,5 +191,24 @@ namespace DAO
             }
             return product;
         }
+
+        public static List<Product> GetAllProductsByShopId(int shopId)
+        {
+            var products = new List<Product>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                products = context.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Shop)
+                    .Where(p => p.ShopId == shopId)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return products;
+        }
     }
 }

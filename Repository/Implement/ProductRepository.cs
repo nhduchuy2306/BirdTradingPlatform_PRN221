@@ -33,6 +33,12 @@ namespace Repository.Interface
             ProductDAO.DeleteProduct(product);
         }
 
+        public List<ProductDTO> GetAllProductsByShopId(int shopId)
+        {
+            List<Product> list = ProductDAO.GetAllProductsByShopId(shopId);
+            return _mapper.Map<List<ProductDTO>>(list);
+        }
+
         public List<ProductDTO> GetProductByCategoryId(int id)
         {
             List<Product> products = ProductDAO.GetProductByCategoryId(id);

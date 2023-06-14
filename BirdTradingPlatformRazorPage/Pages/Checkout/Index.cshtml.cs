@@ -11,6 +11,7 @@ using Repository.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System;
 
 namespace BirdTradingPlatformRazorPage.Pages.Checkout
 {
@@ -26,12 +27,14 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
             IOrderDetailRepository orderDetailRepository, 
             IOrderRepository orderRepository, 
             IUserRepository userRepository, 
-            IPaymentMethodRepository paymentMethodRepository)
+            IPaymentMethodRepository paymentMethodRepository,
+            IProductRepository productRepository)
         {
             _orderDetailRepository = orderDetailRepository;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
             _paymentMethodRepository = paymentMethodRepository;
+            _productRepository = productRepository;
         }
 
         public List<CartItemDTO> cartItems { get; set; }
@@ -54,9 +57,9 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
 
         public IActionResult OnPost()
         {
-            int userIdSession = HttpContext.Session.GetInt32("UserId") ?? 0;
+            string userIdSession = HttpContext.Session.GetString("UserId");
 
-            if(userIdSession == 0)
+            if(string.IsNullOrEmpty(userIdSession))
             {
                 HttpContext.Session.SetString("RedirectTo", "/Checkout/Index");
                 return RedirectToPage("/Login");
@@ -74,7 +77,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
             {
                 cartItems = JsonSerializer.Deserialize<List<CartItemDTO>>(cart);
 
-                int userId = userIdSession;
+                int userId = int.Parse(userIdSession);
                 PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodByUserId(userId);
 
                 HashSet<int> shopIds = new HashSet<int>();
@@ -91,11 +94,12 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
 
                 OrderDTO orderFirst = new OrderDTO
                 {
-                    OrderPaymentId = paymentMethod.PaymentMethodId,
+                    PaymentMethodId = paymentMethod.PaymentMethodId,
                     Total = 0,
                     ShopId = firstShopId,
+                    OrderDate = DateTime.Now,
                     Status = OrderEnum.Processing.ToString(),
-                    PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? "Unpaid" : "Paid"
+                    PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? PaymentEnum.Unpaid.ToString() : PaymentEnum.Paid.ToString()
                 };
                 OrderDTO orderDTOFirstReturn = _orderRepository.AddOrderReturnObject(orderFirst);
 
@@ -134,10 +138,11 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 {
                     OrderDTO order = new OrderDTO
                     {
-                        OrderPaymentId = paymentMethod.PaymentMethodId,
+                        PaymentMethodId = paymentMethod.PaymentMethodId,
                         Status = OrderEnum.Processing.ToString(),
                         Total = 0,
-                        PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? "Unpaid" : "Paid",
+                        OrderDate = DateTime.Now,
+                        PaymentStatus = paymentMethod.PaymentType == PaymentType.COD.ToString() ? PaymentEnum.Unpaid.ToString() : PaymentEnum.Paid.ToString(),
                         ShopId = shopId,
                         OrderParentId = orderDTOFirstReturn.OrderId
                     };
@@ -176,7 +181,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 ViewData["Message"] = "Order success!";
                 HttpContext.Session.Remove("cart");
             }
-            return Page();
+            return RedirectToPage("/Checkout/Index");
         }
     }
 }

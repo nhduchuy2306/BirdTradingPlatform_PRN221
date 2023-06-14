@@ -1,4 +1,5 @@
-﻿@using DTO;
+﻿@using BussinessObject.Enum;
+@using DTO;
 @using Microsoft.AspNetCore.Http;
 @using System.Text.Json;
 
@@ -85,7 +86,11 @@
                 <li><a asp-page="/Index">Home</a></li>
                 <li><a asp-page="/Shop/Index">Shop</a></li>
                 <li><a asp-page="/Contact/Index">Contact</a></li>
-                <li><a asp-page="/Orders/Index">Order History</a></li>
+
+                @if (Context.Session.GetString("UserId") != null)
+                {
+                    <li><a asp-page="/Orders/Index">Order History</a></li>
+                }
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -100,23 +105,33 @@
                     <div class="col-lg-6 col-md-6"></div>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
-                            <div class="header__top__right__auth">
-                                @if(Context.Session.GetString("UserId") == null)
-                                {
+                            @if(Context.Session.GetString("Role") == null) {
+                                <div class="header__top__right__auth">
                                     <a asp-page="/Login"><i class="fas fa-user"></i> Login</a>
-                                }
-                            </div>
-                                @if (Context.Session.GetString("UserId") != null)
-                                {
-                                    <div class="header__top__right__auth mr-5">
-                                        Welcome @Context.Session.GetString("UserName")
-                                    </div>
-                                    <div class="header__top__right__auth">
-                                        <a asp-page="/Login" asp-page-handler="Logout">
-                                            <i class="fas fa-sign-out-alt"></i> Logout
-                                        </a>
-                                    </div>
-                                }
+                                </div>
+                            }
+                            @if (Context.Session.GetString("Role") == RoleEnum.USER.ToString())
+                            {
+                                <div class="header__top__right__auth mr-5">
+                                    Welcome @Context.Session.GetString("UserName")
+                                </div>
+                                <div class="header__top__right__auth">
+                                    <a asp-page="/Login" asp-page-handler="Logout">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </a>
+                                </div>
+                            }
+                            @if (Context.Session.GetString("Role") == RoleEnum.SHOP.ToString())
+                            {
+                                <div class="header__top__right__auth mr-5">
+                                    Welcome @Context.Session.GetString("ShopName")
+                                </div>
+                                <div class="header__top__right__auth">
+                                    <a asp-page="/Login" asp-page-handler="Logout">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -126,35 +141,53 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a class="text-center" asp-page="/Index">
-                            <img class="w-25 img-fluid" src="img/Bird-logo.png" alt="">
+                        <a class="text-center">
+                            <img class="w-25 img-fluid" src="~/img/Bird-logo.png" alt="">
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li><a asp-page="/Index">Home</a></li>
-                            <li><a asp-page="/Shop/Index">Shop</a></li>
-                            <li><a asp-page="/Contact/Index">Contact</a></li>
-                            <li><a asp-page="/Orders/Index">Order History</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart text-center">
-                        <ul>
-                            <li>
-                                <a asp-page="/Cart/Index"><i class="fas fa-shopping-bag"></i>
-                                    <span>@TotalQuantity</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="header__cart__price">item:
-                            <span>$@TotalPrice</span>
+                @if (Context.Session.GetString("Role") == null ||  Context.Session.GetString("Role") == RoleEnum.USER.ToString())
+                {
+                    <div class="col-lg-6">
+                        <nav class="header__menu">
+                            <ul>
+                                <li id="home"><a asp-page="/Index">Home</a></li>
+                                <li id="shop"><a asp-page="/Shop/Index">Shop</a></li>
+                                <li id="contact"><a asp-page="/Contact/Index">Contact</a></li>
+                                <li id="order-history"><a asp-page="/OrderHistory/Index">Order History</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                }
+                @if (Context.Session.GetString("Role") == RoleEnum.SHOP.ToString())
+                {
+                    <div class="col-lg-9">
+                        <nav class="header__menu">
+                            <ul>
+                                <li id="order-request"><a asp-page="/ShopManagement/OrderRequest/Index">Order Request</a></li>
+                                <li id="order-management"><a asp-page="/ShopManagement/OrderManagement/Index">Order Management</a></li>
+                                <li id="product-management"><a asp-page="/ShopManagement/ProductManagement/Index">Product Management</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                }    
+                @if (Context.Session.GetString("Role") == null || Context.Session.GetString("Role") == RoleEnum.USER.ToString())
+                {
+                    <div class="col-lg-3">
+                        <div class="header__cart text-center">
+                            <ul>
+                                <li>
+                                    <a asp-page="/Cart/Index"><i class="fas fa-shopping-bag"></i>
+                                        <span>@TotalQuantity</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="header__cart__price">item:
+                                <span>$@TotalPrice</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
             <div class="humberger__open">
                 <i class="fas fa-bars"></i>
@@ -176,7 +209,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a asp-page="/Index"><img class="w-50" src="img/Bird-logo.png" alt=""></a>
+                            <a asp-page="/Index"><img class="w-50" src="~/img/Bird-logo.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: HCM, VN</li>
@@ -245,5 +278,43 @@
     <script src="~/js/main.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var url = window.location.href;
+            var arr = url.split("/");
+            console.log(arr);
+            switch (true) {
+                case arr[3] === "":
+                    document.getElementById('home').classList.add('active');
+                    break;
+
+                case arr[3] === "Shop":
+                    document.getElementById('shop').classList.add('active');
+                    break;
+
+                case arr[3] === "Contact":
+                    document.getElementById('contact').classList.add('active');
+                    break;
+
+                case arr[3] === "OrderHistory":
+                    document.getElementById('order-history').classList.add('active');
+                    break;
+
+                case arr[4] === "OrderRequest":
+                    document.getElementById('order-request').classList.add('active');
+                    break;
+
+                case arr[4] === "ProductManagement":
+                    document.getElementById('product-management').classList.add('active');
+                    break;
+                    
+                case arr[4] === "OrderManagement":
+                    document.getElementById('order-management').classList.add('active');
+                    break;
+            }
+        }
+    </script>
+
 </body>
 </html>

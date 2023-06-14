@@ -22,6 +22,7 @@ namespace Repository.Interface
         public void AddOrder(OrderDTO orderDTO)
         {
             Order order = _mapper.Map<Order>(orderDTO);
+            order.PaymentMethod = null;
             OrderDAO.AddOrder(order);
         }
 
@@ -30,6 +31,24 @@ namespace Repository.Interface
             Order order = _mapper.Map<Order>(orderDTO);
             Order orderReturn = OrderDAO.AddOrderReturnObject(order);
             return _mapper.Map<OrderDTO>(orderReturn);
+        }
+
+        public List<OrderDTO> GetCompletedOrdersByShopId(int shopId)
+        {
+            List<Order> orders = OrderDAO.GetCompletedOrdersByShopId(shopId);
+            return _mapper.Map<List<OrderDTO>>(orders);
+        }
+
+        public OrderDTO GetOrderById(int orderId)
+        {
+            Order order = OrderDAO.GetOrderById(orderId);
+            return _mapper.Map<OrderDTO>(order);
+        }
+
+        public List<OrderDTO> GetOrdersByShopId(int shopId)
+        {
+            List<Order> orders = OrderDAO.GetOrdersByShopId(shopId);
+            return _mapper.Map<List<OrderDTO>>(orders);
         }
 
         public List<OrderDTO> GetOrdersByUserId(int userId)

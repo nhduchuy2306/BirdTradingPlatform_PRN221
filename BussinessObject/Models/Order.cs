@@ -16,11 +16,12 @@ namespace BussinessObject.Models
         public int OrderId { get; set; }
         public int? PaymentMethodId { get; set; }
         public int? OrderParentId { get; set; }
-        public int? OrderPaymentId { get; set; }
         public double? Total { get; set; }
         public string PaymentStatus { get; set; }
         public string Status { get; set; }
         public int? ShopId { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public DateTime? ShippedDate { get; set; }
 
         public virtual Order OrderParent { get; set; }
         public virtual PaymentMethod PaymentMethod { get; set; }

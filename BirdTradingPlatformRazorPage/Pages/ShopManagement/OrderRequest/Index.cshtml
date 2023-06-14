@@ -1,0 +1,149 @@
+﻿@page
+@using BussinessObject.Enum;
+@using Microsoft.AspNetCore.Http;
+
+@model BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["DeliveredDate"]!=null)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Fail!</strong> @TempData["DeliveredDate"]
+    </div>
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Shop Owner</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <span>Shop Owner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<div class="d-flex flex-row mt-5 mb-5 justify-content-between">
+    <div class="w-50"></div>
+    <div class="w-50">
+        <form method="get">
+            <div class="input-group">
+                <input type="text" class="form-control mr-2" name="SearchString"
+                       placeholder="Search by Order Id" value="" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Total</th>
+            <th>PaymentMethod</th>
+            <th>PaymentStatus</th>
+            <th>Order Date</th>
+            <th>Shipped Date</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int item = 0; item < Model.orderDTO.Count; item++)
+        {
+            <tr>
+                <td>@Model.userDTO[item].FullName</td>
+                <td>@Model.orderDTO[item].Total</td>
+                <td>@Model.orderDTO[item].PaymentType</td>
+                <td>@Model.orderDTO[item].PaymentStatus</td>
+                <td>
+                    @{
+                        var OrderDate = Model.orderDTO[item].OrderDate;
+                        var OrderDateStr = OrderDate.ToString("dd/MM/yyyy");
+                    }
+                    @OrderDateStr
+                </td>
+                <td>
+                    @{
+                        var ShippedDateStr = "";
+                        var ShippedDate = Model.orderDTO[item].ShippedDate;
+                        if(ShippedDate != null)
+                            ShippedDateStr = ShippedDate.Value.ToString("dd/MM/yyyy");
+                        else
+                            ShippedDateStr = "Waiting for shop";
+                    }
+                    @ShippedDateStr
+                </td>
+                <td>@Model.orderDTO[item].Status</td>
+                <td>
+                    @{
+                        var disableDiliveredDate =
+                            (Model.orderDTO[item].PaymentStatus == "Paid" ||
+                            Model.orderDTO[item].Status == OrderEnum.Cancelled.ToString() ||
+                            Model.orderDTO[item].Status == OrderEnum.Shipping.ToString() ||
+                            Model.orderDTO[item].Status == OrderEnum.Delivered.ToString()) ? "disabled" : "";
+                    }
+                    <button class="btn btn-primary"
+                        @disableDiliveredDate
+                        asp-page="Index" 
+                        asp-page-handler="ChooseDate"
+                        asp-route-orderId="@Model.orderDTO[item].OrderId" 
+                            data-toggle="modal" data-target="#DeliverdDate-@Model.orderDTO[item].OrderId">
+                        Delivered Date
+                    </button>
+                    @{
+                        var disabledCancel = 
+                            (Model.orderDTO[item].PaymentStatus == "Paid" ||
+                            Model.orderDTO[item].Status == OrderEnum.Cancelled.ToString() ||
+                            Model.orderDTO[item].Status == OrderEnum.Shipping.ToString() ||
+                            Model.orderDTO[item].Status == OrderEnum.Delivered.ToString()) ? "disabled" : "";
+                    }
+                    <a class="btn btn-danger @disabledCancel"
+                       asp-page="Index"
+                       asp-page-handler="CancelOrder"
+                       asp-route-orderId="@Model.orderDTO[item].OrderId">Cancel Order</a>
+
+
+                    <div class="modal fade" id="DeliverdDate-@Model.orderDTO[item].OrderId" tabindex="-1" role="dialog" aria-labelledby="DeliverdDateTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="post" asp-page-handler="DeliveredDate">
+                                    <div class="modal-body">
+                                        <div>
+                                            <input type="hidden" name="OrderId" value="@Model.orderDTO[item].OrderId" />
+                                            Deliverd Date: <input type="date" name="DeliveredDate" />
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

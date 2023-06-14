@@ -12,8 +12,8 @@ namespace BirdTradingPlatformRazorPage.Pages
     {
 
         private readonly IAccountRepository _accountRepository;
-
         private readonly IUserRepository _userRepository;
+        private readonly IShopRepository _shopRepository;
 
 
         [BindProperty]
@@ -21,10 +21,11 @@ namespace BirdTradingPlatformRazorPage.Pages
         [BindProperty]
         public string Password { get; set; }
 
-        public LoginModel(IAccountRepository accountRepository, IUserRepository userRepository)
+        public LoginModel(IAccountRepository accountRepository, IUserRepository userRepository, IShopRepository shopRepository)
         {
             _accountRepository = accountRepository;
             _userRepository = userRepository;
+            _shopRepository = shopRepository;
         }
 
         public void OnGet()
@@ -43,25 +44,34 @@ namespace BirdTradingPlatformRazorPage.Pages
             {
                 ViewData["Fail"] = null;
                 HttpContext.Session.SetString("Role", accountDTO.Role);
-                int userId = _userRepository.GetUserByAccountId(accountDTO.AccountId).UserId;
-                HttpContext.Session.SetInt32("UserId", userId);
 
-                if (userId != 0 && accountDTO.Role.Equals(RoleEnum.USER.ToString()))
+                if(accountDTO.Role.Equals(RoleEnum.USER.ToString()))
                 {
-                    UserDTO userDTO = _userRepository.GetUserById(userId);
-
+                    UserDTO userDTO = _userRepository.GetUserByAccountId(accountDTO.AccountId);
+                    HttpContext.Session.SetString("UserId", userDTO.UserId.ToString());
                     HttpContext.Session.SetString("UserName", userDTO.FullName);
                 }
-
-                string redirectTo = HttpContext.Session.GetString("RedirectTo");
-
-                if(redirectTo != null)
+                else if (accountDTO.Role.Equals(RoleEnum.SHOP.ToString()))
                 {
-                    return RedirectToPage(redirectTo);
-                }
+                    ShopDTO shopDTO = _shopRepository.GetShopByAccountId(accountDTO.AccountId);
+                    HttpContext.Session.SetString("ShopId", shopDTO.ShopId.ToString());
+                    HttpContext.Session.SetString("ShopName", shopDTO.ShopName);
 
-                return RedirectToPage("/Index");
+                    return Redirect("/ShopManagement/OrderRequest");
+                }
+                else if(accountDTO.Role.Equals(RoleEnum.STAFF.ToString()))
+                {
+                    HttpContext.Session.SetString("StaffId", accountDTO.AccountId.ToString());
+                }
             }
+            string redirectTo = HttpContext.Session.GetString("RedirectTo");
+
+            if (redirectTo != null)
+            {
+                return RedirectToPage(redirectTo);
+            }
+
+            return RedirectToPage("/Index");
         }
 
         public IActionResult OnGetLogout()

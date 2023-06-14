@@ -1,0 +1,100 @@
+﻿@page
+@model BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Shop Owner</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <span>Shop Owner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<div class="d-flex flex-row mt-5 mb-5 justify-content-between">
+    <div class="w-50">
+        <a class="btn btn-primary" asp-page="Create">Create New</a>
+    </div>
+    <div class="w-50">
+        <form method="get">
+            <div class="input-group">
+                <input type="text" class="form-control mr-2" name="SearchString"
+                       placeholder="Search by Order Id" value="" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-responsive table-hover" style="width:100%">
+    <thead>
+        <tr>
+            <th>ProductName</th>
+            <th>UnitPrice</th>
+            <th>Quantity</th>
+            <th>Rating</th>
+            <th>CreateDate</th>
+            <th>Species</th>
+            <th>Age</th>
+            <th>Size</th>
+            <th>Weight</th>
+            <th>Expiration</th>
+            <th>MadeIn</th>
+            <th>Gender</th>
+            <th>Color</th>
+            <th>Material</th>
+            <th>Description</th>
+            <th>BrandName</th>
+            <th>Status</th>
+            <th>ProductImage</th>
+            <th>Category</th>
+            <th>Shop</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.productDTOs) {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.Quantity</td>
+                <td>@item.Rating</td>
+                <td>@item.CreateDate</td>
+                <td>@item.Species</td>
+                <td>@item.Age</td>
+                <td>@item.Size</td>
+                <td>@item.Weight</td>
+                <td>@item.Expiration</td>
+                <td>@item.MadeIn</td>
+                <td>@item.Gender</td>
+                <td>@item.Color</td>
+                <td>@item.Material</td>
+                <td>@item.Description</td>
+                <td>@item.BrandName</td>
+                <td>@item.Status</td>
+                <td>@item.ProductImage</td>
+                <td>@item.CategoryName</td>
+                <td>@item.ShopName</td>
+                <td>
+                    <a class="btn btn-primary w-100 mb-2" asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a>
+                    <a class="btn btn-info w-100 mb-2" asp-page="./Details" asp-route-id="@item.ProductId">Details</a>
+                    <a class="btn btn-danger w-100 mb-2" asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

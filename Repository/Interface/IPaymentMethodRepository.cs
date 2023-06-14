@@ -1,3 +1,4 @@
+using BussinessObject.Models;
 using DTO;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Repository.Interface
 {
     public interface IPaymentMethodRepository
     {
+        PaymentMethodDTO GetPaymentMethodById(int? paymentMethodId);
         PaymentMethodDTO GetPaymentMethodByUserId(int userId);
     }
 }

@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace BussinessObject.Enum
 {
-    public enum OrderEnum
+    public enum PaymentEnum
     {
-        Processing,
-        Shipping,
-        Delivered,
-        Cancelled
+        Paid, Unpaid
     }
 }
