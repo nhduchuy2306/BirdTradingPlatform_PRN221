@@ -251,8 +251,8 @@
                     }
                 </div>
                 @*@{
-                    var prevDisabled = !Model.PaginatedProducts.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.PaginatedProducts.HasNextPage ? "disabled" : "";
+                var prevDisabled = !Model.PaginatedProducts.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.PaginatedProducts.HasNextPage ? "disabled" : "";
                 }*@
                 <div class="product__pagination float-right">
                     @if (Model.PaginatedProducts.HasPreviousPage)

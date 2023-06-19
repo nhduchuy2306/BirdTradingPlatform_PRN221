@@ -1648,12 +1648,6 @@ ol {
 
 .selected {
     background: #7fad39;
-    border-color: #7fad39;
-    color: #ffffff;
-}
-
-.dis {
-    color: #b2b2b2;
 }
 
 .product__pagination a:hover,
