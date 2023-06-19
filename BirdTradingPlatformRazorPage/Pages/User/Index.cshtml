@@ -1,0 +1,300 @@
+﻿@page
+@using BussinessObject.Enum;
+@model BirdTradingPlatformRazorPage.Pages.User.IndexModel
+@{
+}
+
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a id="nav-profile" href="#" class="nav-link active ms-0" target="__blank" onclick="SwitchForm('profile')">Profile</a>
+        <a id="nav-account" href="#" class="nav-link" target="__blank" onclick="SwitchForm('account')">Account</a>
+        <a id="nav-order" href="#" class="nav-link" target="__blank" onclick="SwitchForm('order')">Order</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    @*<button class="btn btn-primary" type="button">Upload new image</button>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div id="frm-profile" class="card mb-4 ">
+                <div class="card-header">
+                    Account Details
+                    @if (ViewData["UpdateSuccess"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @ViewData["UpdateSuccess"]
+                        </div>
+                    }
+                </div>
+                <div class="card-body">
+                    <form method="post">
+
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputFirstName">Full name</label>
+                                <input class="form-control" id="inputFirstName" asp-for="UserDTO.FullName" type="text" name="FullName">
+                            </div>
+                            <!-- Form Group (last name)-->
+
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="email">Email</label>
+                                <input class="form-control" id="email" type="email" name="Email" asp-for="UserDTO.Email">
+                            </div>
+                            @if (ViewData["EmailError"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["EmailError"]
+                                </div>
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="address">Address</label>
+                            <input class="form-control" id="address" name="Address" type="text" asp-for="UserDTO.Address">
+                        </div>
+                        <!-- Form Group (email address)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="avatarUrl">Avatar Url</label>
+                            <input class="form-control" id="avatarUrl" name="AvatarUrl" type="text" asp-for="UserDTO.AvatarUrl">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="gender">Gender</label>
+                                <select class="form-control" style="font-size:small" asp-for="UserDTO.Gender" id="gender" name="Gender" required>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
+                                </select>
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="dob">Birthday</label>
+                                <input class="form-control" id="dob" type="date" name="Dob" asp-for="UserDTO.Dob">
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="frm-account" class="card mb-4 " style="display: none">
+                <div class="card-header">
+                    Account Details
+                    @if (ViewData["UpdateSuccess"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @ViewData["UpdateSuccess"]
+                        </div>
+                    }
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="UpdateAccount">
+                        <!-- Form Group (username)-->
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <input class="form-control" id="accountId" value="AccountDTO.AccountId" type="hidden" name="AccountId">
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="phoneNumber">Phone Number</label>
+                                <input class="form-control" id="phoneNumber" asp-for="AccountDTO.PhoneNumber" type="text" name="PhoneNumber">
+                            </div>
+
+                            @if (ViewData["PhoneNumberError"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @ViewData["PhoneNumberError"]
+                                </div>
+                            }
+                            <!-- Form Group (last name)-->
+
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="password">Password</label>
+                                <input class="form-control" id="password" type="password" name="Password" asp-for="AccountDTO.Password">
+                            </div>
+                        </div>
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="confirmPassword">Confirm Password</label>
+                                <input class="form-control" id="confirmPassword" type="password" name="ConfirmPassword">
+                            </div>
+                        </div>
+                        @if (ViewData["PasswordError"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewData["PasswordError"]
+                            </div>
+                        }
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+            <div id="frm-order" class="card mb-4 " style="display: none; width:fit-content">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Shop</th>
+                            <th>Total</th>
+                            <th>PaymentMethod</th>
+                            <th>PaymentStatus</th>
+                            <th>Order Date</th>
+                            <th>Ship Date</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.orderDTO)
+                        {
+                            <tr>
+                                <td>@item.ShopName</td>
+                                <td>@item.Total</td>
+                                <td>@item.PaymentType</td>
+                                <td>@item.PaymentStatus</td>
+                                <td>
+                                    @{
+                                        var OrderDate = item.OrderDate;
+                                        var OrderDateStr = OrderDate.ToString("dd/MM/yyyy");
+                                    }
+                                    @OrderDateStr
+                                </td>
+                                <td>
+                                    @{
+                                        var ShippedDateStr = "";
+                                        var ShippedDate = item.ShippedDate;
+                                        if (ShippedDate != null)
+                                        {
+                                            ShippedDateStr = ShippedDate.Value.ToString("dd/MM/yyyy");
+                                        }
+                                        else
+                                        {
+                                            ShippedDateStr = "Waiting For Shop";
+                                        }
+                                    }
+                                    @ShippedDateStr
+                                </td>
+                                <td>@item.Status</td>
+                                <td>
+                                    @{
+                                        var disabled = (
+                                        item.PaymentStatus == PaymentEnum.Paid.ToString() ||
+                                        item.Status == OrderEnum.Delivered.ToString() ||
+                                        item.Status == OrderEnum.Cancelled.ToString()) ? "disabled" : "";
+                                    }
+                                    <a class="btn btn-primary @disabled"
+                                    asp-page="Index"
+                                       asp-page-handler="CheckReveivedProduct" asp-route-orderId="@item.OrderId">Reveived</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+@if (ViewData["IsAccount"] != null)
+{
+    <script type="text/javascript">
+        var x = document.getElementById("frm-account");
+        var y = document.getElementById("frm-profile");
+
+        x.style.display = 'block';
+        y.style.display = 'none';
+
+    </script>
+}
+
+<style>
+
+    .img-account-profile {
+        height: 10rem;
+    }
+
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
+
+    .card {
+        box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+    }
+
+        .card .card-header {
+            font-weight: 500;
+        }
+
+    .card-header:first-child {
+        border-radius: 0.35rem 0.35rem 0 0;
+    }
+
+    .card-header {
+        padding: 1rem 1.35rem;
+        margin-bottom: 0;
+        background-color: rgba(33, 40, 50, 0.03);
+        border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+    }
+
+    .form-control, .dataTable-input {
+        display: block;
+        width: 100%;
+        padding: 0.875rem 1.125rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1;
+        color: #69707a;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #c5ccd6;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.35rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .nav-borders .nav-link.active {
+        color: #0061f2;
+        border-bottom-color: #0061f2;
+    }
+
+    .nav-borders .nav-link {
+        color: #69707a;
+        border-bottom-width: 0.125rem;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+</style>

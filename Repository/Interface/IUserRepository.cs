@@ -12,5 +12,13 @@ namespace Repository.Interface
     {
         UserDTO GetUserByAccountId(int id);
         UserDTO GetUserById(int userId);
+
+        bool IsEmailExisted(string email);
+
+        bool AddNewUser(UserDTO user);
+
+        bool UpdateUser(UserDTO user);
+
+        bool IsEmailExisted(string email, int userId);
     }
 }

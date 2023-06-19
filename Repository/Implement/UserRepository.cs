@@ -20,6 +20,12 @@ namespace Repository.Interface
             this.mapper = mapper;
         }
 
+        public bool AddNewUser(UserDTO user)
+        {
+            User user2 = mapper.Map<User>(user);
+            return UserDAO.AddNewUser(user2);
+        }
+
         public UserDTO GetUserByAccountId(int id)
         {
             User user = UserDAO.GetUserByAccountId(id);
@@ -30,6 +36,22 @@ namespace Repository.Interface
         {
             User user = UserDAO.GetUserById(userId);
             return mapper.Map<UserDTO>(user);
+        }
+
+        public bool IsEmailExisted(string email)
+        {
+            return UserDAO.IsEmailExisted(email);
+        }
+
+        public bool IsEmailExisted(string email, int userId)
+        {
+            return UserDAO.IsEmailExisted(email, userId);
+        }
+
+        public bool UpdateUser(UserDTO user)
+        {
+            User user2 = mapper.Map<User>(user);
+            return UserDAO.UpdateUser(user2);
         }
     }
 }
