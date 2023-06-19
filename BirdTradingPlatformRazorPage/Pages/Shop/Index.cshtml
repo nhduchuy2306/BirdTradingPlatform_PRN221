@@ -22,7 +22,6 @@
     </div>
 </section>
 <!-- Breadcrumb Section End -->
-
 <!-- Product Section Begin -->
 <section class="product spad">
     <div class="container">
@@ -33,23 +32,23 @@
                         <h4>Category</h4>
                         <ul>
                             <li>
-                                <a asp-page="./Index" 
-                                    asp-route-pageIndex="1"
-                                    asp-route-minPrice="@Model.MinPrice"
-                                    asp-route-maxPrice="@Model.MaxPrice"
-                                    asp-route-color="@Model.BirdColor"
-                                    asp-route-country="@Model.Country">
+                                <a asp-page="./Index"
+                                   asp-route-pageIndex="1"
+                                   asp-route-minPrice="@Model.MinPrice"
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="@Model.BirdColor"
+                                   asp-route-country="@Model.Country">
                                     All
                                 </a>
                             </li>
-                            @foreach(var item in Model.Categories)
+                            @foreach (var item in Model.Categories)
                             {
                                 <li>
-                                    <a asp-page="./Index" 
-                                        asp-route-categoryId="@item.CategoryId" 
-                                        asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
-                                        asp-route-minPrice="@Model.MinPrice"
-                                        asp-route-maxPrice="@Model.MaxPrice"
+                                    <a asp-page="./Index"
+                                       asp-route-categoryId="@item.CategoryId"
+                                       asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                       asp-route-minPrice="@Model.MinPrice"
+                                       asp-route-maxPrice="@Model.MaxPrice"
                                        asp-route-color="@Model.BirdColor"
                                        asp-route-country="@Model.Country">
                                         @item.CategoryName
@@ -62,43 +61,43 @@
                         <h4>Price</h4>
                         <ul>
                             <li>
-                                <a asp-page="./Index" 
-                                    asp-route-minPrice="0" 
-                                    asp-route-maxPrice="50"
-                                    asp-route-categoryId="@Model.Category.CategoryId" 
-                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                <a asp-page="./Index"
+                                   asp-route-minPrice="0"
+                                   asp-route-maxPrice="50"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-color="@Model.BirdColor"
                                    asp-route-country="@Model.Country">
                                     $0 - $50
                                 </a>
                             </li>
                             <li>
-                                <a asp-page="./Index" 
-                                    asp-route-minPrice="50" 
-                                    asp-route-maxPrice="100"
-                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                <a asp-page="./Index"
+                                   asp-route-minPrice="50"
+                                   asp-route-maxPrice="100"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-color="@Model.BirdColor"
                                    asp-route-country="@Model.Country">
                                     $50 - $100
                                 </a>
                             </li>
                             <li>
-                                <a asp-page="./Index" 
-                                    asp-route-minPrice="100" 
-                                    asp-route-maxPrice="200"
-                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                <a asp-page="./Index"
+                                   asp-route-minPrice="100"
+                                   asp-route-maxPrice="200"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-color="@Model.BirdColor"
                                    asp-route-country="@Model.Country">
                                     $100 - $200
                                 </a>
                             </li>
                             <li>
-                                <a asp-page="./Index" 
-                                    asp-route-minPrice="200"
-                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                <a asp-page="./Index"
+                                   asp-route-minPrice="200"
+                                   asp-route-categoryId="@Model.Category.CategoryId"
+                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-color="@Model.BirdColor"
                                    asp-route-country="@Model.Country">
                                     > $200
@@ -114,22 +113,22 @@
                                    asp-route-categoryId="@Model.Category.CategoryId"
                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-minPrice="@Model.MinPrice"
-                                   asp-route-maxPrice="@Model.MaxPrice" 
-                                   asp-route-color="black" 
+                                   asp-route-maxPrice="@Model.MaxPrice"
+                                   asp-route-color="black"
                                    asp-route-country="@Model.Country" class="btn btn-dark text-white w-25">Black</a>
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
-                                   asp-route-color="white" 
+                                   asp-route-color="white"
                                    asp-route-country="@Model.Country" class="btn btn-light w-25">White</a>
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
-                                   asp-route-color="red" 
+                                   asp-route-color="red"
                                    asp-route-country="@Model.Country" class="btn btn-danger text-white w-25">Red</a>
                             </div>
                             <div class="order-second mt-3">
@@ -152,7 +151,7 @@
                                    asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
-                                   asp-route-color="blue" 
+                                   asp-route-color="blue"
                                    asp-route-country="@Model.Country" class="btn btn-primary text-white w-25">Blue</a>
                             </div>
                         </div>
@@ -237,9 +236,9 @@
                                     <div class="product__item__pic set-bg" data-setbg="@item.ProductImage"></div>
                                 </a>
                                 <div class="product__item__text">
-                                    <a class="btn btn-info text-white w-100" 
-                                        asp-route-productId="@item.ProductId" 
-                                        asp-page-handler="AddToCart">Add to Cart</a>
+                                    <a class="btn btn-info text-white w-100"
+                                       asp-route-productId="@item.ProductId"
+                                       asp-page-handler="AddToCart">Add to Cart</a>
                                 </div>
                                 <div class="product__item__text">
                                     <h5 class="mb-2">Shop Name: @item.ShopName</h5>
@@ -251,39 +250,66 @@
                         </div>
                     }
                 </div>
-                @{
+                @*@{
                     var prevDisabled = !Model.PaginatedProducts.HasPreviousPage ? "disabled" : "";
                     var nextDisabled = !Model.PaginatedProducts.HasNextPage ? "disabled" : "";
-                }
+                }*@
                 <div class="product__pagination float-right">
-                    <a asp-page="./Index" 
-                       asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex-1)"
-                       asp-route-categoryId="@Model.Category.CategoryId"
-                       asp-route-minPrice="@Model.MinPrice"
-                       asp-route-maxPrice="@Model.MaxPrice"
-                       asp-route-color="@Model.BirdColor"
-                       asp-route-country="@Model.Country" class="@prevDisabled">
-                        <i class="fas fa-chevron-left"></i>
-                    </a>
-                    @for(int i = 1; i <= Model.PaginatedProducts.TotalPages; i++)
+                    @if (Model.PaginatedProducts.HasPreviousPage)
                     {
-                        <a asp-page="./Index" 
-                           asp-route-pageIndex="@i" 
-                           asp-route-categoryId="@Model.Category.CategoryId"
+                        <a asp-page="./Index"
+                           asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex-1)"
+                           asp-route-categoryId="@Model.Category.CategoryId ?? null"
+                           asp-route-minPrice="@Model.MinPrice"
+                           asp-route-maxPrice="@Model.MaxPrice"
+                           asp-route-color="@Model.BirdColor"
+                           asp-route-country="@Model.Country">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a style="color: #b2b2b2; background-color: #e1dfdf">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    }
+
+                    @for (int i = 1; i <= Model.PaginatedProducts.TotalPages; i++)
+                    {
+
+                        string c = "";
+                        if (Model.PaginatedProducts.PageIndex == i)
+                        {
+                            c = "selected";
+                        }
+                        <a class="@c"
+                           asp-page="./Index"
+                           asp-route-pageIndex="@i"
+                           asp-route-categoryId="@Model.Category.CategoryId ?? null"
                            asp-route-minPrice="@Model.MinPrice"
                            asp-route-maxPrice="@Model.MaxPrice"
                            asp-route-color="@Model.BirdColor"
                            asp-route-country="@Model.Country">@i</a>
                     }
-                    <a asp-page="./Index" 
-                       asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex+1)"
-                       asp-route-categoryId="@Model.Category.CategoryId" class="@nextDisabled"
-                       asp-route-minPrice="@Model.MinPrice"
-                       asp-route-maxPrice="@Model.MaxPrice"
-                       asp-route-color="@Model.BirdColor"
-                       asp-route-country="@Model.Country">
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
+
+                    @if (Model.PaginatedProducts.HasNextPage)
+                    {
+                        <a asp-page="./Index"
+                           asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex+1)"
+                           asp-route-categoryId="@Model.Category.CategoryId ?? null"
+                           asp-route-minPrice="@Model.MinPrice"
+                           asp-route-maxPrice="@Model.MaxPrice"
+                           asp-route-color="@Model.BirdColor"
+                           asp-route-country="@Model.Country">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a style="color: #b2b2b2; background-color: #e1dfdf">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    }
                 </div>
             </div>
         </div>

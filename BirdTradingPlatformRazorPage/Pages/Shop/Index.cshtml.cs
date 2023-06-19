@@ -45,7 +45,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Shop
             Top3LatestProducts = _productRepository.GetTop3Products();
             Category = _categoryRepository.GetCategoryById(categoryId ?? 1);
             MinPrice = minPrice ?? 0;
-            MaxPrice = maxPrice ?? 100000000;
+            MaxPrice = maxPrice ?? 1000000;
             BirdColor = color ?? "";
             Country = country ?? "";
 
