@@ -23,7 +23,7 @@ namespace BussinessObject.Models
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-        public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public virtual DbSet<OrderShop> OrderShops { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Shop> Shops { get; set; }
@@ -31,11 +31,11 @@ namespace BussinessObject.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var build = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-            IConfigurationRoot configuration = build.Build();
+            IConfiguration configuration = builder.Build();
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("BirdTradingPlatformDB"));
         }
 
@@ -46,6 +46,8 @@ namespace BussinessObject.Models
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.ToTable("Account");
+
+                entity.Property(e => e.CreateDate).HasColumnType("date");
 
                 entity.Property(e => e.Password).HasMaxLength(255);
 
@@ -69,58 +71,54 @@ namespace BussinessObject.Models
             {
                 entity.ToTable("Order");
 
-                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+                entity.Property(e => e.CreateDate).HasColumnType("date");
 
                 entity.Property(e => e.PaymentStatus).HasMaxLength(10);
 
-                entity.Property(e => e.ShippedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.Status).HasMaxLength(10);
 
-                entity.HasOne(d => d.OrderParent)
-                    .WithMany(p => p.InverseOrderParent)
-                    .HasForeignKey(d => d.OrderParentId)
-                    .HasConstraintName("FK__Order__OrderPare__5DCAEF64");
-
-                entity.HasOne(d => d.PaymentMethod)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.PaymentMethodId)
-                    .HasConstraintName("FK__Order__PaymentMe__5CD6CB2B");
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__Order__UserId__5CD6CB2B");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.ToTable("OrderDetail");
 
+                entity.Property(e => e.CreateDate).HasColumnType("date");
+
                 entity.Property(e => e.Rating).HasColumnName("rating");
 
                 entity.Property(e => e.Status).HasMaxLength(10);
 
-                entity.HasOne(d => d.Order)
+                entity.HasOne(d => d.OrderShop)
                     .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__OrderDeta__Order__619B8048");
+                    .HasForeignKey(d => d.OrderShopId)
+                    .HasConstraintName("FK__OrderDeta__Order__6477ECF3");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__OrderDeta__Produ__60A75C0F");
+                    .HasConstraintName("FK__OrderDeta__Produ__6383C8BA");
             });
 
-            modelBuilder.Entity<PaymentMethod>(entity =>
+            modelBuilder.Entity<OrderShop>(entity =>
             {
-                entity.ToTable("PaymentMethod");
+                entity.ToTable("OrderShop");
 
-                entity.Property(e => e.PaymentNumber).HasMaxLength(10);
+                entity.Property(e => e.CreateDate).HasColumnType("date");
 
-                entity.Property(e => e.PaymentType).HasMaxLength(50);
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderShops)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK__OrderShop__Order__60A75C0F");
 
-                entity.Property(e => e.Status).HasMaxLength(10);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.PaymentMethods)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__PaymentMe__UserI__4E88ABD4");
+                entity.HasOne(d => d.Shop)
+                    .WithMany(p => p.OrderShops)
+                    .HasForeignKey(d => d.ShopId)
+                    .HasConstraintName("FK__OrderShop__ShopI__5FB337D6");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -143,7 +141,7 @@ namespace BussinessObject.Models
 
                 entity.Property(e => e.Material).HasMaxLength(20);
 
-                entity.Property(e => e.ProductImage).HasMaxLength(500);
+                entity.Property(e => e.ProductImage).HasMaxLength(255);
 
                 entity.Property(e => e.ProductName).HasMaxLength(255);
 
@@ -154,12 +152,12 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Product__Categor__571DF1D5");
+                    .HasConstraintName("FK__Product__Categor__5441852A");
 
                 entity.HasOne(d => d.Shop)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.ShopId)
-                    .HasConstraintName("FK__Product__Product__5629CD9C");
+                    .HasConstraintName("FK__Product__ShopId__534D60F1");
             });
 
             modelBuilder.Entity<ProductImage>(entity =>
@@ -173,7 +171,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductImages)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__ProductIm__Produ__59FA5E80");
+                    .HasConstraintName("FK__ProductIm__Produ__571DF1D5");
             });
 
             modelBuilder.Entity<Shop>(entity =>
@@ -193,7 +191,7 @@ namespace BussinessObject.Models
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Shops)
                     .HasForeignKey(d => d.AccountId)
-                    .HasConstraintName("FK__Shop__Status__534D60F1");
+                    .HasConstraintName("FK__Shop__Status__5070F446");
             });
 
             modelBuilder.Entity<User>(entity =>

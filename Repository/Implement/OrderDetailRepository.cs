@@ -28,8 +28,9 @@ namespace Repository.Interface
 
         public List<OrderDetailDTO> GetOrderDetailByOrderId(int id)
         {
-            List<OrderDetail> list = OrderDetailDAO.GetOrderDetailsByOrderId(id);
-            return _mapper.Map<List<OrderDetailDTO>>(list);
+            /*List<OrderDetail> list = OrderDetailDAO.GetOrderDetailsByOrderId(id);
+            return _mapper.Map<List<OrderDetailDTO>>(list);*/
+            return null;
         }
     }
 }

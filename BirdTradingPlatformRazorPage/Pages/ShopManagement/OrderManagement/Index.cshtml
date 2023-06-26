@@ -56,7 +56,7 @@
         @for(int i = 0; i < Model.orderDTO.Count; i++)
         {
             <tr>
-                <td>@Model.userDTO[i].FullName</td>
+                @*<td>@Model.userDTO[i].FullName</td>
                 <td>@Model.orderDTO[i].Total</td>
                 <td>@Model.orderDTO[i].OrderDate</td>
                 <td>@Model.orderDTO[i].ShippedDate</td>
@@ -66,7 +66,7 @@
                 <td>@Model.orderDTO[i].PaymentStatus</td>
                 <td>
                     <a class="btn btn-info" asp-page="./Details" asp-route-id="@Model.orderDTO[i].OrderId">Details</a>
-                </td>
+                </td>*@
             </tr>
         }
     </tbody>

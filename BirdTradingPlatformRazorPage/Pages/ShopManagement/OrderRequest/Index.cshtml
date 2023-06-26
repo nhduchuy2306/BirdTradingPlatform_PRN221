@@ -65,7 +65,7 @@
         @for (int item = 0; item < Model.orderDTO.Count; item++)
         {
             <tr>
-                <td>@Model.userDTO[item].FullName</td>
+                @*<td>@Model.userDTO[item].FullName</td>
                 <td>@Model.orderDTO[item].Total</td>
                 <td>@Model.orderDTO[item].PaymentType</td>
                 <td>@Model.orderDTO[item].PaymentStatus</td>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
 
-                </td>
+                </td>*@
             </tr>
         }
     </tbody>

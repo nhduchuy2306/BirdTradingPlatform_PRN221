@@ -10,7 +10,6 @@ namespace DAO
 {
     public class UserDAO
     {
-
         public static User GetUserByAccountId(int id)
         {
             User user = null;
@@ -69,7 +68,8 @@ namespace DAO
             {
                 using (var context = new BirdTradingPlatformContext())
                 {
-                    status = context.Users.FirstOrDefault(c => c.Email == email && c.UserId != userId) != null;
+                    status = context.Users.FirstOrDefault(c => c.Email == email && 
+                        c.UserId != userId) != null;
                 }
             }
             catch (Exception e)

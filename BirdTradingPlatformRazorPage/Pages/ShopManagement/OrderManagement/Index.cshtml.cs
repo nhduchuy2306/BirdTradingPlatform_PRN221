@@ -17,18 +17,15 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
         private readonly IOrderRepository _orderRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IPaymentMethodRepository _paymentMethodRepository;
 
         public IndexModel(
             IOrderRepository orderRepository, 
             IShopRepository shopRepository, 
-            IUserRepository userRepository,
-            IPaymentMethodRepository paymentMethodRepository)
+            IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
-            _paymentMethodRepository = paymentMethodRepository;
         }
 
         public List<OrderDTO> orderDTO { get; set; }
@@ -36,7 +33,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
 
         public IActionResult OnGet()
         {
-            userDTO = new List<UserDTO>();
+            /*userDTO = new List<UserDTO>();
             string shopId = HttpContext.Session.GetString("ShopId");
 
             if (shopId == null)
@@ -51,7 +48,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
                 PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodById(item.PaymentMethodId);
                 UserDTO user = _userRepository.GetUserById((int)paymentMethod.UserId);
                 userDTO.Add(user);
-            }
+            }*/
 
             return Page();
         }

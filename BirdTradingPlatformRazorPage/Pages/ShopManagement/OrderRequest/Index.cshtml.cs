@@ -18,18 +18,15 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
         private readonly IOrderRepository _orderRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IPaymentMethodRepository _paymentMethodRepository;
 
         public IndexModel(
             IOrderRepository orderRepository, 
             IShopRepository shopRepository, 
-            IUserRepository userRepository, 
-            IPaymentMethodRepository paymentMethodRepository)
+            IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
-            _paymentMethodRepository = paymentMethodRepository;
         }
 
         public List<OrderDTO> orderDTO { get;set; }
@@ -37,7 +34,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
 
         public IActionResult OnGet()
         {
-            userDTO = new List<UserDTO>();
+           /* userDTO = new List<UserDTO>();
             string shopId = HttpContext.Session.GetString("ShopId");
 
             if(shopId == null)
@@ -52,14 +49,14 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
                 PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodById(item.PaymentMethodId);
                 UserDTO user = _userRepository.GetUserById((int)paymentMethod.UserId);
                 userDTO.Add(user);
-            }
+            }*/
 
             return Page();
         }
 
         public IActionResult OnPostDeliveredDate(int OrderId, DateTime? DeliveredDate)
         {
-            OrderDTO orderDTO = _orderRepository.GetOrderById(OrderId);
+            /*OrderDTO orderDTO = _orderRepository.GetOrderById(OrderId);
 
             if(DeliveredDate.Value.Day < orderDTO.OrderDate.Day)
             {
@@ -70,7 +67,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
             orderDTO.Status = OrderEnum.Shipping.ToString();
             orderDTO.ShippedDate = DeliveredDate;
 
-            _orderRepository.UpdateOrder(orderDTO);
+            _orderRepository.UpdateOrder(orderDTO);*/
             return RedirectToPage("/ShopManagement/OrderRequest/Index");
         }
 

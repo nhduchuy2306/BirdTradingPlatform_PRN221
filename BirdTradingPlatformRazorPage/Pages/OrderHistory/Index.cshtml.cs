@@ -28,7 +28,7 @@ namespace BirdTradingPlatformRazorPage.Pages.OrderHistory
 
         public IActionResult OnGet()
         {
-            string userId = HttpContext.Session.GetString("UserId");
+            /*string userId = HttpContext.Session.GetString("UserId");
 
             if (userId == null)
             {
@@ -41,7 +41,7 @@ namespace BirdTradingPlatformRazorPage.Pages.OrderHistory
             foreach(var item in orderDTO)
             {
                 item.ShopName = _shopRepository.GetShopById((int)item.ShopId).ShopName;
-            }
+            }*/
 
             return Page();
         }

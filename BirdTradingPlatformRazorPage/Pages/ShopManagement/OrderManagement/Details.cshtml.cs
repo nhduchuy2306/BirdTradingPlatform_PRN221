@@ -16,15 +16,13 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
         private readonly IOrderRepository _orderRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IPaymentMethodRepository _paymentMethodRepository;
         private readonly IOrderDetailRepository _orderDetailRepository;
 
-        public DetailsModel(IOrderRepository orderRepository, IShopRepository shopRepository, IUserRepository userRepository, IPaymentMethodRepository paymentMethodRepository, IOrderDetailRepository orderDetailRepository)
+        public DetailsModel(IOrderRepository orderRepository, IShopRepository shopRepository, IUserRepository userRepository, IOrderDetailRepository orderDetailRepository)
         {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
-            _paymentMethodRepository = paymentMethodRepository;
             _orderDetailRepository = orderDetailRepository;
         }
 
@@ -34,7 +32,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
 
         public IActionResult OnGet(int? id)
         {
-            if (id == null)
+            /*if (id == null)
             {
                 return NotFound();
             }
@@ -50,7 +48,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
             if (orderDTO == null)
             {
                 return NotFound();
-            }
+            }*/
             return Page();
         }
     }

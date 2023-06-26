@@ -18,20 +18,17 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
         private readonly IOrderDetailRepository _orderDetailRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IPaymentMethodRepository _paymentMethodRepository;
         private readonly IProductRepository _productRepository;
 
         public IndexModel(
             IOrderDetailRepository orderDetailRepository, 
             IOrderRepository orderRepository, 
-            IUserRepository userRepository, 
-            IPaymentMethodRepository paymentMethodRepository,
+            IUserRepository userRepository,
             IProductRepository productRepository)
         {
             _orderDetailRepository = orderDetailRepository;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
-            _paymentMethodRepository = paymentMethodRepository;
             _productRepository = productRepository;
         }
 
@@ -55,7 +52,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
 
         public IActionResult OnPost()
         {
-            string userIdSession = HttpContext.Session.GetString("UserId");
+            /*string userIdSession = HttpContext.Session.GetString("UserId");
 
             if(string.IsNullOrEmpty(userIdSession))
             {
@@ -179,7 +176,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 ViewData["Message"] = "Order success!";
                 HttpContext.Session.Remove("cart");
                 cartItems = new List<CartItemDTO>();
-            }
+            }*/
             return Page();
         }
     }

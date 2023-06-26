@@ -34,7 +34,7 @@ namespace BirdTradingPlatformRazorPage.Pages.User
 
         public IActionResult OnGet()
         {
-            if(HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("Role") != "USER")
+            /*if(HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("Role") != "USER")
             {
                 return RedirectToPage("../Login");
             }
@@ -46,7 +46,7 @@ namespace BirdTradingPlatformRazorPage.Pages.User
             foreach (var item in orderDTO)
             {
                 item.ShopName = shopRepository.GetShopById((int)item.ShopId).ShopName;
-            }
+            }*/
             return Page();
         }
 

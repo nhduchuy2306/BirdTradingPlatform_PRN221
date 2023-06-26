@@ -24,7 +24,7 @@ namespace DAO
             }
         }
 
-        public static List<OrderDetail> GetOrderDetailsByOrderId(int orderId)
+        /*public static List<OrderDetail> GetOrderDetailsByOrderId(int orderId)
         {
             List<OrderDetail> orderDetails = new List<OrderDetail>();
             try
@@ -40,6 +40,6 @@ namespace DAO
                 throw new Exception(ex.Message);
             }
             return orderDetails;
-        }
+        }*/
     }
 }

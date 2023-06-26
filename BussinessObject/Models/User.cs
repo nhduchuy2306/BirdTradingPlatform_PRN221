@@ -9,7 +9,7 @@ namespace BussinessObject.Models
     {
         public User()
         {
-            PaymentMethods = new HashSet<PaymentMethod>();
+            Orders = new HashSet<Order>();
         }
 
         public int UserId { get; set; }
@@ -24,6 +24,6 @@ namespace BussinessObject.Models
         public string Address { get; set; }
 
         public virtual Account Account { get; set; }
-        public virtual ICollection<PaymentMethod> PaymentMethods { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                shop = context.Shops.FirstOrDefault(s => s.AccountId == accountId);
+                shop = context.Shops.SingleOrDefault(s => s.AccountId == accountId);
             }
             catch(Exception ex)
             {
@@ -30,7 +30,7 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                shop = context.Shops.FirstOrDefault(s => s.ShopId == id);
+                shop = context.Shops.SingleOrDefault(s => s.ShopId == id);
             }
             catch(Exception ex)
             {

@@ -18,6 +18,7 @@ namespace BussinessObject.Models
         public string Password { get; set; }
         public string Role { get; set; }
         public string Status { get; set; }
+        public DateTime? CreateDate { get; set; }
 
         public virtual ICollection<Shop> Shops { get; set; }
         public virtual ICollection<User> Users { get; set; }
