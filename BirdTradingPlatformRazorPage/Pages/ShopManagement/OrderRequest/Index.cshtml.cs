@@ -16,24 +16,47 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
     public class IndexModel : PageModel
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderShopRepository _orderShopRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
 
         public IndexModel(
             IOrderRepository orderRepository, 
             IShopRepository shopRepository, 
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IOrderShopRepository orderShopRepository)
         {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
+            _orderShopRepository = orderShopRepository;
         }
 
         public List<OrderDTO> orderDTO { get;set; }
         public List<UserDTO> userDTO { get;set; }
+        public List<OrderShop> orderShops { get; set; }
+        public List<ShopOrderRequestDTO> shopOrderRequestDTOs { get; set; }
 
         public IActionResult OnGet()
         {
+            string shopId = HttpContext.Session.GetString("ShopId");
+            orderShops = _orderShopRepository.GetOrdersByShopId(int.Parse(shopId));
+            shopOrderRequestDTOs = new List<ShopOrderRequestDTO>();
+
+            foreach(var item in orderShops)
+            {
+                UserDTO userDTO = _userRepository.GetUserById((int)item.Order.UserId);
+                string paymentStatus = item.Order.PaymentStatus;
+
+                shopOrderRequestDTOs.Add(new ShopOrderRequestDTO
+                {
+                    Username = userDTO.FullName,
+                    Total = (double)item.Order.Total,
+                    PaymentStatus = paymentStatus,
+                    CreateDate = item.Order.CreateDate.ToString(),
+                    Status = item.Order.Status
+                });
+            }
            /* userDTO = new List<UserDTO>();
             string shopId = HttpContext.Session.GetString("ShopId");
 

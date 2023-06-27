@@ -11,17 +11,10 @@ namespace BirdTradingPlatformRazorPage.Pages.User
 {
     public class IndexModel : PageModel
     {
-        IUserRepository userRepository;
-        IAccountRepository accountRepository;
-        IOrderRepository orderRepository;
-        IShopRepository shopRepository;
-        [BindProperty]
-        public UserDTO UserDTO { get; set; }
-        [BindProperty]
-        public string PhoneNumber { get; set; }
-        [BindProperty]
-        public AccountDTO AccountDTO { get; set; }
-        public List<OrderDTO> orderDTO { get; set; }
+        private readonly IUserRepository userRepository;
+        private readonly IAccountRepository accountRepository;
+        private readonly IOrderRepository orderRepository;
+        private readonly IShopRepository shopRepository;
 
         public IndexModel(IUserRepository userRepository, IAccountRepository accountRepository,
             IOrderRepository orderRepository, IShopRepository shopRepository)
@@ -32,18 +25,27 @@ namespace BirdTradingPlatformRazorPage.Pages.User
             this.shopRepository = shopRepository;
         }
 
+        [BindProperty]
+        public UserDTO UserDTO { get; set; }
+        [BindProperty]
+        public string PhoneNumber { get; set; }
+        [BindProperty]
+        public AccountDTO AccountDTO { get; set; }
+        public List<OrderDTO> orderDTO { get; set; }
+
         public IActionResult OnGet()
         {
-            /*if(HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("Role") != "USER")
+            if (HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("Role") != "USER")
             {
                 return RedirectToPage("../Login");
             }
             int userId = int.Parse(HttpContext.Session.GetString("UserId"));
             UserDTO = userRepository.GetUserById(userId);
+            Console.WriteLine(UserDTO.Gender);
             AccountDTO = accountRepository.GetAccountByUserId(userId);
             orderDTO = orderRepository.GetOrdersByUserId(userId);
 
-            foreach (var item in orderDTO)
+            /*foreach (var item in orderDTO)
             {
                 item.ShopName = shopRepository.GetShopById((int)item.ShopId).ShopName;
             }*/

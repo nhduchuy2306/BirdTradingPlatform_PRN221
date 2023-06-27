@@ -2,6 +2,7 @@
 @using BussinessObject.Enum;
 @model BirdTradingPlatformRazorPage.Pages.User.IndexModel
 @{
+    ViewData["Title"] = "Profile";
 }
 
 
@@ -81,7 +82,7 @@
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="gender">Gender</label>
-                                <select class="form-control" style="font-size:small" asp-for="UserDTO.Gender" id="gender" name="Gender" required>
+                                <select class="form-control p-1" asp-for="UserDTO.Gender" id="gender" name="Gender" required>
                                     <option value="MALE">Male</option>
                                     <option value="FEMALE">Female</option>
                                 </select>
@@ -155,62 +156,30 @@
                     </form>
                 </div>
             </div>
-            <div id="frm-order" class="card mb-4 " style="display: none; width:fit-content">
+            <div id="frm-order" class="card mb-4 w-100" style="display: none;">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Shop</th>
                             <th>Total</th>
-                            <th>PaymentMethod</th>
                             <th>PaymentStatus</th>
                             <th>Order Date</th>
-                            <th>Ship Date</th>
                             <th>Status</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.orderDTO)
                         {
                             <tr>
-                                @*<td>@item.ShopName</td>
                                 <td>@item.Total</td>
-                                <td>@item.PaymentType</td>
                                 <td>@item.PaymentStatus</td>
                                 <td>
                                     @{
-                                        var OrderDate = item.OrderDate;
-                                        var OrderDateStr = OrderDate.ToString("dd/MM/yyyy");
+                                        var CreateDate = (DateTime)item.CreateDate;
+                                        var CreateDateStr = CreateDate.ToString("dd/MM/yyyy");
                                     }
-                                    @OrderDateStr
-                                </td>
-                                <td>
-                                    @{
-                                        var ShippedDateStr = "";
-                                        var ShippedDate = item.ShippedDate;
-                                        if (ShippedDate != null)
-                                        {
-                                            ShippedDateStr = ShippedDate.Value.ToString("dd/MM/yyyy");
-                                        }
-                                        else
-                                        {
-                                            ShippedDateStr = "Waiting For Shop";
-                                        }
-                                    }
-                                    @ShippedDateStr
+                                    @CreateDateStr
                                 </td>
                                 <td>@item.Status</td>
-                                <td>
-                                    @{
-                                        var disabled = (
-                                        item.PaymentStatus == PaymentEnum.Paid.ToString() ||
-                                        item.Status == OrderEnum.Delivered.ToString() ||
-                                        item.Status == OrderEnum.Cancelled.ToString()) ? "disabled" : "";
-                                    }
-                                    <a class="btn btn-primary @disabled"
-                                    asp-page="Index"
-                                       asp-page-handler="CheckReveivedProduct" asp-route-orderId="@item.OrderId">Reveived</a>
-                                </td>*@
                             </tr>
                         }
                     </tbody>

@@ -22,6 +22,20 @@
 </section>
 <!-- Breadcrumb Section End -->
 <!-- Checkout Section Begin -->
+
+@if(ViewData["Message"]!= null)
+{
+    <div class="alert alert-success m-2" role="alert">
+        @ViewData["Message"]
+    </div>
+}
+@if(ViewData["Error"]!= null)
+{
+    <div class="alert alert-danger m-2" role="alert">
+        @ViewData["Error"]
+    </div>
+}
+
 <section class="checkout spad">
     <div class="container">
         <div class="checkout__form">
@@ -47,7 +61,7 @@
                                     <td class="float-left">
                                         <strong>@item.ShopName</strong>
                                     </td>
-                                    <td class="float-right"><strong>$@item.UnitPrice</strong></td>
+                                    <td class="float-right"><strong>$@(item.UnitPrice*item.Quantity)</strong></td>
                                 </tr>
                             }
                         </tbody>

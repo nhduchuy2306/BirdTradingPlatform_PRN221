@@ -45,7 +45,7 @@
                                 <li>
                                     <a asp-page="./Index"
                                        asp-route-categoryId="@item.CategoryId"
-                                       asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                       asp-route-pageIndex="1"
                                        asp-route-minPrice="@Model.MinPrice"
                                        asp-route-maxPrice="@Model.MaxPrice"
                                        asp-route-color="@Model.BirdColor">
@@ -63,7 +63,7 @@
                                    asp-route-minPrice="0"
                                    asp-route-maxPrice="50"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-color="@Model.BirdColor">
                                     $0 - $50
                                 </a>
@@ -73,7 +73,7 @@
                                    asp-route-minPrice="50"
                                    asp-route-maxPrice="100"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-color="@Model.BirdColor">
                                     $50 - $100
                                 </a>
@@ -83,7 +83,7 @@
                                    asp-route-minPrice="100"
                                    asp-route-maxPrice="200"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-color="@Model.BirdColor">
                                     $100 - $200
                                 </a>
@@ -92,7 +92,7 @@
                                 <a asp-page="./Index"
                                    asp-route-minPrice="200"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-color="@Model.BirdColor">
                                     > $200
                                 </a>
@@ -105,19 +105,19 @@
                             <div class="order-first">
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-color="black" class="btn btn-dark text-white w-25">Black</a>
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-color="white" class="btn btn-light w-25">White</a>
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-color="red" class="btn btn-danger text-white w-25">Red</a>
@@ -125,19 +125,19 @@
                             <div class="order-second mt-3">
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-color="yellow" class="btn btn-warning text-white w-25">Yellow</a>
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-color="grey" class="btn btn-secondary text-white w-25">Grey</a>
                                 <a asp-page="./Index"
                                    asp-route-categoryId="@Model.Category.CategoryId"
-                                   asp-route-pageIndex="@Model.PaginatedProducts.PageIndex"
+                                   asp-route-pageIndex="1"
                                    asp-route-minPrice="@Model.MinPrice"
                                    asp-route-maxPrice="@Model.MaxPrice"
                                    asp-route-color="blue" class="btn btn-primary text-white w-25">Blue</a>
@@ -201,9 +201,9 @@
                         <a asp-page="./Index"
                            asp-route-pageIndex="@(Model.PaginatedProducts.PageIndex-1)"
                            asp-route-categoryId="@Model.Category.CategoryId ?? null"
-                           asp-route-minPrice="@Model.MinPrice ?? 0"
-                           asp-route-maxPrice="@Model.MaxPrice ?? 1000000"
-                           asp-route-color="@Model.BirdColor ?? null">
+                           asp-route-minPrice="@Model.MinPrice"
+                           asp-route-maxPrice="@Model.MaxPrice"
+                           asp-route-color="@Model.BirdColor">
                             <i class="fas fa-chevron-left"></i>
                         </a>
                     }

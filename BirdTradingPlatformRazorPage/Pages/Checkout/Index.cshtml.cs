@@ -79,6 +79,14 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 double Total = 0;
                 foreach (CartItemDTO item in cartItems)
                 {
+                    ProductDTO productDTO = _productRepository.GetProductById(item.ProductId);
+
+                    if (productDTO.Quantity < item.Quantity)
+                    {
+                        ViewData["Error"] = "Not Enough Product: " + productDTO.ProductName;
+                        return Page();
+                    }
+
                     Total += item.Quantity * item.UnitPrice;
                 }
 
@@ -138,10 +146,6 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                             {
                                 productDTO.Quantity -= item.Quantity;
                                 _productRepository.UpdateProduct(productDTO);
-                            }
-                            else
-                            {
-                                return RedirectToPage("/Error");
                             }
                         }
                     }

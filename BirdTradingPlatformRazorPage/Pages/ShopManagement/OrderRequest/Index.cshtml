@@ -53,18 +53,22 @@
         <tr>
             <th>User</th>
             <th>Total</th>
-            <th>PaymentMethod</th>
             <th>PaymentStatus</th>
-            <th>Order Date</th>
+            <th>Create Date</th>
             <th>Shipped Date</th>
             <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @for (int item = 0; item < Model.orderDTO.Count; item++)
+        @foreach (var item in Model.shopOrderRequestDTOs)
         {
             <tr>
+                <td>@item.Username</td>
+                <td>@item.Total</td>
+                <td>@item.PaymentStatus</td>
+                <td>@item.CreateDate</td>
+                <td>@item.Status</td>
                 @*<td>@Model.userDTO[item].FullName</td>
                 <td>@Model.orderDTO[item].Total</td>
                 <td>@Model.orderDTO[item].PaymentType</td>
