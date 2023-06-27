@@ -14,6 +14,5 @@ namespace DTO
         public string PaymentStatus { get; set; }
         public string Status { get; set; }
         public DateTime? CreateDate { get; set; }
-        public DateTime? ShippedDate { get; set; }
     }
 }

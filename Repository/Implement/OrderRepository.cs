@@ -21,19 +21,10 @@ namespace Repository.Interface
 
         public OrderDTO AddOrder(OrderDTO orderDTO)
         {
-            /*Order order = _mapper.Map<Order>(orderDTO);
-            OrderDAO.AddOrder(order);*/
             Order order = _mapper.Map<Order>(orderDTO);
-            Order orderReturn = OrderDAO.AddOrder(order);
-            return _mapper.Map<OrderDTO>(orderReturn);
+            Order newOrder = OrderDAO.AddOrder(order);
+            return _mapper.Map<OrderDTO>(newOrder);
         }
-
-        /*        public OrderDTO AddOrderReturnObject(OrderDTO orderDTO)
-                {
-                    Order order = _mapper.Map<Order>(orderDTO);
-                    Order orderReturn = OrderDAO.AddOrderReturnObject(order);
-                    return _mapper.Map<OrderDTO>(orderReturn);
-                }*/
 
         public List<OrderDTO> GetCompletedOrdersByShopId(int shopId)
         {

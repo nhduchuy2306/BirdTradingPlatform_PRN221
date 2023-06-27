@@ -112,14 +112,14 @@ namespace BirdTradingPlatformRazorPage.Pages.User
         }
         public IActionResult OnGetCheckReveivedProduct(int orderId)
         {
-            OrderDTO orderDTO = orderRepository.GetOrderById(orderId);
+            /*OrderDTO orderDTO = orderRepository.GetOrderById(orderId);
 
             orderDTO.Status = OrderEnum.Delivered.ToString();
             orderDTO.PaymentStatus = PaymentEnum.Paid.ToString();
             if (orderDTO.ShippedDate == null)
                 orderDTO.ShippedDate = DateTime.Now;
 
-            orderRepository.UpdateOrder(orderDTO);
+            orderRepository.UpdateOrder(orderDTO);*/
 
             return Page();
         }

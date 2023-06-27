@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using BussinessObject.Models;
+using DAO;
+using DTO;
 using Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,12 @@ namespace Repository.Implement
         public OrderShopRepository(IMapper mapper)
         {
             _mapper = mapper;
+        }
+
+        public OrderShopDTO AddOrderShop(OrderShopDTO orderShopDTO)
+        {
+            OrderShop orderShop = _mapper.Map<OrderShop>(orderShopDTO);
+            return _mapper.Map<OrderShopDTO>(OrderShopDAO.AddOrderShop(orderShop));
         }
     }
 }

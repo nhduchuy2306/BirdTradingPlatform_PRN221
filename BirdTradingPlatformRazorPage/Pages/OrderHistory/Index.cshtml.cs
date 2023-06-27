@@ -48,14 +48,14 @@ namespace BirdTradingPlatformRazorPage.Pages.OrderHistory
 
         public IActionResult OnGetCheckReveivedProduct(int orderId)
         {
-            OrderDTO orderDTO = _orderRepository.GetOrderById(orderId);
+            /*OrderDTO orderDTO = _orderRepository.GetOrderById(orderId);
 
             orderDTO.Status = OrderEnum.Delivered.ToString();
             orderDTO.PaymentStatus = PaymentEnum.Paid.ToString();
             if(orderDTO.ShippedDate == null)
                 orderDTO.ShippedDate = DateTime.Now;
 
-            _orderRepository.UpdateOrder(orderDTO);
+            _orderRepository.UpdateOrder(orderDTO);*/
 
             return RedirectToPage("/OrderHistory/Index");
         }
