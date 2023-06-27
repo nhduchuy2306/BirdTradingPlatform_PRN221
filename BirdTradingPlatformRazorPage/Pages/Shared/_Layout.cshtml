@@ -8,7 +8,7 @@
     int TotalQuantity = 0;
 
     string cart = Context.Session.GetString("cart");
-    if (cart != null)
+    if (!string.IsNullOrEmpty(cart))
     {
         var cartList = JsonSerializer.Deserialize<List<CartItemDTO>>(cart);
         TotalQuantity = cartList.Count;
@@ -16,11 +16,6 @@
         {
             TotalPrice += item.UnitPrice * item.Quantity;
         }
-    }
-    else
-    {
-        TotalPrice = 0;
-        TotalQuantity = 0;
     }
 }
 

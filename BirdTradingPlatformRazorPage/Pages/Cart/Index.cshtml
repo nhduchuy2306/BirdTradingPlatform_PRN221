@@ -21,7 +21,6 @@
     </div>
 </section>
 <!-- Breadcrumb Section End -->
-
 <!-- Shoping Cart Section Begin -->
 <section class="shoping-cart spad">
     <div class="container">
@@ -40,7 +39,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach(var item in Model.cartItems)
+                                @foreach (var item in Model.cartItems)
                                 {
                                     <tr>
                                         <td class="shoping__cart__item">
@@ -54,12 +53,12 @@
                                         <td class="shoping__cart__quantity">
                                             <div class="quantity">
                                                 <div class="pro-qty">
-                                                    <input type="text" name="Quantities" value="@item.Quantity">
+                                                    <input type="number" name="Quantities" value="@item.Quantity" min="1">
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="shoping__cart__total">
-                                            $@(item.Quantity* item.UnitPrice)
+                                            $@(item.Quantity * item.UnitPrice)
                                         </td>
                                         <td class="shoping__cart__item__close">
                                             <a class="btn" asp-page="./Index" asp-route-productId="@item.ProductId" asp-page-handler="RemoveItemFromCart">
@@ -88,9 +87,11 @@
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>
-                                $@(Model.cartItems.Sum(x => x.Quantity * x.UnitPrice))
-                            </span></li>
+                            <li>
+                                Subtotal <span>
+                                    $@(Model.cartItems.Sum(x => x.Quantity * x.UnitPrice))
+                                </span>
+                            </li>
                             <li>Total <span>$@(Model.cartItems.Sum(x => x.Quantity * x.UnitPrice))</span></li>
                         </ul>
                         <a asp-page="/Checkout/Index" class="primary-btn">PROCEED TO CHECKOUT</a>
