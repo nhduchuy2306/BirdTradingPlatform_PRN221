@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using BussinessObject.Models;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Repository.Interface
     public interface IOrderShopRepository
     {
         public OrderShopDTO AddOrderShop(OrderShopDTO orderShopDTO);
+        /*public List<OrderShopDTO> GetOrdersByShopId(int shopId);*/
+        public List<OrderShop> GetOrdersByShopId(int ShopId);
     }
 }
