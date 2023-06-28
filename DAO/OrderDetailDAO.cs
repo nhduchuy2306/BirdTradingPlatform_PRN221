@@ -24,6 +24,24 @@ namespace DAO
             }
         }
 
+        public static List<OrderDetail> GetOrderDetailsByOrderShopId(int orderShopId)
+        {
+            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                orderDetails = context.OrderDetails
+                    .Include(o => o.Product)
+                    .Where(o => o.OrderShopId == orderShopId)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return orderDetails;
+        }
+
         /*public static List<OrderDetail> GetOrderDetailsByOrderId(int orderId)
         {
             List<OrderDetail> orderDetails = new List<OrderDetail>();

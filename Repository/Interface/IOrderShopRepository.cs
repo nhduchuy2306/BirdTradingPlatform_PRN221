@@ -13,5 +13,6 @@ namespace Repository.Interface
         public OrderShopDTO AddOrderShop(OrderShopDTO orderShopDTO);
         /*public List<OrderShopDTO> GetOrdersByShopId(int shopId);*/
         public List<OrderShop> GetOrdersByShopId(int ShopId);
+        public OrderShop GetOrderShopById(int ShopId);
     }
 }

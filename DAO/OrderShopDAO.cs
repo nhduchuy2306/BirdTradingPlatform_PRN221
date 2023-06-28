@@ -43,5 +43,23 @@ namespace DAO
             }
             return newOrderShop;
         }
+
+        public static OrderShop GetOrderShopById(int orderShopId)
+        {
+            var newOrderShop = new OrderShop();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                newOrderShop = context.OrderShops
+                    .Include(o => o.Order)
+                    .Include(o => o.Shop)
+                    .SingleOrDefault(o => o.OrderShopId == orderShopId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return newOrderShop;
+        }
     }
 }

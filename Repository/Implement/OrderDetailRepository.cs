@@ -32,5 +32,11 @@ namespace Repository.Interface
             return _mapper.Map<List<OrderDetailDTO>>(list);*/
             return null;
         }
+
+        public List<OrderDetailDTO> GetOrderDetailByOrderShopId(int orderShopId)
+        {
+            List<OrderDetail> orderDetailList = OrderDetailDAO.GetOrderDetailsByOrderShopId(orderShopId);
+            return _mapper.Map<List<OrderDetailDTO>>(orderDetailList);
+        }
     }
 }

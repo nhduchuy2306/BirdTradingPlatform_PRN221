@@ -32,6 +32,11 @@ namespace Repository.Implement
             return _mapper.Map<List<OrderShopDTO>>(orderShops);
         }
 
+        public OrderShop GetOrderShopById(int ShopId)
+        {
+            return OrderShopDAO.GetOrderShopById(ShopId);
+        }
+
         List<OrderShop> IOrderShopRepository.GetOrdersByShopId(int ShopId)
         {
             return OrderShopDAO.GetOrdersByShopId(ShopId);
