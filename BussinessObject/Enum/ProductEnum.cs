@@ -8,7 +8,7 @@ namespace BussinessObject.Enum
 {
     public enum ProductEnum
     {
-        Active,
-        UnActive
+        ACTIVE,
+        INACTIVE
     }
 }

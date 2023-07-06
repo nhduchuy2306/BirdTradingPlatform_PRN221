@@ -58,6 +58,8 @@ namespace BirdTradingPlatformRazorPage.Pages
                 else if (accountDTO.Role.Equals(RoleEnum.STAFF.ToString()))
                 {
                     HttpContext.Session.SetString("StaffId", accountDTO.AccountId.ToString());
+
+                    return Redirect("/AdminManagement/ProductManagement");
                 }
 
                 string redirectTo = HttpContext.Session.GetString("RedirectTo");

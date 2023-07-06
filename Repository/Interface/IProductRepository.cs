@@ -10,6 +10,7 @@ namespace Repository.Interface
 {
     public interface IProductRepository
     {
+        List<ProductDTO> GetAllProductsInactive();
         List<ProductDTO> GetProducts();
         List<ProductDTO> GetTop3Products();
         List<ProductDTO> GetProductByCategoryId(int id);

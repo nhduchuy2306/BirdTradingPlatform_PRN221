@@ -39,6 +39,12 @@ namespace Repository.Interface
             return _mapper.Map<List<ProductDTO>>(list);
         }
 
+        public List<ProductDTO> GetAllProductsInactive()
+        {
+            List<Product> list = ProductDAO.getAllProductStatusInactive();
+            return _mapper.Map<List<ProductDTO>>(list) ;
+        }
+
         public List<ProductDTO> GetProductByCategoryId(int id)
         {
             List<Product> products = ProductDAO.GetProductByCategoryId(id);
@@ -82,5 +88,7 @@ namespace Repository.Interface
             product.Shop = null;
             ProductDAO.UpdateProduct(product);
         }
+
+
     }
 }

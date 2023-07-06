@@ -1,3 +1,4 @@
+using BussinessObject.Enum;
 using BussinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -122,7 +123,7 @@ namespace DAO
                 using var context = new BirdTradingPlatformContext();
                 products = context.Products.OrderByDescending(p => p.ProductId).Take(3).ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -185,7 +186,7 @@ namespace DAO
                 using var context = new BirdTradingPlatformContext();
                 product = context.Products.FirstOrDefault(p => p.ProductId == productId && p.ShopId == shopId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -203,6 +204,26 @@ namespace DAO
                     .Include(p => p.Shop)
                     .Where(p => p.ShopId == shopId)
                     .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return products;
+        }
+
+        public static List<Product> getAllProductStatusInactive()
+        {
+            var products = new List<Product>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                products = context.Products
+                            .Include(p => p.Category)
+                            .Include(p => p.Shop)
+                            .Where(p => p.Status == ProductEnum.INACTIVE.ToString())
+                            .AsNoTracking()
+                            .ToList();
             }
             catch (Exception ex)
             {

@@ -128,6 +128,17 @@
                                     </a>
                                 </div>
                             }
+                            @if (Context.Session.GetString("Role") == RoleEnum.STAFF.ToString())
+                            {
+                                <div class="header__top__right__auth mr-5">
+                                    Welcome Admin
+                                </div>
+                                <div class="header__top__right__auth">
+                                    <a asp-page="/Login" asp-page-handler="Logout">
+                                        <i class="fas fa-sign-out-alt"></i> Logout
+                                    </a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

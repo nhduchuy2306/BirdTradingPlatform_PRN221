@@ -1,0 +1,224 @@
+﻿@page
+@model BirdTradingPlatformRazorPage.Pages.AdminManagement.Detail.IndexModel
+@{
+    ViewData["Title"] = "Details";
+}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="../img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Product Detail</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Product Details Section Begin -->
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    @if (Model.productImageDTOs.Count > 0)
+                    {
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large img-fluid"
+                                 id="img-large"
+                                 style="width: 500px; height: 500px"
+                                 src="@Model.productImageDTOs[0].ImageUrl" alt="">
+                        </div>
+                        <div class="product__details__pic__slider owl-carousel">
+                            @foreach (var item in Model.productImageDTOs)
+                            {
+                                <img class="img-fluid img-small" data-imgbigurl="@item.ImageUrl"
+                                     style="width: 100px; height: 100px"
+                                     src="@item.ImageUrl" alt="">
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large img-fluid"
+                                 style="width: 500px; height: 500px"
+                                 src="@Model.productDTO.ProductImage" alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.productDTO.ProductName</h3>
+                    <div class="product__details__rating">
+                        @{
+                            if (Model.productDTO.Rating != null)
+                            {
+                                int solidStar = (int)Model.productDTO.Rating;
+                                int outlineStar = 5 - solidStar;
+
+                                for (int i = 0; i < solidStar; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                for (int i = 0; i < outlineStar; i++)
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="product__details__price">$ @Model.productDTO.UnitPrice</div>
+                    <p>@Model.productDTO.Description</p>
+
+                    <a style="border:none" class="btn-success btn-lg mr-3" asp-page-handler="Approve" asp-route-id="@Model.productDTO.ProductId">Approve</a>
+                    <a style="border:none" class="btn-danger btn-lg mr-3" asp-page-handler="Decline" asp-route-id="@Model.productDTO.ProductId">Decline</a>
+
+                    <ul>
+                        <li><b>Shop</b> <span>@Model.shopDTO.ShopName</span></li>
+                        <li><b>Availability</b> <span>@(Model.productDTO.Status.Trim() == "Active" ? "In Stock" : "Out of Stock")</span></li>
+                        <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                        <li><b>Weight</b> <span>@Model.productDTO.Weight</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        @* <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                        aria-selected="true">Description</a>
+                        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                               aria-selected="false">Information</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Bird Detail Infomation</h6>
+                                <table class="table table-hover table-active">
+                                    <tbody>
+                                        @if (Model.productDTO.ProductName != null)
+                                        {
+                                            <tr>
+                                                <th>Name</th>
+                                                <td>@Model.productDTO.ProductName</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Description != null)
+                                        {
+                                            <tr>
+                                                <th>Product Description</th>
+                                                <td>@Model.productDTO.Description</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.UnitPrice != null)
+                                        {
+                                            <tr>
+                                                <th>Price</th>
+                                                <td>$ @Model.productDTO.UnitPrice</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Status != null)
+                                        {
+                                            <tr>
+                                                <th>Status</th>
+                                                <td>@(Model.productDTO.Status.Trim() == "Active" ? "In Stock" : "Out Of Stock")</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Weight != null)
+                                        {
+                                            <tr>
+                                                <th>Weight</th>
+                                                <td>@Model.productDTO.Weight kg</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Species != null)
+                                        {
+                                            <tr>
+                                                <th>Species</th>
+                                                <td>@Model.productDTO.Species</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Color != null)
+                                        {
+                                            <tr>
+                                                <th>Color</th>
+                                                <td>@Model.productDTO.Color</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Material != null)
+                                        {
+                                            <tr>
+                                                <th>Material</th>
+                                                <td>@Model.productDTO.Material</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.BrandName != null)
+                                        {
+                                            <tr>
+                                                <th>Brand</th>
+                                                <td>@Model.productDTO.BrandName</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Gender != null)
+                                        {
+                                            <tr>
+                                                <th>Gender</th>
+                                                <td>@Model.productDTO.Gender</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.MadeIn != null)
+                                        {
+                                            <tr>
+                                                <th>Come From</th>
+                                                <td>@Model.productDTO.MadeIn</td>
+                                            </tr>
+                                        }
+                                        @if (Model.productDTO.Expiration != null)
+                                        {
+                                            <tr>
+                                                <th>Expiration</th>
+                                                <td>
+                                                    @{
+                                                        DateTime date = (DateTime)Model.productDTO.Expiration;
+                                                        var ExpirateDate = date.ToString("dd/MM/yyyy");
+                                                    }
+                                                    @ExpirateDate
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Products Infomation</h6>
+                                <p>
+                                    @Model.productDTO.Description
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product Details Section End -->
+<script>
+    var imgSmall = document.getElementsByClassName("img-small");
+    var imgLarge = document.getElementById("img-large");
+
+    for (let i = 0; i < imgSmall.length; i++) {
+        imgSmall[i].onclick = function () {
+            console.log("Click");
+            imgLarge.src = imgSmall[i].src;
+        }
+    }
+</script>
