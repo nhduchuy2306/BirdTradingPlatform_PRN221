@@ -23,6 +23,7 @@ namespace Repository.Interface
         {
             OrderDetail orderDetail = _mapper.Map<OrderDetail>(orderDetailDTO);
             orderDetail.Product = null;
+            orderDetail.OrderShop = null;
             OrderDetailDAO.AddOrderDetail(orderDetail);
         }
 

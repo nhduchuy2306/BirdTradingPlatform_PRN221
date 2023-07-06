@@ -275,7 +275,7 @@
                                                         }
                                                         @CreateDateDetailStr
                                                     </td>
-                                                    @if (detail.Rating == null)
+                                                    @if (detail.Rating == null && item.Status == "Delivered")
                                                     {
                                                         <td>
                                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="@("#modalReview" + detail.OrderDetailId)">
@@ -297,11 +297,11 @@
                                                                             <div class="sidebar__item">
                                                                                 <h4>Rating</h4>
                                                                                 <div class="rating">
-                                                                                    <input type="radio" name="Rating" value="5" id="5"><label for="5">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="4" id="4"><label for="4">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="3" id="3"><label for="3">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="2" id="2"><label for="2">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="1" id="1"><label for="1">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="5" id="@("start1-"+ detail.OrderDetailId)"><label for="5">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="4" id="@("start2-"+ detail.OrderDetailId)"><label for="4">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="3" id="@("start3-"+ detail.OrderDetailId)"><label for="3">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="2" id="@("start4-"+ detail.OrderDetailId)"><label for="2">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="1" id="@("start5-"+ detail.OrderDetailId)"><label for="1">&star;</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
