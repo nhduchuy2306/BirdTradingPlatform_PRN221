@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BussinessObject.Models;
 using Repository.Interface;
 using DTO;
+using Microsoft.AspNetCore.Http;
 
 namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
 {
@@ -47,6 +48,8 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
 
         public IActionResult OnPost()
         {
+            int shopId = int.Parse(HttpContext.Session.GetString("ShopId"));
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -54,6 +57,8 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
 
             try
             {
+                productDTO.ShopId = shopId;
+                productDTO.CreateDate = DateTime.Now;
                 _productRepository.UpdateProduct(productDTO);
             }
             catch (DbUpdateConcurrencyException)
