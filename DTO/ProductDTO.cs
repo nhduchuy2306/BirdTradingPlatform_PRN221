@@ -22,14 +22,14 @@ namespace DTO
         public int? Size { get; set; }
         public int? Weight { get; set; }
         public DateTime? Expiration { get; set; }
-        public string MadeIn { get; set; }
-        public string Gender { get; set; }
-        public string Color { get; set; }
-        public string Material { get; set; }
-        public string Description { get; set; }
-        public string BrandName { get; set; }
-        public string Status { get; set; }
-        public string ShopName { get; set; }
-        public string CategoryName { get; set; }
+        public string? MadeIn { get; set; }
+        public string? Gender { get; set; }
+        public string? Color { get; set; }
+        public string? Material { get; set; }
+        public string? Description { get; set; }
+        public string? BrandName { get; set; }
+        public string? Status { get; set; }
+        public string? ShopName { get; set; }
+        public string? CategoryName { get; set; }
     }
 }

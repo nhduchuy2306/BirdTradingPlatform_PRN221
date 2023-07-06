@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BussinessObject.Models;
 using DTO;
 using Repository.Interface;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.AspNetCore.Http;
 
 namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
 {
@@ -39,6 +41,12 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
             {
                 return Page();
             }
+            
+            int shopId = int.Parse(HttpContext.Session.GetString("ShopId"));
+            productDTO.ShopId = shopId;
+            productDTO.Status = "ACTIVE";
+            productDTO.Rating = 5;
+            productDTO.CreateDate = DateTime.Now;
 
             _productRepository.AddProduct(productDTO);
 
