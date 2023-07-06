@@ -10,9 +10,8 @@ namespace Repository.Interface
     public interface IOrderRepository
     {
         List<OrderDTO> GetOrdersByUserId(int userId);
-        void AddOrder(OrderDTO orderDTO);
+        OrderDTO AddOrder(OrderDTO orderDTO);
         void UpdateOrder(OrderDTO orderDTO);
-        OrderDTO AddOrderReturnObject(OrderDTO orderDTO);
         OrderDTO GetOrderById(int orderId);
         List<OrderDTO> GetOrdersByShopId(int shopId);
         List<OrderDTO> GetCompletedOrdersByShopId(int shopId);

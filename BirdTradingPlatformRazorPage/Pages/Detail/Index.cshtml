@@ -28,13 +28,14 @@
                     {
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large img-fluid"
+                                 id = "img-large"
                                  style="width: 500px; height: 500px"
                                  src="@Model.productImageDTOs[0].ImageUrl" alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
                             @foreach (var item in Model.productImageDTOs)
                             {
-                                <img class="img-fluid" data-imgbigurl="@item.ImageUrl"
+                                <img class="img-fluid img-small" data-imgbigurl="@item.ImageUrl"
                                      style="width: 100px; height: 100px"
                                      src="@item.ImageUrl" alt="">
                             }
@@ -255,3 +256,14 @@
     </div>
 </section>
 <!-- Related Product Section End -->
+<script>
+    var imgSmall = document.getElementsByClassName("img-small");
+    var imgLarge = document.getElementById("img-large");
+
+    for(let i = 0; i < imgSmall.length; i++){
+        imgSmall[i].onclick = function(){
+            console.log("Click");
+            imgLarge.src = imgSmall[i].src;
+        }
+    }
+</script>

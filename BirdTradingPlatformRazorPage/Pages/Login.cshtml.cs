@@ -28,10 +28,6 @@ namespace BirdTradingPlatformRazorPage.Pages
             _shopRepository = shopRepository;
         }
 
-        public void OnGet()
-        {
-        }
-
         public IActionResult OnPost()
         {
             AccountDTO accountDTO = _accountRepository.GetAccountByPhoneNumberAndPassword(PhoneNumber, Password);
@@ -45,7 +41,7 @@ namespace BirdTradingPlatformRazorPage.Pages
                 ViewData["Fail"] = null;
                 HttpContext.Session.SetString("Role", accountDTO.Role);
 
-                if(accountDTO.Role.Equals(RoleEnum.USER.ToString()))
+                if (accountDTO.Role.Equals(RoleEnum.USER.ToString()))
                 {
                     UserDTO userDTO = _userRepository.GetUserByAccountId(accountDTO.AccountId);
                     HttpContext.Session.SetString("UserId", userDTO.UserId.ToString());
@@ -59,14 +55,14 @@ namespace BirdTradingPlatformRazorPage.Pages
 
                     return Redirect("/ShopManagement/OrderRequest");
                 }
-                else if(accountDTO.Role.Equals(RoleEnum.STAFF.ToString()))
+                else if (accountDTO.Role.Equals(RoleEnum.STAFF.ToString()))
                 {
                     HttpContext.Session.SetString("StaffId", accountDTO.AccountId.ToString());
                 }
 
                 string redirectTo = HttpContext.Session.GetString("RedirectTo");
 
-                if(redirectTo != null)
+                if (redirectTo != null)
                 {
                     return RedirectToPage(redirectTo);
                 }

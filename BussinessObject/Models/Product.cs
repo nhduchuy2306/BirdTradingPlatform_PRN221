@@ -17,6 +17,7 @@ namespace BussinessObject.Models
         public int? ShopId { get; set; }
         public int? CategoryId { get; set; }
         public string ProductName { get; set; }
+        public string ProductImage { get; set; }
         public double? UnitPrice { get; set; }
         public int? Quantity { get; set; }
         public int? Rating { get; set; }
@@ -33,7 +34,6 @@ namespace BussinessObject.Models
         public string Description { get; set; }
         public string BrandName { get; set; }
         public string Status { get; set; }
-        public string ProductImage { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual Shop Shop { get; set; }

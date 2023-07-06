@@ -19,24 +19,18 @@ namespace Repository.Interface
             _mapper = mapper;
         }
 
-        public void AddOrder(OrderDTO orderDTO)
+        public OrderDTO AddOrder(OrderDTO orderDTO)
         {
             Order order = _mapper.Map<Order>(orderDTO);
-            order.PaymentMethod = null;
-            OrderDAO.AddOrder(order);
-        }
-
-        public OrderDTO AddOrderReturnObject(OrderDTO orderDTO)
-        {
-            Order order = _mapper.Map<Order>(orderDTO);
-            Order orderReturn = OrderDAO.AddOrderReturnObject(order);
-            return _mapper.Map<OrderDTO>(orderReturn);
+            Order newOrder = OrderDAO.AddOrder(order);
+            return _mapper.Map<OrderDTO>(newOrder);
         }
 
         public List<OrderDTO> GetCompletedOrdersByShopId(int shopId)
         {
-            List<Order> orders = OrderDAO.GetCompletedOrdersByShopId(shopId);
-            return _mapper.Map<List<OrderDTO>>(orders);
+            /*List<Order> orders = OrderDAO.GetCompletedOrdersByShopId(shopId);
+            return _mapper.Map<List<OrderDTO>>(orders);*/
+            return null;
         }
 
         public OrderDTO GetOrderById(int orderId)
@@ -47,8 +41,9 @@ namespace Repository.Interface
 
         public List<OrderDTO> GetOrdersByShopId(int shopId)
         {
-            List<Order> orders = OrderDAO.GetOrdersByShopId(shopId);
-            return _mapper.Map<List<OrderDTO>>(orders);
+            /*List<Order> orders = OrderDAO.GetOrdersByShopId(shopId);
+            return _mapper.Map<List<OrderDTO>>(orders);*/
+            return null;
         }
 
         public List<OrderDTO> GetOrdersByUserId(int userId)

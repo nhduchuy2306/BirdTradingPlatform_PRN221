@@ -10,7 +10,6 @@ namespace DAO
 {
     public class UserDAO
     {
-
         public static User GetUserByAccountId(int id)
         {
             User user = null;
@@ -18,7 +17,7 @@ namespace DAO
             {
                 using (var context = new BirdTradingPlatformContext())
                 {
-                    user = context.Users.Where(u => u.AccountId == id).FirstOrDefault();
+                    user = context.Users.SingleOrDefault(u => u.AccountId == id);
                 }
             }
             catch (Exception e)
@@ -35,7 +34,7 @@ namespace DAO
             {
                 using (var context = new BirdTradingPlatformContext())
                 {
-                    user = context.Users.FirstOrDefault(u => u.UserId == userId);
+                    user = context.Users.SingleOrDefault(u => u.UserId == userId);
                 }
             }
             catch (Exception e)
@@ -69,7 +68,8 @@ namespace DAO
             {
                 using (var context = new BirdTradingPlatformContext())
                 {
-                    status = context.Users.FirstOrDefault(c => c.Email == email && c.UserId != userId) != null;
+                    status = context.Users.FirstOrDefault(c => c.Email == email && 
+                        c.UserId != userId) != null;
                 }
             }
             catch (Exception e)

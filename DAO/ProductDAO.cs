@@ -29,7 +29,7 @@ namespace DAO
             return products;
         }
 
-        public static List<Product> GetProductPaginatin(int totalPage, int pageSize)
+        public static List<Product> GetProductPagination(int totalPage, int pageSize)
         {
             var products = new List<Product>();
             using var context = new BirdTradingPlatformContext();

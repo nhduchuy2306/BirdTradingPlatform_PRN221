@@ -9,6 +9,7 @@ namespace BussinessObject.Models
     {
         public Shop()
         {
+            OrderShops = new HashSet<OrderShop>();
             Products = new HashSet<Product>();
         }
 
@@ -21,6 +22,7 @@ namespace BussinessObject.Models
         public string Status { get; set; }
 
         public virtual Account Account { get; set; }
+        public virtual ICollection<OrderShop> OrderShops { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

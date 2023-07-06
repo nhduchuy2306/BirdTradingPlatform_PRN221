@@ -16,28 +16,48 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
     public class IndexModel : PageModel
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderShopRepository _orderShopRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IPaymentMethodRepository _paymentMethodRepository;
 
         public IndexModel(
             IOrderRepository orderRepository, 
             IShopRepository shopRepository, 
-            IUserRepository userRepository, 
-            IPaymentMethodRepository paymentMethodRepository)
+            IUserRepository userRepository,
+            IOrderShopRepository orderShopRepository)
         {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
-            _paymentMethodRepository = paymentMethodRepository;
+            _orderShopRepository = orderShopRepository;
         }
 
         public List<OrderDTO> orderDTO { get;set; }
         public List<UserDTO> userDTO { get;set; }
+        public List<OrderShop> orderShops { get; set; }
+        public List<ShopOrderRequestDTO> shopOrderRequestDTOs { get; set; }
 
         public IActionResult OnGet()
         {
-            userDTO = new List<UserDTO>();
+            string shopId = HttpContext.Session.GetString("ShopId");
+            orderShops = _orderShopRepository.GetOrdersByShopId(int.Parse(shopId));
+            shopOrderRequestDTOs = new List<ShopOrderRequestDTO>();
+
+            foreach(var item in orderShops)
+            {
+                UserDTO userDTO = _userRepository.GetUserById((int)item.Order.UserId);
+                string paymentStatus = item.Order.PaymentStatus;
+
+                shopOrderRequestDTOs.Add(new ShopOrderRequestDTO
+                {
+                    Username = userDTO.FullName,
+                    Total = (double)item.Order.Total,
+                    PaymentStatus = paymentStatus,
+                    CreateDate = item.Order.CreateDate.ToString(),
+                    Status = item.Order.Status
+                });
+            }
+           /* userDTO = new List<UserDTO>();
             string shopId = HttpContext.Session.GetString("ShopId");
 
             if(shopId == null)
@@ -52,14 +72,14 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
                 PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodById(item.PaymentMethodId);
                 UserDTO user = _userRepository.GetUserById((int)paymentMethod.UserId);
                 userDTO.Add(user);
-            }
+            }*/
 
             return Page();
         }
 
         public IActionResult OnPostDeliveredDate(int OrderId, DateTime? DeliveredDate)
         {
-            OrderDTO orderDTO = _orderRepository.GetOrderById(OrderId);
+            /*OrderDTO orderDTO = _orderRepository.GetOrderById(OrderId);
 
             if(DeliveredDate.Value.Day < orderDTO.OrderDate.Day)
             {
@@ -70,7 +90,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
             orderDTO.Status = OrderEnum.Shipping.ToString();
             orderDTO.ShippedDate = DeliveredDate;
 
-            _orderRepository.UpdateOrder(orderDTO);
+            _orderRepository.UpdateOrder(orderDTO);*/
             return RedirectToPage("/ShopManagement/OrderRequest/Index");
         }
 

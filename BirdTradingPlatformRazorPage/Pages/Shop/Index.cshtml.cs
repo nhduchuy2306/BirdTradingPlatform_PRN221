@@ -32,11 +32,10 @@ namespace BirdTradingPlatformRazorPage.Pages.Shop
         public int MinPrice { get; set; }
         public int MaxPrice { get; set; }
         public string BirdColor { get; set; }
-        public string Country { get; set; }
 
         public string currentUrl { get; set; }
 
-        public IActionResult OnGet(int? pageIndex, int? categoryId, int? minPrice, int? maxPrice, string color, string country)
+        public IActionResult OnGet(int? pageIndex, int? categoryId, int? minPrice, int? maxPrice, string color)
         {
             currentUrl = HttpContext.Request.GetDisplayUrl();
 
@@ -47,7 +46,6 @@ namespace BirdTradingPlatformRazorPage.Pages.Shop
             MinPrice = minPrice ?? 0;
             MaxPrice = maxPrice ?? 1000000;
             BirdColor = color ?? "";
-            Country = country ?? "";
 
             IQueryable<ProductDTO> productsIQ = Products.AsQueryable();
 
@@ -71,12 +69,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Shop
                 productsIQ = productsIQ.Where(p => p.Color.ToUpper().Trim() == color.ToUpper().Trim());
             }
 
-            if (country != null)
-            {
-                productsIQ = productsIQ.Where(p => p.MadeIn.ToUpper().Trim() == country.ToUpper().Trim());
-            }
-
-            int pageSize = 6;
+            int pageSize = 9;
             PaginatedProducts = PaginatedList<ProductDTO>.Create(productsIQ, pageIndex ?? 1, pageSize);
 
             return Page();

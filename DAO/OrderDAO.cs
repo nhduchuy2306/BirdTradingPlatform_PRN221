@@ -17,11 +17,7 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                orders = context.Orders
-                    .Include(p => p.PaymentMethod)
-                    .Include(p => p.OrderParent)
-                    .Where(o => o.PaymentMethod.UserId == userId)
-                    .ToList();
+                orders = context.Orders.Where(o => o.UserId == userId).ToList();
             }
             catch(Exception ex)
             {
@@ -30,34 +26,20 @@ namespace DAO
             return orders;
         }
 
-        public static void AddOrder(Order order)
+        public static Order AddOrder(Order order)
         {
+            Order newOrder = new Order();
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                context.Orders.Add(order);
+                newOrder = context.Orders.Add(order).Entity;
                 context.SaveChanges();
-            }
+            }   
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-        }
-        
-        public static Order AddOrderReturnObject(Order order)
-        {
-            Order orderReturn = new Order();
-            try
-            {
-                using var context = new BirdTradingPlatformContext();
-                orderReturn = context.Orders.Add(order).Entity;
-                context.SaveChanges();
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            return orderReturn;
+            return newOrder;
         }
 
         public static void DeleteOrder(Order order)
@@ -93,10 +75,7 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                order = context.Orders
-                    .Include(p => p.PaymentMethod)
-                    .Include(p => p.OrderParent)
-                    .FirstOrDefault(o => o.OrderId == orderId);
+                order = context.Orders.SingleOrDefault(o => o.OrderId == orderId);
             }
             catch (Exception ex)
             {
@@ -105,15 +84,13 @@ namespace DAO
             return order;
         }
 
-        public static List<Order> GetOrdersByShopId(int shopId)
+        /*public static List<Order> GetOrdersByShopId(int shopId)
         {
             List<Order> orders = new List<Order>();
             try
             {
                 using var context = new BirdTradingPlatformContext();
                 orders = context.Orders
-                    .Include(p => p.PaymentMethod)
-                    .Include(p => p.OrderParent)
                     .Where(o => o.ShopId == shopId)
                     .ToList();
             }
@@ -143,6 +120,6 @@ namespace DAO
                 throw new Exception(ex.Message);
             }
             return orders;
-        }
+        }*/
     }
 }

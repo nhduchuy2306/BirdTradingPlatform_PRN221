@@ -17,22 +17,23 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
         private readonly IOrderRepository _orderRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IPaymentMethodRepository _paymentMethodRepository;
+        private readonly IOrderShopRepository _orderShopRepository;
 
         public IndexModel(
             IOrderRepository orderRepository, 
             IShopRepository shopRepository, 
             IUserRepository userRepository,
-            IPaymentMethodRepository paymentMethodRepository)
+            IOrderShopRepository orderShopRepository)
         {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
-            _paymentMethodRepository = paymentMethodRepository;
+            _orderShopRepository = orderShopRepository;
         }
 
         public List<OrderDTO> orderDTO { get; set; }
         public List<UserDTO> userDTO { get; set; }
+        public List<OrderShop> orderShops { get; set; }
 
         public IActionResult OnGet()
         {
@@ -44,12 +45,12 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderManagement
                 return RedirectToPage("/Login");
             }
 
-            orderDTO = _orderRepository.GetCompletedOrdersByShopId(int.Parse(shopId));
+            orderShops = _orderShopRepository.GetOrdersByShopId(int.Parse(shopId));
 
-            foreach (var item in orderDTO)
+            foreach(var item in orderShops)
             {
-                PaymentMethodDTO paymentMethod = _paymentMethodRepository.GetPaymentMethodById(item.PaymentMethodId);
-                UserDTO user = _userRepository.GetUserById((int)paymentMethod.UserId);
+                int userId = (int)item.Order.UserId;
+                UserDTO user = _userRepository.GetUserById(userId);
                 userDTO.Add(user);
             }
 

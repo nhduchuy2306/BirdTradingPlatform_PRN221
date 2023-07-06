@@ -11,5 +11,6 @@ namespace Repository.Interface
     {
         void AddOrderDetail(OrderDetailDTO orderDetailDTO);
         List<OrderDetailDTO> GetOrderDetailByOrderId(int id);
+        List<OrderDetailDTO> GetOrderDetailByOrderShopId(int orderShopId);
     }
 }

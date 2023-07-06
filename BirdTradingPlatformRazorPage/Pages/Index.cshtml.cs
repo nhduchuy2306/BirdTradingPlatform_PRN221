@@ -72,7 +72,7 @@ namespace BirdTradingPlatformRazorPage.Pages
             {
                 List<CartItemDTO> cartItemDTOs = JsonSerializer.Deserialize<List<CartItemDTO>>(cart);
 
-                CartItemDTO existingCartItemDTO = cartItemDTOs.FirstOrDefault(c => c.ProductId == productId);
+                CartItemDTO existingCartItemDTO = cartItemDTOs.SingleOrDefault(c => c.ProductId == productId);
 
                 if (existingCartItemDTO == null)
                 {

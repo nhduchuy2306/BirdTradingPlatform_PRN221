@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Repository;
+using Repository.Implement;
 using Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -33,11 +34,11 @@ namespace BirdTradingPlatformRazorPage
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
-            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
             services.AddScoped<IProductImageRepository, ProductImageRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShopRepository, ShopRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrderShopRepository, OrderShopRepository>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig).Assembly);
         }
