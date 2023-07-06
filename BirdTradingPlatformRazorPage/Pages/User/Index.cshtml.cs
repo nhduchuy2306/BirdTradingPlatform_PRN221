@@ -15,14 +15,16 @@ namespace BirdTradingPlatformRazorPage.Pages.User
         private readonly IAccountRepository accountRepository;
         private readonly IOrderRepository orderRepository;
         private readonly IShopRepository shopRepository;
+        private readonly IOrderDetailRepository orderDetailRepository;
 
         public IndexModel(IUserRepository userRepository, IAccountRepository accountRepository,
-            IOrderRepository orderRepository, IShopRepository shopRepository)
+            IOrderRepository orderRepository, IShopRepository shopRepository, IOrderDetailRepository orderDetailRepository)
         {
             this.userRepository = userRepository;
             this.accountRepository = accountRepository;
             this.orderRepository = orderRepository;
             this.shopRepository = shopRepository;
+            this.orderDetailRepository = orderDetailRepository;
         }
 
         [BindProperty]
@@ -33,17 +35,15 @@ namespace BirdTradingPlatformRazorPage.Pages.User
         public AccountDTO AccountDTO { get; set; }
         public List<OrderDTO> orderDTO { get; set; }
 
+        public List<OrderDetailDTO> orderDetailDTO { get; set; }
+
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("UserId") == null || HttpContext.Session.GetString("Role") != "USER")
             {
                 return RedirectToPage("../Login");
             }
-            int userId = int.Parse(HttpContext.Session.GetString("UserId"));
-            UserDTO = userRepository.GetUserById(userId);
-            Console.WriteLine(UserDTO.Gender);
-            AccountDTO = accountRepository.GetAccountByUserId(userId);
-            orderDTO = orderRepository.GetOrdersByUserId(userId);
+            LoadData();
 
             /*foreach (var item in orderDTO)
             {
@@ -85,7 +85,7 @@ namespace BirdTradingPlatformRazorPage.Pages.User
         public IActionResult OnPostUpdateAccount(string ConfirmPassword, int AccountId)
         {
             int userId = int.Parse(HttpContext.Session.GetString("UserId"));
-            ViewData["IsAccount"] = "display: none";
+            ViewData["Site"] = "Account";
             if(AccountDTO.Password != ConfirmPassword)
             {
                 ViewData["PasswordError"] = "Password is not match!";
@@ -124,6 +124,46 @@ namespace BirdTradingPlatformRazorPage.Pages.User
             orderRepository.UpdateOrder(orderDTO);*/
 
             return Page();
+        }
+
+        public IActionResult OnGetCancelOrder(int orderId)
+        {
+            ViewData["Site"] = "Order";
+            OrderDTO order = orderRepository.GetOrderById(orderId);
+            order.Status = "Cancelled";
+            orderRepository.UpdateOrder(order);
+            LoadData();
+            return Page();
+        }
+
+        public IActionResult OnPostReviewOrder(int detailId ,int Rating)
+        {
+            ViewData["Site"] = "Order";
+            OrderDetailDTO orderDetail = orderDetailRepository.GetOrderDetailId(detailId);
+            orderDetail.Rating = Rating;
+            orderDetailRepository.UpdateOrderDetail(orderDetail);
+            LoadData();
+            return Page();
+        }
+
+        public void LoadData()
+        {
+            if (HttpContext.Session.GetString("UserId") != null && HttpContext.Session.GetString("Role") == "USER")
+            {
+                int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+                UserDTO = userRepository.GetUserById(userId);
+                AccountDTO = accountRepository.GetAccountByUserId(userId);
+                orderDTO = orderRepository.GetOrdersByUserId(userId);
+                if(orderDTO != null)
+                {
+                    orderDetailDTO = new List<OrderDetailDTO>();
+                    orderDTO.ForEach(o =>
+                    {
+                        orderDetailDTO.AddRange(orderDetailRepository.GetOrderDetailByOrderId(o.OrderId));
+                    });
+                }
+            }
+            
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Repository.Interface
     public interface IShopRepository
     {
         ShopDTO GetShopByAccountId(int accountId);
-        public ShopDTO GetShopById(int id);
+        ShopDTO GetShopById(int id);
+
+        bool AddNewShop(ShopDTO shop);
     }
 }

@@ -26,17 +26,30 @@ namespace Repository.Interface
             OrderDetailDAO.AddOrderDetail(orderDetail);
         }
 
+        public void UpdateOrderDetail(OrderDetailDTO orderDetailDTO)
+        {
+            OrderDetail orderDetail = _mapper.Map<OrderDetail>(orderDetailDTO);
+            orderDetail.Product = null;
+            orderDetail.OrderShop = null;
+            OrderDetailDAO.UpdateOrderDetail(orderDetail);
+        }
+
         public List<OrderDetailDTO> GetOrderDetailByOrderId(int id)
         {
-            /*List<OrderDetail> list = OrderDetailDAO.GetOrderDetailsByOrderId(id);
-            return _mapper.Map<List<OrderDetailDTO>>(list);*/
-            return null;
+            List<OrderDetail> list = OrderDetailDAO.GetOrderDetailByOrderId(id);
+            return _mapper.Map<List<OrderDetailDTO>>(list);
         }
 
         public List<OrderDetailDTO> GetOrderDetailByOrderShopId(int orderShopId)
         {
             List<OrderDetail> orderDetailList = OrderDetailDAO.GetOrderDetailsByOrderShopId(orderShopId);
             return _mapper.Map<List<OrderDetailDTO>>(orderDetailList);
+        }
+
+        public OrderDetailDTO GetOrderDetailId(int id)
+        {
+            OrderDetail order = OrderDetailDAO.GetOrderDetailId(id);
+            return _mapper.Map<OrderDetailDTO>(order);
         }
     }
 }

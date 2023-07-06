@@ -102,8 +102,12 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             @if(Context.Session.GetString("Role") == null) {
+                                <div class="header__top__right__auth mr-5">
+                                    <a asp-page="/ShopRegister"> Become a Shop </a>
+                                </div>
+
                                 <div class="header__top__right__auth">
-                                    <a asp-page="/Login"><i class="fas fa-user"></i> Login</a>
+                                     <a asp-page="/Login"><i class="fas fa-user"></i> Login</a>
                                 </div>
                             }
                             @if (Context.Session.GetString("Role") == RoleEnum.USER.ToString())

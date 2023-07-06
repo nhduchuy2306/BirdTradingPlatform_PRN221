@@ -38,5 +38,23 @@ namespace DAO
             }
             return shop;
         }
+
+        public static bool AddNewShop(Shop shop)
+        {
+            bool status = false;
+            try
+            {
+                using (var context = new BirdTradingPlatformContext())
+                {
+                    context.Shops.Add(shop);
+                    status = context.SaveChanges() > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return status;
+        }
     }
 }
