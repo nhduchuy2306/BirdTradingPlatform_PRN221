@@ -9,9 +9,9 @@
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
-        <a id="nav-profile" href="#" class="nav-link active ms-0" target="__blank" onclick="SwitchForm('profile')">Profile</a>
-        <a id="nav-account" href="#" class="nav-link" target="__blank" onclick="SwitchForm('account')">Account</a>
-        <a id="nav-order" href="#" class="nav-link" target="__blank" onclick="SwitchForm('order')">Order</a>
+        <div id="nav-profile" style="cursor: pointer" class="nav-link active ms-0" target="__blank" onclick="SwitchForm('profile')">Profile</div>
+        <div id="nav-account" style="cursor: pointer" class="nav-link" target="__blank" onclick="SwitchForm('account')">Account</div>
+        <div id="nav-order" style="cursor: pointer" class="nav-link " target="__blank" onclick="SwitchForm('order')">Order</div>
     </nav>
     <hr class="mt-0 mb-4">
     <div class="row">
@@ -164,13 +164,15 @@
                             <th>PaymentStatus</th>
                             <th>Order Date</th>
                             <th>Status</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.orderDTO)
                         {
                             <tr>
-                                <td>@item.Total</td>
+                                <td>@item.Total $</td>
                                 <td>@item.PaymentStatus</td>
                                 <td>
                                     @{
@@ -180,27 +182,201 @@
                                     @CreateDateStr
                                 </td>
                                 <td>@item.Status</td>
+                                @if (item.Status == "Processing")
+                                {
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="@("#exampleModal" + item.OrderId)">
+                                            Cancel
+                                        </button>
+                                    </td>
+                                    <!-- Modal Cancel -->
+                                    <div class="modal fade" id="@("exampleModal" + item.OrderId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you want to cancel this order?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <a class="btn btn-info"
+                                                       asp-route-orderId="@item.OrderId"
+                                                       asp-page-handler="CancelOrder">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+                                <td>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="@("#modalDetail" + item.OrderId)">
+                                        Detail
+                                    </button>
+                                </td>
+                                
+
                             </tr>
+
+
                         }
                     </tbody>
                 </table>
             </div>
 
+            @foreach(var item in Model.orderDTO)
+            {
+                <!-- Modal Review -->
+                <div class="modal fade" id="@("modalDetail" + item.OrderId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-hover table-detail">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Shop Name</th>
+                                            <th>Date</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in Model.orderDetailDTO)
+                                        {
+                                            if (detail.OrderId == item.OrderId)
+                                            {
+                                                <tr>
+                                                    <td>@detail.ProductName</td>
+                                                    <td>@detail.Quantity</td>
+                                                    <td>
+                                                        @detail.Price
+                                                    </td>
+                                                    <td>@detail.ShopName</td>
+                                                    <td>
+                                                        @{
+                                                            var CreateDateDetail = (DateTime)item.CreateDate;
+                                                            var CreateDateDetailStr = CreateDateDetail.ToString("dd/MM/yyyy");
+                                                        }
+                                                        @CreateDateDetailStr
+                                                    </td>
+                                                    @if (detail.Rating == null)
+                                                    {
+                                                        <td>
+                                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="@("#modalReview" + detail.OrderDetailId)">
+                                                                Review
+                                                            </button>
+                                                        </td>
+                                                        <!-- Modal Review -->
+                                                        <div class="modal fade" id="@("modalReview" +  detail.OrderDetailId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <form method="post" asp-page-handler="ReviewOrder" asp-route-detailId="@detail.OrderDetailId">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Review</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="sidebar__item">
+                                                                                <h4>Rating</h4>
+                                                                                <div class="rating">
+                                                                                    <input type="radio" name="Rating" value="5" id="5"><label for="5">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="4" id="4"><label for="4">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="3" id="3"><label for="3">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="2" id="2"><label for="2">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="1" id="1"><label for="1">&star;</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            <button type="submit" class="btn btn-info">Submit</button>
+                                                                        </div>
+
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td> </td>
+                                                    }
+
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            }
 
         </div>
     </div>
 </div>
-@if (ViewData["IsAccount"] != null)
+@if (ViewData["Site"] != null)
 {
-    <script type="text/javascript">
-        var x = document.getElementById("frm-account");
-        var y = document.getElementById("frm-profile");
+    if (ViewData["Site"] == "Account")
+    {
+        <script type="text/javascript">
+            var x = document.getElementById("frm-account");
+            var y = document.getElementById("frm-profile");
+            var z = document.getElementById("frm-order");
 
-        x.style.display = 'block';
-        y.style.display = 'none';
+            x.style.display = 'block';
+            y.style.display = 'none';
+            z.style.display = 'none';
 
-    </script>
+        </script>
+    }
+    else if (ViewData["Site"] == "Order")
+    {
+        <script type="text/javascript">
+            var x = document.getElementById("frm-account");
+            var y = document.getElementById("frm-profile");
+            var z = document.getElementById("frm-order");
+
+            x.style.display = 'none';
+            y.style.display = 'none';
+            z.style.display = 'block';
+
+        </script>
+    }
+
 }
+
+@*<script type="text/javascript">
+    $('#modal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+    </script>*@
 
 <style>
 
@@ -266,4 +442,42 @@
         margin-left: 1rem;
         margin-right: 1rem;
     }
+
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+    }
+
+        .rating > input {
+            display: none;
+        }
+
+        .rating > label {
+            position: relative;
+            width: 1em;
+            font-size: 4vw;
+            color: #FFD600;
+            cursor: pointer;
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0;
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important;
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1;
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4;
+        }
+
 </style>

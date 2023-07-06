@@ -15,5 +15,17 @@ namespace DTO
         public string AvatarUrl { get; set; }
         public DateTime? CreateDate { get; set; }
         public string Status { get; set; }
+
+        public ShopDTO(int? accountId, string shopName, string address, string avatarUrl, DateTime? createDate, string status)
+        {
+            AccountId = accountId;
+            ShopName = shopName;
+            Address = address;
+            AvatarUrl = avatarUrl;
+            CreateDate = createDate;
+            Status = status;
+        }
     }
+
+
 }

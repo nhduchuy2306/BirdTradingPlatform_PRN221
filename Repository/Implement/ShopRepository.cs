@@ -31,5 +31,11 @@ namespace Repository.Interface
             return _mapper.Map<ShopDTO>(shop);
         }
 
+        public bool AddNewShop(ShopDTO shop)
+        {
+            Shop shop1 = _mapper.Map<Shop>(shop);
+            return ShopDAO.AddNewShop(shop1);
+        }
+
     }
 }
