@@ -53,7 +53,7 @@ namespace BirdTradingPlatformRazorPage.Pages
                     HttpContext.Session.SetString("ShopId", shopDTO.ShopId.ToString());
                     HttpContext.Session.SetString("ShopName", shopDTO.ShopName);
 
-                    return Redirect("/ShopManagement/OrderRequest");
+                    return Redirect("/ShopManagement/Dashboard");
                 }
                 else if (accountDTO.Role.Equals(RoleEnum.STAFF.ToString()))
                 {

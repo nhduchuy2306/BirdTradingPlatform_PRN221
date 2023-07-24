@@ -21,7 +21,7 @@ namespace DAO
                     .Include(o => o.Shop)
                     .ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -37,7 +37,7 @@ namespace DAO
                 newOrderShop = context.OrderShops.Add(orderShop).Entity;
                 context.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

@@ -3,11 +3,7 @@ using BussinessObject.Models;
 using DAO;
 using DTO;
 using Repository.Interface;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository.Implement
 {
@@ -26,18 +22,12 @@ namespace Repository.Implement
             return _mapper.Map<OrderShopDTO>(OrderShopDAO.AddOrderShop(orderShop));
         }
 
-        public List<OrderShopDTO> GetOrdersByShopId(int shopId)
-        {
-            List<OrderShop> orderShops = OrderShopDAO.GetOrdersByShopId(shopId);
-            return _mapper.Map<List<OrderShopDTO>>(orderShops);
-        }
-
         public OrderShop GetOrderShopById(int ShopId)
         {
             return OrderShopDAO.GetOrderShopById(ShopId);
         }
 
-        List<OrderShop> IOrderShopRepository.GetOrdersByShopId(int ShopId)
+        public List<OrderShop> GetOrdersByShopId(int ShopId)
         {
             return OrderShopDAO.GetOrdersByShopId(ShopId);
         }
