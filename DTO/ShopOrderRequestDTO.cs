@@ -13,5 +13,9 @@ namespace DTO
         public string PaymentStatus { get; set; }
         public string CreateDate { get; set; }
         public string Status { get; set; }
+
+        public int OrderId { get; set; }
+
+        public int OrderShopId { get; set; }
     }
 }

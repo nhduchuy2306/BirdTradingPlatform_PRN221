@@ -40,7 +40,7 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
         public IActionResult OnGet()
         {
             string shopId = HttpContext.Session.GetString("ShopId");
-            orderShops = _orderShopRepository.GetOrdersByShopId(int.Parse(shopId));
+            orderShops = _orderShopRepository.GetOrdersByShopId(int.Parse(shopId)).Where(o => o.Order.Status.Equals("Processing")).ToList();
             shopOrderRequestDTOs = new List<ShopOrderRequestDTO>();
 
             foreach(var item in orderShops)
@@ -54,7 +54,9 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
                     Total = (double)item.Order.Total,
                     PaymentStatus = paymentStatus,
                     CreateDate = item.Order.CreateDate.ToString(),
-                    Status = item.Order.Status
+                    Status = item.Order.Status,
+                    OrderId = item.Order.OrderId,
+                    OrderShopId = item.OrderShopId
                 });
             }
            /* userDTO = new List<UserDTO>();
@@ -91,6 +93,14 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.OrderRequest
             orderDTO.ShippedDate = DeliveredDate;
 
             _orderRepository.UpdateOrder(orderDTO);*/
+            return RedirectToPage("/ShopManagement/OrderRequest/Index");
+        }
+
+        public IActionResult OnGetDeliveryOrder(int orderId)
+        {
+            OrderDTO order = _orderRepository.GetOrderById(orderId);
+            order.Status = "Shipping";
+            _orderRepository.UpdateOrder(order);
             return RedirectToPage("/ShopManagement/OrderRequest/Index");
         }
 

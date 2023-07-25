@@ -17,7 +17,7 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                orders = context.Orders.Where(o => o.UserId == userId).ToList();
+                orders = context.Orders.Where(o => o.UserId == userId).OrderByDescending(c => c.CreateDate).ToList();
             }
             catch(Exception ex)
             {

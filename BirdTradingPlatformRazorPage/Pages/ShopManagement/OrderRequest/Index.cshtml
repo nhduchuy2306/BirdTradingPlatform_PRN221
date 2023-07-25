@@ -55,7 +55,6 @@
             <th>Total</th>
             <th>PaymentStatus</th>
             <th>Create Date</th>
-            <th>Shipped Date</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -69,84 +68,33 @@
                 <td>@item.PaymentStatus</td>
                 <td>@item.CreateDate</td>
                 <td>@item.Status</td>
-                @*<td>@Model.userDTO[item].FullName</td>
-                <td>@Model.orderDTO[item].Total</td>
-                <td>@Model.orderDTO[item].PaymentType</td>
-                <td>@Model.orderDTO[item].PaymentStatus</td>
                 <td>
-                    @{
-                        var OrderDate = Model.orderDTO[item].OrderDate;
-                        var OrderDateStr = OrderDate.ToString("dd/MM/yyyy");
-                    }
-                    @OrderDateStr
-                </td>
-                <td>
-                    @{
-                        var ShippedDateStr = "";
-                        var ShippedDate = Model.orderDTO[item].ShippedDate;
-                        if(ShippedDate != null)
-                            ShippedDateStr = ShippedDate.Value.ToString("dd/MM/yyyy");
-                        else
-                            ShippedDateStr = "Waiting for shop";
-                    }
-                    @ShippedDateStr
-                </td>
-                <td>@Model.orderDTO[item].Status</td>
-                <td>
-                    @{
-                        var disableDiliveredDate =
-                            (Model.orderDTO[item].PaymentStatus == "Paid" ||
-                            Model.orderDTO[item].Status == OrderEnum.Cancelled.ToString() ||
-                            Model.orderDTO[item].Status == OrderEnum.Shipping.ToString() ||
-                            Model.orderDTO[item].Status == OrderEnum.Delivered.ToString()) ? "disabled" : "";
-                    }
-                    <button class="btn btn-primary"
-                        @disableDiliveredDate
-                        asp-page="Index" 
-                        asp-page-handler="ChooseDate"
-                        asp-route-orderId="@Model.orderDTO[item].OrderId" 
-                            data-toggle="modal" data-target="#DeliverdDate-@Model.orderDTO[item].OrderId">
-                        Delivered Date
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="@("#exampleModal" + item.OrderId)">
+                        Delivery
                     </button>
-                    @{
-                        var disabledCancel = 
-                            (Model.orderDTO[item].PaymentStatus == "Paid" ||
-                            Model.orderDTO[item].Status == OrderEnum.Cancelled.ToString() ||
-                            Model.orderDTO[item].Status == OrderEnum.Shipping.ToString() ||
-                            Model.orderDTO[item].Status == OrderEnum.Delivered.ToString()) ? "disabled" : "";
-                    }
-                    <a class="btn btn-danger @disabledCancel"
-                       asp-page="Index"
-                       asp-page-handler="CancelOrder"
-                       asp-route-orderId="@Model.orderDTO[item].OrderId">Cancel Order</a>
-
-
-                    <div class="modal fade" id="DeliverdDate-@Model.orderDTO[item].OrderId" tabindex="-1" role="dialog" aria-labelledby="DeliverdDateTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form method="post" asp-page-handler="DeliveredDate">
-                                    <div class="modal-body">
-                                        <div>
-                                            <input type="hidden" name="OrderId" value="@Model.orderDTO[item].OrderId" />
-                                            Deliverd Date: <input type="date" name="DeliveredDate" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </form>
+                </td>
+                <!-- Modal Cancel -->
+                <div class="modal fade" id="@("exampleModal" + item.OrderId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to delivery this order?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a class="btn btn-info"
+                                   asp-route-orderId="@item.OrderId"
+                                   asp-page-handler="DeliveryOrder">Yes</a>
                             </div>
                         </div>
                     </div>
-
-                </td>*@
+                </div>
             </tr>
         }
     </tbody>

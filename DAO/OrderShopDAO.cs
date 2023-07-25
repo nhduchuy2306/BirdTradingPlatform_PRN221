@@ -19,6 +19,7 @@ namespace DAO
                 orderShops = context.OrderShops.Where(o => o.ShopId == shopId)
                     .Include(o => o.Order)
                     .Include(o => o.Shop)
+                    .OrderByDescending(o => o.Order.CreateDate)
                     .ToList();
             }
             catch (Exception ex)
