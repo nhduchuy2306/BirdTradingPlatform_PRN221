@@ -11,6 +11,7 @@ using Repository.Interface;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.AspNetCore.Http;
 using BussinessObject.Enum;
+using System.Text.RegularExpressions;
 
 namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
 {
@@ -40,6 +41,50 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
         {
             if (!ModelState.IsValid)
             {
+                return Page();
+            }
+
+            bool invalid = false;
+            string pattern = @"^\s*$";
+            if (productDTO?.ProductName == null || Regex.IsMatch(productDTO.ProductName, pattern))
+            {
+                ModelState.AddModelError("productDTO.ProductName", "Product Name cannot be empty!");
+                invalid = true;
+            }
+
+            if (productDTO?.Weight == null)
+            {
+                ModelState.AddModelError("productDTO.Weight", "Product Weight cannot be empty!");
+                invalid = true;
+            }
+
+            if (productDTO?.UnitPrice == null)
+            {
+                ModelState.AddModelError("productDTO.UnitPrice", "Product Price cannot be empty!");
+                invalid = true;
+            }
+
+            if (productDTO?.Quantity == null)
+            {
+                ModelState.AddModelError("productDTO.Quantity", "Product Quantity cannot be empty!");
+                invalid = true;
+            }
+
+            if (productDTO?.Description == null || Regex.IsMatch(productDTO.Description, pattern))
+            {
+                ModelState.AddModelError("productDTO.Description", "Description cannot be empty!");
+                invalid = true;
+            }
+
+            if (productDTO?.ProductImage == null || Regex.IsMatch(productDTO?.ProductImage, pattern))
+            {
+                ModelState.AddModelError("productDTO.ProductImage", "Product Image cannot be empty!");
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                ViewData["CategoryId"] = new SelectList(_categoryRepository.GetCategories(), "CategoryId", "CategoryName");
                 return Page();
             }
 

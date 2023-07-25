@@ -36,7 +36,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Detail
             productDTO = _productRepository.GetProductById((int)id);
             shopDTO = _shopRepository.GetShopById((int)productDTO.ShopId);
             productImageDTOs = _productImageRepository.GetProductImagesByProductId((int)id);
-            relatedProducts = _productRepository.GetProductByShopId((int)productDTO.ShopId);
+            relatedProducts = _productRepository.GetActiveProductsByShopId((int)productDTO.ShopId);
             return Page();
         }
 

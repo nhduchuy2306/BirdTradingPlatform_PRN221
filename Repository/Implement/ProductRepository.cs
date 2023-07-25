@@ -39,6 +39,12 @@ namespace Repository.Interface
             return _mapper.Map<List<ProductDTO>>(list);
         }
 
+        public List<ProductDTO> GetActiveProductsByShopId(int shopId)
+        {
+            List<Product> list = ProductDAO.GetAllActiveProductsByShopId(shopId);
+            return _mapper.Map<List<ProductDTO>>(list);
+        }
+
         public List<ProductDTO> GetAllProductsInactive()
         {
             List<Product> list = ProductDAO.getAllProductStatusInactive();

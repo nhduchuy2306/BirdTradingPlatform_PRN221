@@ -121,7 +121,11 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                products = context.Products.OrderByDescending(p => p.ProductId).Take(3).ToList();
+                products = context.Products
+                    .Where(p => p.Status.Equals(StatusEnum.ACTIVE.ToString()))
+                    .OrderByDescending(p => p.ProductId)
+                    .Take(3)
+                    .ToList();
             }
             catch (Exception ex)
             {
@@ -166,7 +170,9 @@ namespace DAO
             try
             {
                 using var context = new BirdTradingPlatformContext();
-                products = context.Products.OrderByDescending(p => p.ProductId)
+                products = context.Products
+                    .Where(p => p.Status.Equals(StatusEnum.ACTIVE.ToString()))
+                    .OrderByDescending(p => p.ProductId)
                     .Include(p => p.Category)
                     .Include(p => p.Shop)
                     .Take(8).ToList();
@@ -203,6 +209,25 @@ namespace DAO
                     .Include(p => p.Category)
                     .Include(p => p.Shop)
                     .Where(p => p.ShopId == shopId)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return products;
+        }
+
+        public static List<Product> GetAllActiveProductsByShopId(int shopId)
+        {
+            var products = new List<Product>();
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                products = context.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Shop)
+                    .Where(p => p.ShopId == shopId && p.Status.Equals(StatusEnum.ACTIVE.ToString()))
                     .ToList();
             }
             catch (Exception ex)
