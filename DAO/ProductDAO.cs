@@ -209,6 +209,7 @@ namespace DAO
                     .Include(p => p.Category)
                     .Include(p => p.Shop)
                     .Where(p => p.ShopId == shopId)
+                    .OrderByDescending(p => p.CreateDate)
                     .ToList();
             }
             catch (Exception ex)

@@ -5,14 +5,14 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+@*<h1>Details</h1>*@
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="text-center">Create FlowerBouquet</h3>
+                    <h3 class="text-center">Product Details</h3>
                 </div>
                 <div class="card-body">
                     <dl class="row">
@@ -54,8 +54,8 @@
                         <dd class="col-sm-10">@Model.productDTO.ProductImage</dd>
                         <dt class="col-sm-2">Category</dt>
                         <dd class="col-sm-10">@Model.productDTO.CategoryName</dd>
-                        <dt class="col-sm-2">Shop</dt>
-                        <dd class="col-sm-10">@Model.productDTO.ShopName</dd>
+                        @*<dt class="col-sm-2">Shop</dt>
+                        <dd class="col-sm-10">@Model.productDTO.ShopName</dd>*@
                     </dl>
                 </div>
                 <div class="card-footer">
@@ -78,7 +78,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Product Detail Images</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

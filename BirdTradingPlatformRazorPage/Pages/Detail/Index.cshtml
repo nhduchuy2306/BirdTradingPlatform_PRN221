@@ -102,7 +102,7 @@
                     }
 
                     <ul>
-                        <li><b>Shop</b> <span>@Model.shopDTO.ShopName</span></li>
+                        <li><b>Shop</b> <span><a asp-page="/ShopPage/Index" asp-route-id="@Model.shopDTO.ShopId">@Model.shopDTO.ShopName</a></span></li>
                         <li><b>Availability</b> <span>@(Model.productDTO.Quantity > 0 ? "Available" : "Out of Stock")</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                         <li><b>Weight</b> <span>@Model.productDTO.Weight</span></li>

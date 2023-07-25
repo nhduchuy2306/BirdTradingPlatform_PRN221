@@ -104,8 +104,8 @@
                            asp-page-handler="AddToCart">Add to Cart</a>
                         </div>
                         <div class="product__item__text">
-                            <h5 class="mb-2">Shop Name: @item.ShopName</h5>
-                            <h6 class="mb-2">Category: @item.ProductName</h6>
+                            <h5 class="mb-2"><a asp-page="/ShopPage/Index" asp-route-id="@item.ShopId">Shop Name: @item.ShopName</a></h5>
+                            <h6 class="mb-2">Category: @item.CategoryName</h6>
                             <h6><a asp-page="/Detail/Index" asp-route-id="@item.ProductId">@item.ProductName</a></h6>
                             <h5>$@item.UnitPrice</h5>
                         </div>
