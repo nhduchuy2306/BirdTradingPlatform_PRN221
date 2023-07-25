@@ -176,11 +176,20 @@
                                 <a asp-page="/Detail/Index" asp-route-id="@item.ProductId">
                                     <div class="product__item__pic set-bg" data-setbg="@item.ProductImage"></div>
                                 </a>
-                                <div class="product__item__text">
-                                    <a class="btn btn-info text-white w-100"
-                                       asp-route-productId="@item.ProductId"
-                                       asp-page-handler="AddToCart">Add to Cart</a>
-                                </div>
+                                @if(item.Quantity <= 0)
+                                {
+                                    <div class="product__item__text">
+                                        <p class="btn btn-info w-100" style="color:red; font-weight:bold">Out of stock</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="product__item__text">
+                                        <a class="btn btn-info text-white w-100"
+                                           asp-route-productId="@item.ProductId"
+                                           asp-page-handler="AddToCart">Add to Cart</a>
+                                    </div>
+                                }
                                 <div class="product__item__text">
                                     <h5 class="mb-2">Shop Name: @item.ShopName</h5>
                                     <h6 class="mb-2">Category: @item.ProductName</h6>

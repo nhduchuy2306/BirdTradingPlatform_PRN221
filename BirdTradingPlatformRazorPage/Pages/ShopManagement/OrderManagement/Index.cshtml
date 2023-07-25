@@ -43,23 +43,52 @@
         <tr>
             <th>User</th>
             <th>Total</th>
-            <th>OrderDate</th>
-            <th>Status</th>
             <th>PaymentStatus</th>
+            <th>Create Date</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @for(int i = 0; i < Model.orderShops.Count; i++)
+        @foreach (var item in Model.shopOrderRequestDTOs)
         {
             <tr>
-                <td>@Model.userDTO[i].FullName</td>
-                <td>@Model.orderShops[i].Total</td>
-                <td>@Model.orderShops[i].CreateDate</td>
-                <td>@Model.orderShops[i].Order.Status</td>
-                <td>@Model.orderShops[i].Order.PaymentStatus</td>
+                <td>@item.Username</td>
+                <td>@item.Total</td>
+                <td>@item.PaymentStatus</td>
+                <td>@item.CreateDate</td>
+                <td>@item.Status</td>
                 <td>
-                    <a class="btn btn-info" asp-page="./Details" asp-route-id="@Model.orderShops[i].OrderShopId">Details</a>
+                    <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.OrderShopId">Details</a> |
+                    @if (item.Status.Equals("Shipping"))
+                    {
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="@("#exampleModal" + item.OrderId)">
+                            Done
+                        </button>
+
+                        <div class="modal fade" id="@("exampleModal" + item.OrderId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirm</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to make this order done?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a class="btn btn-info"
+                                           asp-route-orderId="@item.OrderId"
+                                           asp-page-handler="DoneOrder">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                 </td>
             </tr>
         }

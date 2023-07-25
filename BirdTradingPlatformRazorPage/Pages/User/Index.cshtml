@@ -22,8 +22,7 @@
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
                     <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                    <!-- Profile picture help block-->
-                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+       
                     <!-- Profile picture upload button-->
                     @*<button class="btn btn-primary" type="button">Upload new image</button>*@
                 </div>
@@ -222,7 +221,7 @@
                                         Detail
                                     </button>
                                 </td>
-                                
+
 
                             </tr>
 
@@ -232,7 +231,7 @@
                 </table>
             </div>
 
-            @foreach(var item in Model.orderDTO)
+            @foreach (var item in Model.orderDTO)
             {
                 <!-- Modal Review -->
                 <div class="modal fade" id="@("modalDetail" + item.OrderId)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -297,11 +296,11 @@
                                                                             <div class="sidebar__item">
                                                                                 <h4>Rating</h4>
                                                                                 <div class="rating">
-                                                                                    <input type="radio" name="Rating" value="5" id="@("start1-"+ detail.OrderDetailId)"><label for="5">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="4" id="@("start2-"+ detail.OrderDetailId)"><label for="4">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="3" id="@("start3-"+ detail.OrderDetailId)"><label for="3">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="2" id="@("start4-"+ detail.OrderDetailId)"><label for="2">&star;</label>
-                                                                                    <input type="radio" name="Rating" value="1" id="@("start5-"+ detail.OrderDetailId)"><label for="1">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="5" id="@("5-"+ detail.OrderDetailId)"><label for="@("5-"+ detail.OrderDetailId)">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="4" id="@("4-"+ detail.OrderDetailId)"><label for="@("4-"+ detail.OrderDetailId)">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="3" id="@("3-"+ detail.OrderDetailId)"><label for="@("3-"+ detail.OrderDetailId)">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="2" id="@("2-"+ detail.OrderDetailId)"><label for="@("2-"+ detail.OrderDetailId)">&star;</label>
+                                                                                    <input type="radio" name="Rating" value="1" id="@("1-"+ detail.OrderDetailId)"><label for="@("1-"+ detail.OrderDetailId)">&star;</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
