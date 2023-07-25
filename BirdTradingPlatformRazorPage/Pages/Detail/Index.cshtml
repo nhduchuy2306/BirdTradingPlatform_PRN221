@@ -17,18 +17,17 @@
     </div>
 </section>
 <!-- Breadcrumb Section End -->
-
 <!-- Product Details Section Begin -->
 <section class="product-details spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__pic">
-                    @if(Model.productImageDTOs.Count > 0)
+                    @if (Model.productImageDTOs.Count > 0)
                     {
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large img-fluid"
-                                 id = "img-large"
+                                 id="img-large"
                                  style="width: 500px; height: 500px"
                                  src="@Model.productImageDTOs[0].ImageUrl" alt="">
                         </div>
@@ -56,7 +55,7 @@
                     <h3>@Model.productDTO.ProductName</h3>
                     <div class="product__details__rating">
                         @{
-                            if(Model.productDTO.Rating != null)
+                            if (Model.productDTO.Rating != null)
                             {
                                 int solidStar = (int)Model.productDTO.Rating;
                                 int outlineStar = 5 - solidStar;
@@ -74,19 +73,37 @@
                     </div>
                     <div class="product__details__price">$ @Model.productDTO.UnitPrice</div>
                     <p>@Model.productDTO.Description</p>
-                    <form method="post">
-                        <div class="product__details__quantity">
-                            <div class="quantity">
-                                <div class="pro-qty">
-                                    <input type="text" value="1" name="Quantity">
+
+                    @if (Model.productDTO.Quantity > 0)
+                    {
+                        <form method="post">
+                            <div class="product__details__quantity">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" value="1" name="Quantity">
+                                    </div>
                                 </div>
                             </div>
+                            <button asp-page-handler="AddToCart"
+                                asp-route-id="@Model.productDTO.ProductId"
+                                    type="submit" style="border:none"
+                                    class="primary-btn">
+                                Add to cart
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <p style="color:red; font-weight:bold">Out of stock</p>
+                            </div>
                         </div>
-                        <button asp-page-handler="AddToCart" asp-route-id="@Model.productDTO.ProductId" type="submit" style="border:none" class="primary-btn">Add to cart</button>
-                    </form>
+                    }
+
                     <ul>
                         <li><b>Shop</b> <span>@Model.shopDTO.ShopName</span></li>
-                        <li><b>Availability</b> <span>@(Model.productDTO.Status.Trim() == "Active" ? "In Stock" : "Out of Stock")</span></li>
+                        <li><b>Availability</b> <span>@(Model.productDTO.Quantity > 0 ? "Available" : "Out of Stock")</span></li>
                         <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
                         <li><b>Weight</b> <span>@Model.productDTO.Weight</span></li>
                     </ul>
@@ -135,7 +152,7 @@
                                         {
                                             <tr>
                                                 <th>Status</th>
-                                                <td>@(Model.productDTO.Status.Trim()=="Active"?"In Stock":"Out Of Stock")</td>
+                                                <td>@(Model.productDTO.Status.Trim() == "Active" ? "In Stock" : "Out Of Stock")</td>
                                             </tr>
                                         }
                                         @if (Model.productDTO.Weight != null)
@@ -159,7 +176,7 @@
                                                 <td>@Model.productDTO.Color</td>
                                             </tr>
                                         }
-                                        @if(Model.productDTO.Material != null)
+                                        @if (Model.productDTO.Material != null)
                                         {
                                             <tr>
                                                 <th>Material</th>
@@ -193,7 +210,7 @@
                                                 <th>Expiration</th>
                                                 <td>
                                                     @{
-                                                        DateTime date = (DateTime) Model.productDTO.Expiration;
+                                                        DateTime date = (DateTime)Model.productDTO.Expiration;
                                                         var ExpirateDate = date.ToString("dd/MM/yyyy");
                                                     }
                                                     @ExpirateDate
@@ -219,7 +236,6 @@
     </div>
 </section>
 <!-- Product Details Section End -->
-
 <!-- Related Product Section Begin -->
 <section class="related-product">
     <div class="container">
@@ -241,7 +257,7 @@
                         <div class="product__item__text">
                             <form method="post">
                                 <input type="hidden" name="Quantity" value="1" />
-                                <input type="hidden" name="Id" value="@item.ProductId"/>
+                                <input type="hidden" name="Id" value="@item.ProductId" />
                                 <button type="submit" class="btn btn-info text-white w-100" asp-route-id="@Model.productDTO.ProductId" asp-page-handler="RelateAddToCart">Add to Cart</button>
                             </form>
                         </div>
@@ -260,8 +276,8 @@
     var imgSmall = document.getElementsByClassName("img-small");
     var imgLarge = document.getElementById("img-large");
 
-    for(let i = 0; i < imgSmall.length; i++){
-        imgSmall[i].onclick = function(){
+    for (let i = 0; i < imgSmall.length; i++) {
+        imgSmall[i].onclick = function () {
             console.log("Click");
             imgLarge.src = imgSmall[i].src;
         }
