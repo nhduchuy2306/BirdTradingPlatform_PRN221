@@ -20,7 +20,7 @@ namespace DAO
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -34,10 +34,10 @@ namespace DAO
             {
                 using (var context = new BirdTradingPlatformContext())
                 {
-                    category = context.Categories.FirstOrDefault(c => c.CategoryId == id);
+                    category = context.Categories.SingleOrDefault(c => c.CategoryId == id);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
