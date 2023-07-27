@@ -16,12 +16,14 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IShopRepository _shopRepository;
+        private readonly IOrderDetailRepository _orderDetailRepository;
 
-        public DeleteModel(IProductRepository productRepository, IShopRepository shopRepository, ICategoryRepository categoryRepository)
+        public DeleteModel(IProductRepository productRepository, IShopRepository shopRepository, ICategoryRepository categoryRepository, IOrderDetailRepository orderDetailRepository)
         {
             _productRepository = productRepository;
             _shopRepository = shopRepository;
             _categoryRepository = categoryRepository;
+            _orderDetailRepository = orderDetailRepository;
         }
 
         public ProductDTO productDTO { get; set; }
@@ -49,14 +51,27 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
                 return NotFound();
             }
 
-            productDTO = _productRepository.GetProductById(id.Value);
-
-            if (productDTO != null)
+            bool isExist = _orderDetailRepository.CheckIsExistProductInOrderDetail(id.Value);
+            if (!isExist)
             {
-                _productRepository.DeleteProduct(productDTO);
-            }
+                productDTO = _productRepository.GetProductById(id.Value);
 
-            return RedirectToPage("./Index");
+                if (productDTO != null)
+                {
+                    _productRepository.DeleteProduct(productDTO);
+                }
+
+                string alertMessage = "Delete Successfull";
+                return Redirect($"/ShopManagement/ProductManagement?alertMessage={Uri.EscapeDataString(alertMessage)}");
+            }
+            else
+            {
+                /*  ViewData["Error"] = "Product exist in order detail, cannot delete!!";
+                  return Page();*/
+
+                string alertMessage = "Product exist in order detail, cannot delete!!";
+                return Redirect($"/ShopManagement/ProductManagement?alertMessage={Uri.EscapeDataString(alertMessage)}");
+            }
         }
     }
 }

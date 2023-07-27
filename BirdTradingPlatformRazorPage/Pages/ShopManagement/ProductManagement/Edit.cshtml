@@ -115,4 +115,16 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const alertMessage = urlParams.get('alertMessage');
+
+            if (alertMessage) {
+                alert(alertMessage);
+            }
+        });
+    </script>
 }

@@ -52,5 +52,10 @@ namespace Repository.Interface
             OrderDetail order = OrderDetailDAO.GetOrderDetailId(id);
             return _mapper.Map<OrderDetailDTO>(order);
         }
+
+        public bool CheckIsExistProductInOrderDetail(int productId)
+        {
+            return OrderDetailDAO.CheckProductExistInOrderDetail(productId);
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace DAO
                 context.OrderDetails.Add(orderDetail);
                 context.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -92,6 +93,20 @@ namespace DAO
                 throw new Exception(ex.Message);
             }
             return orderDetails;
+        }
+
+        public static bool CheckProductExistInOrderDetail(int productId)
+        {
+            try
+            {
+                using var context = new BirdTradingPlatformContext();
+                var res = context.OrderDetails.Count(o => o.ProductId == productId) > 0;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /*public static List<OrderDetail> GetOrderDetailsByOrderId(int orderId)

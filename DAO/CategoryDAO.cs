@@ -43,53 +43,5 @@ namespace DAO
             }
             return category;
         }
-
-        public void AddCategory(Category category)
-        {
-            try
-            {
-                using (var context = new BirdTradingPlatformContext())
-                {
-                    context.Categories.Add(category);
-                    context.SaveChanges();
-                }
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void UpdateCategory(Category category)
-        {
-            try
-            {
-                using (var context = new BirdTradingPlatformContext())
-                {
-                    context.Entry<Category>(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                    context.SaveChanges();
-                }
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public void DeleteCategory(Category category)
-        {
-            try
-            {
-                using (var context = new BirdTradingPlatformContext())
-                {
-                    context.Categories.Remove(category);
-                    context.SaveChanges();
-                }
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
     }
 }

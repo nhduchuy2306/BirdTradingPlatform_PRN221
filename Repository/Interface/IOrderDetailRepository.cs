@@ -17,6 +17,7 @@ namespace Repository.Interface
 
         OrderDetailDTO GetOrderDetailId(int id);
 
+        bool CheckIsExistProductInOrderDetail(int productId);
 
     }
 }

@@ -334,6 +334,7 @@ namespace BirdTradingPlatformRazorPage.Pages.Checkout
                 else
                 {
                     ViewData["Error"] = "Order failed!";
+                    return Page();
                 }
             }
             return Page();

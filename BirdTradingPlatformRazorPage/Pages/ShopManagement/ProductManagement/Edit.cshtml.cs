@@ -92,6 +92,12 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
                     invalid = true;
                 }
 
+                if (productDTO?.Expiration != null && productDTO.Expiration < DateTime.Now.AddDays(7))
+                {
+                    ModelState.AddModelError("productDTO.Expiration", "Expired Date must be at least a week away from current date!");
+                    invalid = true;
+                }
+
                 if (productDTO?.Description == null || Regex.IsMatch(productDTO.Description, pattern))
                 {
                     ModelState.AddModelError("productDTO.Description", "Description cannot be empty!");
@@ -128,7 +134,9 @@ namespace BirdTradingPlatformRazorPage.Pages.ShopManagement.ProductManagement
                 }
             }
 
-            return RedirectToPage("./Index");
+            //return RedirectToPage("./Index");
+            string alertMessage = "Product updated successfully!";
+            return Redirect($"/ShopManagement/ProductManagement?alertMessage={Uri.EscapeDataString(alertMessage)}");
         }
 
         private bool ProductExists(int id)
